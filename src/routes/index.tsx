@@ -3,7 +3,6 @@ import { ArrowRight, Sparkles, Star, Quote } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
-import { ThreeScene } from "@/components/ThreeScene";
 import interior from "@/assets/clinic-interior.png";
 import reception from "@/assets/clinic-reception.png";
 import drAhmed from "@/assets/dr-ahmed.jpg";
@@ -43,8 +42,8 @@ function HomePage() {
       <SiteHeader />
 
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 pt-16 pb-24 lg:grid-cols-12 lg:gap-8 lg:px-10 lg:pt-24 lg:pb-32">
+      <section className="hero-texture relative overflow-hidden">
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pt-16 pb-24 lg:grid-cols-12 lg:gap-8 lg:px-10 lg:pt-24 lg:pb-32">
           <div className="lg:col-span-7">
             <SectionLabel>Islamabad · Est. 2024</SectionLabel>
             <h1 className="fade-up mt-8 font-display text-5xl leading-[1.02] tracking-tight md:text-7xl lg:text-[5.5rem]">
@@ -69,28 +68,41 @@ function HomePage() {
             <div className="arch-frame relative h-[480px] w-full overflow-hidden bg-secondary md:h-[560px]">
               <img src={reception} alt="ORA reception" className="h-full w-full object-cover" width={800} height={1000} />
             </div>
-            <ThreeScene className="absolute -left-16 -bottom-16 h-64 w-64 lg:h-80 lg:w-80" />
           </div>
         </div>
 
-        {/* Aligno marquee */}
-        <div className="border-y border-border bg-foreground py-5 text-background">
+        {/* Marquee */}
+        <div className="relative border-y border-border bg-foreground py-5 text-background">
           <div className="flex overflow-hidden">
             <div className="marquee flex shrink-0 items-center gap-16 whitespace-nowrap pr-16 font-sans-tight">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <span key={i} className="flex items-center gap-3">
+              {[
+                "Sculpted smiles, considered care",
+                "Specialists in clear aligners",
+                "Cosmetic & aesthetic dentistry",
+                "F-7 Markaz · Islamabad",
+                "By appointment only",
+                "Led by Dr. Ahmed Sultan & Dr. Roha Ejaz",
+              ].flatMap((t, i) => [
+                <span key={`a-${i}`} className="flex items-center gap-3">
                   <Sparkles className="h-3 w-3 text-accent" />
-                  Exclusive Aligno aligner partner in Islamabad
-                </span>
-              ))}
+                  {t}
+                </span>,
+              ])}
             </div>
             <div className="marquee flex shrink-0 items-center gap-16 whitespace-nowrap pr-16 font-sans-tight" aria-hidden>
-              {Array.from({ length: 8 }).map((_, i) => (
-                <span key={i} className="flex items-center gap-3">
+              {[
+                "Sculpted smiles, considered care",
+                "Specialists in clear aligners",
+                "Cosmetic & aesthetic dentistry",
+                "F-7 Markaz · Islamabad",
+                "By appointment only",
+                "Led by Dr. Ahmed Sultan & Dr. Roha Ejaz",
+              ].flatMap((t, i) => [
+                <span key={`b-${i}`} className="flex items-center gap-3">
                   <Sparkles className="h-3 w-3 text-accent" />
-                  Exclusive Aligno aligner partner in Islamabad
-                </span>
-              ))}
+                  {t}
+                </span>,
+              ])}
             </div>
           </div>
         </div>
