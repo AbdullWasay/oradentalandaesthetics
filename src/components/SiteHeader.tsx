@@ -16,11 +16,14 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-        <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="ORA" className="h-9 w-9" width={36} height={36} />
-          <div className="leading-tight">
-            <div className="font-display text-xl tracking-tight">ORA</div>
-            <div className="font-sans-tight text-[0.6rem] text-muted-foreground">Dental & Aesthetic</div>
+        <Link to="/" className="flex items-center gap-4">
+          <img src={logo} alt="ORA" className="h-10 w-10" width={40} height={40} />
+          <div className="flex items-center gap-4">
+            <span className="font-display text-3xl leading-none tracking-tight text-foreground">ORA</span>
+            <span className="hidden h-7 w-px bg-foreground/30 sm:block" />
+            <span className="hidden font-sans-tight text-[0.7rem] text-foreground/70 sm:inline">
+              Dental &amp; Aesthetic Clinic
+            </span>
           </div>
         </Link>
 
