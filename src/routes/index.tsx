@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Star, Quote } from "lucide-react";
+import { ArrowRight, Sparkles, Star, Quote, Award, Users, Clock, Smile } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
@@ -7,13 +7,12 @@ import interior from "@/assets/clinic-interior.png";
 import reception from "@/assets/clinic-reception.png";
 import drAhmed from "@/assets/dr-ahmed.jpg";
 import drRoha from "@/assets/dr-roha.jpg";
-import aligners from "@/assets/aligners.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "ORA Dental & Aesthetic Clinic — Islamabad" },
-      { name: "description", content: "Quiet-luxury dentistry in Islamabad. Exclusive Aligno aligner partner. Led by Dr. Ahmed Sultan & Dr. Roha Ejaz." },
+      { name: "description", content: "Quiet-luxury dentistry and aesthetics in F-7 Islamabad. Specialists in clear aligners. Led by Dr. Ahmed Sultan & Dr. Roha Ejaz." },
       { property: "og:title", content: "ORA Dental & Aesthetic Clinic" },
       { property: "og:description", content: "Sculpted smiles. Quiet luxury dentistry in F-7 Islamabad." },
     ],
@@ -21,19 +20,41 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
+const stats = [
+  { icon: Smile, k: "1,200+", v: "Smiles transformed" },
+  { icon: Users, k: "240+", v: "5-star reviews" },
+  { icon: Award, k: "15+", v: "Years combined experience" },
+  { icon: Clock, k: "98%", v: "Case predictability" },
+];
+
 const services = [
   { title: "Cosmetic Dentistry", desc: "Veneers, whitening, smile design — sculpted to your features." },
-  { title: "Aligno Clear Aligners", desc: "Exclusive Islamabad providers of the Aligno system." },
+  { title: "Clear Aligners", desc: "Near-invisible, 3D-planned aligner therapy for discreet movement." },
   { title: "Implants & Restorative", desc: "Quiet, considered restorations that age beautifully." },
   { title: "Aesthetic Treatments", desc: "Subtle facial harmony — botox, fillers, skin care." },
   { title: "Pediatric Care", desc: "Gentle first visits in a calm, sensory-aware setting." },
   { title: "Preventive & Hygiene", desc: "Considered routines for a lifetime of healthy teeth." },
 ];
 
+const pillars = [
+  { n: "01", t: "Restraint", d: "We do less, more carefully. The smallest intervention that achieves the most natural result — always." },
+  { n: "02", t: "Precision", d: "Digital scans, 3D treatment planning, microscope-aided dentistry. Modern tools, classical hands." },
+  { n: "03", t: "Calm", d: "Long appointments. Real conversations. The pace and the space engineered to lower your shoulders before we recline the chair." },
+];
+
 const testimonials = [
-  { name: "Sana Khalid", role: "Aligno patient · 9 months", quote: "ORA didn't feel like a clinic — it felt like a quiet ritual. My smile is finally mine, and the team made every step calm." },
+  { name: "Sana Khalid", role: "Clear aligners · 9 months", quote: "ORA didn't feel like a clinic — it felt like a quiet ritual. My smile is finally mine, and the team made every step calm." },
   { name: "Hamza Riaz", role: "Veneers", quote: "Dr. Sultan's eye for proportion is extraordinary. People notice something different — they just can't place what." },
   { name: "Mehwish Tariq", role: "Aesthetic + dental", quote: "The space alone disarms you. Dr. Roha is gentle, precise, and unhurried. I drive across the city to come here." },
+];
+
+const marqueeItems = [
+  "Sculpted smiles, considered care",
+  "Specialists in clear aligners",
+  "Cosmetic & aesthetic dentistry",
+  "F-7 Markaz · Islamabad",
+  "By appointment only",
+  "Led by Dr. Ahmed Sultan & Dr. Roha Ejaz",
 ];
 
 function HomePage() {
@@ -58,8 +79,8 @@ function HomePage() {
               <Link to="/contact" className="group inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 font-sans-tight text-background transition-all hover:gap-4">
                 Book a Consultation <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              <Link to="/services" className="inline-flex items-center gap-2 rounded-full border border-foreground/30 px-7 py-4 font-sans-tight transition-colors hover:border-foreground">
-                Our Services
+              <Link to="/treatments" className="inline-flex items-center gap-2 rounded-full border border-foreground/30 px-7 py-4 font-sans-tight transition-colors hover:border-foreground">
+                Our Treatments
               </Link>
             </div>
           </div>
@@ -75,36 +96,35 @@ function HomePage() {
         <div className="relative border-y border-border bg-foreground py-5 text-background">
           <div className="flex overflow-hidden">
             <div className="marquee flex shrink-0 items-center gap-16 whitespace-nowrap pr-16 font-sans-tight">
-              {[
-                "Sculpted smiles, considered care",
-                "Specialists in clear aligners",
-                "Cosmetic & aesthetic dentistry",
-                "F-7 Markaz · Islamabad",
-                "By appointment only",
-                "Led by Dr. Ahmed Sultan & Dr. Roha Ejaz",
-              ].flatMap((t, i) => [
+              {marqueeItems.map((t, i) => (
                 <span key={`a-${i}`} className="flex items-center gap-3">
                   <Sparkles className="h-3 w-3 text-accent" />
                   {t}
-                </span>,
-              ])}
+                </span>
+              ))}
             </div>
             <div className="marquee flex shrink-0 items-center gap-16 whitespace-nowrap pr-16 font-sans-tight" aria-hidden>
-              {[
-                "Sculpted smiles, considered care",
-                "Specialists in clear aligners",
-                "Cosmetic & aesthetic dentistry",
-                "F-7 Markaz · Islamabad",
-                "By appointment only",
-                "Led by Dr. Ahmed Sultan & Dr. Roha Ejaz",
-              ].flatMap((t, i) => [
+              {marqueeItems.map((t, i) => (
                 <span key={`b-${i}`} className="flex items-center gap-3">
                   <Sparkles className="h-3 w-3 text-accent" />
                   {t}
-                </span>,
-              ])}
+                </span>
+              ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section className="border-b border-border bg-background">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px overflow-hidden border-x border-border bg-border lg:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.v} className="bg-background px-8 py-12 lg:px-10 lg:py-16">
+              <s.icon className="h-6 w-6 text-accent" />
+              <div className="mt-6 font-display text-4xl tracking-tight md:text-5xl">{s.k}</div>
+              <div className="mt-3 font-sans-tight text-sm text-foreground/60">{s.v}</div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -140,7 +160,7 @@ function HomePage() {
               <SectionLabel>What we do</SectionLabel>
               <h2 className="mt-5 font-display text-4xl leading-tight md:text-5xl">Care, considered.</h2>
             </div>
-            <Link to="/services" className="font-sans-tight text-foreground/70 hover:text-foreground">All services →</Link>
+            <Link to="/treatments" className="font-sans-tight text-foreground/70 hover:text-foreground">All treatments →</Link>
           </div>
           <div className="mt-14 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
             {services.map((s) => (
@@ -165,7 +185,7 @@ function HomePage() {
 
         <div className="mt-16 grid gap-12 md:grid-cols-2">
           {[
-            { img: drAhmed, name: "Dr. Ahmed Sultan", role: "Cosmetic & Restorative", bio: "An eye for proportion shaped by a decade of cosmetic work — Dr. Sultan leads our smile-design and Aligno cases." },
+            { img: drAhmed, name: "Dr. Ahmed Sultan", role: "Cosmetic & Restorative", bio: "An eye for proportion shaped by a decade of cosmetic work — Dr. Sultan leads our smile-design and clear aligner cases." },
             { img: drRoha, name: "Dr. Roha Ejaz", role: "Aesthetic & Pediatric", bio: "Calm, precise, and unhurried — Dr. Ejaz brings a quiet warmth to aesthetic treatments and family dentistry." },
           ].map((d) => (
             <article key={d.name} className="group">
@@ -182,34 +202,36 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ALIGNO */}
+      {/* PHILOSOPHY (replaces Aligno section) */}
       <section className="bg-foreground text-background">
-        <div className="mx-auto grid max-w-7xl gap-16 px-6 py-28 lg:grid-cols-12 lg:px-10 lg:py-40">
-          <div className="lg:col-span-6">
-            <div className="arch-frame relative h-[520px] overflow-hidden">
-              <img src={aligners} alt="Aligno clear aligners" className="h-full w-full object-cover" loading="lazy" width={1280} height={960} />
+        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-40">
+          <div className="grid gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-5">
+              <SectionLabel><span className="text-background/60">Our philosophy</span></SectionLabel>
+              <h2 className="mt-6 font-display text-4xl leading-tight md:text-5xl">
+                Three quiet<br />
+                <span className="italic text-accent">commitments.</span>
+              </h2>
+              <p className="mt-6 max-w-md text-background/70">
+                Everything we do at ORA — from the first consultation to the final polish — is shaped by these three ideas. They're how we practice. They're why patients stay.
+              </p>
+              <Link to="/about" className="mt-10 inline-flex items-center gap-3 rounded-full border border-background/40 px-7 py-4 font-sans-tight transition-colors hover:bg-background hover:text-foreground">
+                Read our story <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
-          </div>
-          <div className="lg:col-span-5 lg:col-start-8 lg:pt-10">
-            <SectionLabel><span className="text-background/60">Partnership</span></SectionLabel>
-            <h2 className="mt-6 font-display text-4xl leading-tight md:text-5xl">
-              The only Aligno<br />
-              <span className="italic text-accent">providers in Islamabad.</span>
-            </h2>
-            <p className="mt-6 text-background/70">
-              We are the exclusive Islamabad partner of <a className="underline decoration-accent underline-offset-4" href="https://aligno.co" target="_blank" rel="noreferrer">Aligno</a> — a next-generation clear aligner system engineered for predictable, beautiful movement. Quietly worn. Precisely planned.
-            </p>
-            <div className="mt-10 grid grid-cols-3 gap-6 border-t border-background/15 pt-8">
-              {[["98%", "case predictability"], ["3D", "treatment planning"], ["1:1", "clinician oversight"]].map(([k, v]) => (
-                <div key={k}>
-                  <div className="font-display text-3xl text-accent">{k}</div>
-                  <div className="mt-1 font-sans-tight text-background/60">{v}</div>
-                </div>
-              ))}
+            <div className="lg:col-span-7">
+              <div className="grid gap-px border border-background/15 bg-background/15">
+                {pillars.map((p) => (
+                  <div key={p.n} className="bg-foreground p-10">
+                    <div className="flex items-baseline gap-6">
+                      <span className="font-display text-3xl text-accent">{p.n}</span>
+                      <h3 className="font-display text-3xl">{p.t}</h3>
+                    </div>
+                    <p className="mt-4 max-w-2xl text-background/70">{p.d}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <Link to="/aligno" className="mt-10 inline-flex items-center gap-3 rounded-full border border-background/40 px-7 py-4 font-sans-tight transition-colors hover:bg-background hover:text-foreground">
-              Learn about Aligno <ArrowRight className="h-4 w-4" />
-            </Link>
           </div>
         </div>
       </section>
@@ -240,6 +262,11 @@ function HomePage() {
               </figcaption>
             </figure>
           ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Link to="/reviews" className="font-sans-tight text-accent hover:underline">
+            Read all reviews →
+          </Link>
         </div>
       </section>
 

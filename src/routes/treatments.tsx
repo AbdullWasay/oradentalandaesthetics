@@ -4,20 +4,21 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
 
-export const Route = createFileRoute("/services")({
+export const Route = createFileRoute("/treatments")({
   head: () => ({
     meta: [
-      { title: "Services — ORA Dental & Aesthetic Clinic" },
-      { name: "description", content: "Cosmetic dentistry, Aligno clear aligners, implants, aesthetic treatments and pediatric care in Islamabad." },
-      { property: "og:title", content: "Services — ORA Clinic" },
+      { title: "Treatments — ORA Dental & Aesthetic Clinic" },
+      { name: "description", content: "Cosmetic dentistry, clear aligners, implants, aesthetic treatments and pediatric care in Islamabad." },
+      { property: "og:title", content: "Treatments — ORA Clinic" },
       { property: "og:description", content: "Considered dentistry and aesthetics, end to end." },
     ],
   }),
-  component: ServicesPage,
+  component: TreatmentsPage,
 });
 
 const groups = [
   {
+    id: "cosmetic",
     label: "Cosmetic",
     items: [
       { t: "Smile Design", d: "Bespoke planning of shape, shade and proportion — built around your face, not a template." },
@@ -26,13 +27,15 @@ const groups = [
     ],
   },
   {
+    id: "orthodontics",
     label: "Orthodontics",
     items: [
-      { t: "Aligno Clear Aligners", d: "Exclusive Islamabad provider. 3D-planned, near-invisible, predictable." },
+      { t: "Clear Aligners", d: "Near-invisible, 3D-planned aligner therapy. Predictable, discreet, and lifestyle-friendly." },
       { t: "Retention", d: "Discreet retainers and lifetime guidance to keep your result still." },
     ],
   },
   {
+    id: "restorative",
     label: "Restorative",
     items: [
       { t: "Dental Implants", d: "Single, multiple and full-arch — restored with surgical precision and aesthetic intent." },
@@ -41,6 +44,7 @@ const groups = [
     ],
   },
   {
+    id: "aesthetic",
     label: "Aesthetic",
     items: [
       { t: "Botox & Fillers", d: "Subtle facial harmony — never overdone. Lip, jaw, smile-line refinement." },
@@ -48,34 +52,43 @@ const groups = [
     ],
   },
   {
-    label: "Family",
+    id: "family",
+    label: "Family & Pediatric",
     items: [
       { t: "Pediatric Dentistry", d: "Gentle first visits in a calm, sensory-aware setting." },
-      { t: "Hygiene & Prevention", d: "Considered routines for a lifetime of healthy teeth." },
+      { t: "Family Care Plans", d: "Coordinated, considered care for every member of your family." },
+    ],
+  },
+  {
+    id: "hygiene",
+    label: "Hygiene & Prevention",
+    items: [
+      { t: "Scale & Polish", d: "Quiet, thorough hygiene visits that leave you genuinely refreshed." },
+      { t: "Preventive Care", d: "Considered routines for a lifetime of healthy teeth." },
     ],
   },
 ];
 
-function ServicesPage() {
+function TreatmentsPage() {
   return (
     <div className="min-h-screen">
       <SiteHeader />
 
       <section className="mx-auto max-w-7xl px-6 pt-20 pb-12 lg:px-10 lg:pt-32">
-        <SectionLabel>Services</SectionLabel>
+        <SectionLabel>Treatments</SectionLabel>
         <h1 className="mt-8 max-w-4xl font-display text-5xl leading-[1.05] md:text-7xl">
           End to end,<br />
           <span className="italic text-foreground/60">considered care.</span>
         </h1>
         <p className="mt-8 max-w-2xl text-lg text-foreground/70">
-          From a single hygiene visit to a full smile transformation — every service at ORA is delivered with the same restraint and the same standard.
+          From a single hygiene visit to a full smile transformation — every treatment at ORA is delivered with the same restraint and the same standard.
         </p>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
         <div className="space-y-24">
           {groups.map((g) => (
-            <div key={g.label} className="grid gap-12 lg:grid-cols-12">
+            <div key={g.id} id={g.id} className="grid scroll-mt-24 gap-12 lg:grid-cols-12">
               <div className="lg:col-span-3">
                 <div className="font-sans-tight text-accent">— {g.label}</div>
               </div>

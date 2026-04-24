@@ -35,9 +35,10 @@ export function SiteFooter() {
         <div>
           <h4 className="font-sans-tight text-muted-foreground">Explore</h4>
           <ul className="mt-5 space-y-3 text-sm">
-            <li><Link to="/about" className="hover:text-accent">About</Link></li>
-            <li><Link to="/services" className="hover:text-accent">Services</Link></li>
-            <li><Link to="/aligno" className="hover:text-accent">Aligno Partnership</Link></li>
+            <li><Link to="/about" className="hover:text-accent">About Us</Link></li>
+            <li><Link to="/treatments" className="hover:text-accent">Treatments</Link></li>
+            <li><Link to="/reviews" className="hover:text-accent">Reviews</Link></li>
+            <li><Link to="/atelier" className="hover:text-accent">Atelier</Link></li>
             <li><Link to="/contact" className="hover:text-accent">Contact</Link></li>
           </ul>
         </div>
