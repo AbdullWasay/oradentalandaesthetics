@@ -291,37 +291,105 @@ function HomePage() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-40">
-        <div className="flex items-end justify-between">
-          <div>
-            <SectionLabel>Voices</SectionLabel>
-            <h2 className="mt-6 font-display text-4xl md:text-5xl">Trusted, quietly.</h2>
+      {/* TESTIMONIALS — floating portraits with flip cards */}
+      <section className="relative overflow-hidden bg-background">
+        {/* faint vertical guide lines */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(to right, transparent 0 calc(100%/8 - 1px), color-mix(in oklab, var(--sage-deep) 18%, transparent) calc(100%/8 - 1px) calc(100%/8))",
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-32 lg:px-10 lg:pt-32 lg:pb-44">
+          {/* Floating cards row */}
+          <div className="relative mx-auto h-[420px] w-full max-w-6xl md:h-[460px]">
+            {testimonials.map((t, i) => {
+              // Hand-placed positions to mimic a staggered portrait constellation
+              const positions = [
+                "left-[2%]   top-[42%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-slow rotate-[-3deg]",
+                "left-[14%]  top-[14%] w-[130px] h-[170px] md:w-[170px] md:h-[220px] float-med  rotate-[2deg]",
+                "left-[28%]  top-[48%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-fast rotate-[-2deg]",
+                "left-[40%]  top-[6%]  w-[140px] h-[180px] md:w-[180px] md:h-[230px] float-slow rotate-[1deg] hidden sm:block",
+                "right-[28%] top-[44%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-med  rotate-[-1deg] hidden sm:block",
+                "right-[12%] top-[10%] w-[130px] h-[170px] md:w-[170px] md:h-[220px] float-fast rotate-[3deg] hidden md:block",
+                "right-[2%]  top-[46%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-slow rotate-[-2deg] hidden md:block",
+              ];
+              const toneBg: Record<Testimonial["tone"], string> = {
+                sage: "bg-gradient-to-br from-sage-soft via-shoji to-sage/30",
+                ink:  "bg-gradient-to-br from-foreground via-foreground to-foreground/85 text-background",
+                soft: "bg-gradient-to-br from-shoji via-secondary to-sage-soft",
+              };
+              const toneInitials: Record<Testimonial["tone"], string> = {
+                sage: "text-sage-deep",
+                ink:  "text-background",
+                soft: "text-foreground/70",
+              };
+              const toneBack: Record<Testimonial["tone"], string> = {
+                sage: "bg-foreground text-background",
+                ink:  "bg-shoji text-foreground border border-border",
+                soft: "bg-sage-deep text-background",
+              };
+              return (
+                <div
+                  key={t.name}
+                  className={`flip-card absolute ${positions[i]} rounded-[14px] shadow-[0_18px_50px_-22px_rgba(0,0,0,0.35)]`}
+                  tabIndex={0}
+                >
+                  <div className="flip-card-inner rounded-[14px]">
+                    {/* FRONT — portrait */}
+                    <div className={`flip-face rounded-[14px] ${toneBg[t.tone]} flex flex-col items-center justify-center p-3`}>
+                      <div className={`font-display text-5xl ${toneInitials[t.tone]} md:text-6xl`}>
+                        {t.initials}
+                      </div>
+                      <div className={`mt-3 font-sans-tight text-[10px] uppercase tracking-[0.16em] ${t.tone === "ink" ? "text-background/70" : "text-foreground/55"}`}>
+                        {t.role.split("·")[0].trim()}
+                      </div>
+                    </div>
+                    {/* BACK — quote */}
+                    <div className={`flip-face flip-back rounded-[14px] ${toneBack[t.tone]} flex flex-col justify-between p-4`}>
+                      <p className="font-display text-[11px] leading-snug md:text-[13px]">
+                        “{t.quote}”
+                      </p>
+                      <div className="mt-2">
+                        <div className="font-display text-sm md:text-base">{t.name}</div>
+                        <div className={`font-sans-tight text-[9px] uppercase tracking-[0.14em] ${t.tone === "ink" ? "text-foreground/55" : "text-background/65"}`}>
+                          {t.role}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div className="hidden items-center gap-1 md:flex">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-accent text-accent" />
-            ))}
+
+          {/* Centered headline */}
+          <div className="relative mx-auto mt-10 max-w-3xl text-center">
+            <span className="inline-block rounded-full bg-secondary px-4 py-1.5 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/70">
+              Testimonials
+            </span>
+            <h2 className="mt-7 font-display text-5xl leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+              Trusted by patients<br />
+              <span className="italic text-foreground/55">who chose quieter care.</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-foreground/65">
+              Hover any portrait to read why patients from across Islamabad — and beyond — make the drive to ORA.
+            </p>
+            <div className="mt-8 flex items-center justify-center gap-2">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="h-4 w-4 fill-sage-deep text-sage-deep" />
+              ))}
+              <span className="ml-2 font-sans-tight text-sm text-foreground/60">4.9 · 240+ reviews</span>
+            </div>
+            <Link
+              to="/reviews"
+              className="mt-10 inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 font-sans-tight text-background transition-all hover:gap-4"
+            >
+              Read all reviews <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
-        </div>
-        <div className="mt-14 grid gap-px border border-border bg-border md:grid-cols-3">
-          {testimonials.map((t) => (
-            <figure key={t.name} className="bg-background p-10">
-              <Quote className="h-7 w-7 text-accent" />
-              <blockquote className="mt-6 font-display text-xl leading-relaxed text-foreground/85">
-                "{t.quote}"
-              </blockquote>
-              <figcaption className="mt-8">
-                <div className="font-display text-lg">{t.name}</div>
-                <div className="font-sans-tight text-muted-foreground">{t.role}</div>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Link to="/reviews" className="font-sans-tight text-accent hover:underline">
-            Read all reviews →
-          </Link>
         </div>
       </section>
 
