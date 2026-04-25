@@ -3,6 +3,7 @@ import { ArrowRight, Sparkles, Star, Award, Users, Clock, Smile, Scissors, Align
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
+import { TeamCarousel } from "@/components/TeamCarousel";
 import interior from "@/assets/clinic-interior.png";
 import reception from "@/assets/clinic-reception.png";
 import drAhmed from "@/assets/dr-ahmed.jpg";
@@ -254,6 +255,24 @@ function HomePage() {
               <p className="mt-3 max-w-md text-foreground/70">{d.bio}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* MEET OUR TEAM — carousel */}
+      <section className="bg-secondary/40">
+        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionLabel>The team</SectionLabel>
+            <h2 className="mt-6 font-display text-4xl leading-tight md:text-5xl">
+              Meet Our <span className="italic text-sage-deep">Specialists</span>
+            </h2>
+            <p className="mt-6 text-foreground/70">
+              An exceptionally trained team of dental surgeons and aesthetic specialists — quietly dedicated to your care in F-7 Islamabad.
+            </p>
+          </div>
+          <div className="mt-16">
+            <TeamCarousel />
+          </div>
         </div>
       </section>
 
