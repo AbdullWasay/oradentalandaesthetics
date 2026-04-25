@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Member = {
@@ -17,14 +17,42 @@ const team: Member[] = [
   { name: "Dr. Muhammad Muaaz", role: "Restorative Dentist", img: "https://images.unsplash.com/photo-1612531386530-97286d97c2d2?w=600&h=800&fit=crop&crop=faces" },
 ];
 
+const AUTOPLAY_MS = 3500;
+const SWIPE_THRESHOLD = 50;
+
 export function TeamCarousel() {
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
   const len = team.length;
 
   const prev = () => setActive((a) => (a - 1 + len) % len);
   const next = () => setActive((a) => (a + 1) % len);
 
-  // Compute relative offset for each card (-3..-2..-1..0..1..2..3)
+  // Autoplay
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => {
+      setActive((a) => (a + 1) % len);
+    }, AUTOPLAY_MS);
+    return () => window.clearInterval(id);
+  }, [paused, len]);
+
+  // Swipe (touch + mouse drag)
+  const startX = useRef<number | null>(null);
+  const onPointerDown = (e: React.PointerEvent) => {
+    startX.current = e.clientX;
+    setPaused(true);
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    if (startX.current === null) return;
+    const dx = e.clientX - startX.current;
+    if (dx > SWIPE_THRESHOLD) prev();
+    else if (dx < -SWIPE_THRESHOLD) next();
+    startX.current = null;
+    // resume autoplay shortly after
+    window.setTimeout(() => setPaused(false), 1500);
+  };
+
   const offsetOf = (i: number) => {
     let d = i - active;
     if (d > len / 2) d -= len;
@@ -33,15 +61,23 @@ export function TeamCarousel() {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-6xl">
-      <div className="relative h-[460px] md:h-[560px]">
+    <div
+      className="relative mx-auto w-full max-w-6xl"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div
+        className="relative h-[460px] touch-pan-y select-none md:h-[560px]"
+        onPointerDown={onPointerDown}
+        onPointerUp={onPointerUp}
+        onPointerCancel={() => (startX.current = null)}
+      >
         {team.map((m, i) => {
           const d = offsetOf(i);
           const abs = Math.abs(d);
           if (abs > 3) return null;
 
-          // Center card biggest, others step down + behind
-          const translateX = d * 130; // px spacing between cards
+          const translateX = d * 130;
           const scale = 1 - abs * 0.12;
           const z = 50 - abs;
           const opacity = abs === 0 ? 1 : abs === 1 ? 0.85 : abs === 2 ? 0.55 : 0.3;
@@ -68,21 +104,16 @@ export function TeamCarousel() {
               <img
                 src={m.img}
                 alt={m.name}
-                className="h-full w-full object-cover"
+                className="pointer-events-none h-full w-full object-cover"
                 loading="lazy"
+                draggable={false}
               />
-              {/* gradient overlay */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/20 to-transparent" />
-              {/* caption */}
-              <div className="absolute inset-x-0 bottom-0 px-5 pb-5 text-left">
-                <h3
-                  className={`font-display text-background ${isCenter ? "text-2xl" : "text-lg"}`}
-                >
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 px-5 pb-5 text-left">
+                <h3 className={`font-display text-background ${isCenter ? "text-2xl" : "text-lg"}`}>
                   {m.name}
                 </h3>
-                <p
-                  className={`font-sans-tight text-background/80 ${isCenter ? "text-sm" : "text-xs"}`}
-                >
+                <p className={`font-sans-tight text-background/80 ${isCenter ? "text-sm" : "text-xs"}`}>
                   {m.role}
                 </p>
               </div>
@@ -91,7 +122,6 @@ export function TeamCarousel() {
         })}
       </div>
 
-      {/* arrows */}
       <button
         onClick={prev}
         aria-label="Previous"
@@ -106,6 +136,20 @@ export function TeamCarousel() {
       >
         <ChevronRight className="h-5 w-5 text-foreground" />
       </button>
+
+      {/* dots */}
+      <div className="mt-8 flex items-center justify-center gap-2">
+        {team.map((m, i) => (
+          <button
+            key={m.name}
+            onClick={() => setActive(i)}
+            aria-label={`Go to ${m.name}`}
+            className={`h-1.5 rounded-full transition-all ${
+              i === active ? "w-8 bg-sage-deep" : "w-1.5 bg-foreground/20 hover:bg-foreground/40"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
