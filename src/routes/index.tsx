@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Star, Award, Users, Clock, Smile, Scissors, AlignLeft, Gem, Wand2, Baby, Leaf } from "lucide-react";
+import { ArrowRight, Sparkles, Star, Award, Users, Clock, Smile, Scissors, AlignLeft, Gem, Wand2, Baby, Leaf, MapPin, Phone, CalendarDays, MessageCircle, User as UserIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
@@ -37,11 +40,8 @@ const services = [
   { icon: Leaf, num: "06", title: "Preventive & Hygiene", desc: "Considered routines for a lifetime of healthy teeth.", tag: "Wellness" },
 ];
 
-const pillars = [
-  { n: "01", t: "Restraint", d: "We do less, more carefully. The smallest intervention that achieves the most natural result — always." },
-  { n: "02", t: "Precision", d: "Digital scans, 3D treatment planning, microscope-aided dentistry. Modern tools, classical hands." },
-  { n: "03", t: "Calm", d: "Long appointments. Real conversations. The pace and the space engineered to lower your shoulders before we recline the chair." },
-];
+
+
 
 type Testimonial = {
   name: string; role: string; quote: string; initials: string; tone: "sage" | "ink" | "soft";
@@ -251,35 +251,141 @@ function HomePage() {
         </div>
       </section>
 
-      {/* PHILOSOPHY (replaces Aligno section) */}
-      <section className="bg-foreground text-background">
-        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-40">
-          <div className="grid gap-12 lg:grid-cols-12">
+      {/* BOOK NOW */}
+      <section className="relative overflow-hidden bg-foreground text-background">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 20% 20%, var(--accent) 0, transparent 40%), radial-gradient(circle at 80% 80%, var(--sage-deep) 0, transparent 45%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
+          <div className="grid gap-16 lg:grid-cols-12">
+            {/* LEFT — copy + details */}
             <div className="lg:col-span-5">
-              <SectionLabel><span className="text-background/60">Our philosophy</span></SectionLabel>
-              <h2 className="mt-6 font-display text-4xl leading-tight md:text-5xl">
-                Three quiet<br />
-                <span className="italic text-accent">commitments.</span>
+              <SectionLabel><span className="text-background/60">Book now</span></SectionLabel>
+              <h2 className="mt-6 font-display text-4xl leading-[1.05] md:text-5xl">
+                Book Your<br />
+                <span className="italic text-accent">Appointment</span> Today
               </h2>
               <p className="mt-6 max-w-md text-background/70">
-                Everything we do at ORA — from the first consultation to the final polish — is shaped by these three ideas. They're how we practice. They're why patients stay.
+                Walk-ins welcome. Reserve a time that suits you and our team will confirm within minutes.
               </p>
-              <Link to="/about" className="mt-10 inline-flex items-center gap-3 rounded-full border border-background/40 px-7 py-4 font-sans-tight transition-colors hover:bg-background hover:text-foreground">
-                Read our story <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-            <div className="lg:col-span-7">
-              <div className="grid gap-px border border-background/15 bg-background/15">
-                {pillars.map((p) => (
-                  <div key={p.n} className="bg-foreground p-10">
-                    <div className="flex items-baseline gap-6">
-                      <span className="font-display text-3xl text-accent">{p.n}</span>
-                      <h3 className="font-display text-3xl">{p.t}</h3>
-                    </div>
-                    <p className="mt-4 max-w-2xl text-background/70">{p.d}</p>
+
+              <div className="mt-12 space-y-6">
+                <div className="flex items-start gap-4">
+                  <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-background/20">
+                    <MapPin className="h-4 w-4 text-accent" />
+                  </span>
+                  <div>
+                    <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Visit</p>
+                    <p className="mt-1">G-8, Islamabad, Pakistan</p>
                   </div>
-                ))}
+                </div>
+                <div className="flex items-start gap-4">
+                  <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-background/20">
+                    <Phone className="h-4 w-4 text-accent" />
+                  </span>
+                  <div>
+                    <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Call</p>
+                    <a href="tel:+923000000000" className="mt-1 block hover:text-accent">+92 300 000 0000</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-background/20">
+                    <Clock className="h-4 w-4 text-accent" />
+                  </span>
+                  <div>
+                    <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Hours</p>
+                    <p className="mt-1">Mon – Sat · 10:00 AM – 9:00 PM</p>
+                  </div>
+                </div>
               </div>
+
+              <a
+                href="https://wa.me/923000000000"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-10 inline-flex items-center gap-3 rounded-full bg-accent px-7 py-4 font-sans-tight text-foreground transition-transform hover:-translate-y-0.5"
+              >
+                <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
+              </a>
+            </div>
+
+            {/* RIGHT — form card */}
+            <div className="lg:col-span-7">
+              <form
+                onSubmit={(e) => { e.preventDefault(); }}
+                className="relative rounded-3xl border border-background/15 bg-background/[0.03] p-8 backdrop-blur-sm md:p-12"
+              >
+                <div className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
+
+                <h3 className="font-display text-2xl md:text-3xl">Reserve a chair</h3>
+                <p className="mt-2 text-sm text-background/60">We'll confirm by phone within minutes.</p>
+
+                <div className="mt-10 grid gap-6 md:grid-cols-2">
+                  <div className="md:col-span-2">
+                    <label className="font-sans-tight text-xs uppercase tracking-[0.2em] text-background/50">Full name</label>
+                    <div className="relative mt-2">
+                      <UserIcon className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-background/40" />
+                      <Input
+                        required
+                        placeholder="Your name"
+                        className="h-12 rounded-none border-0 border-b border-background/20 bg-transparent pl-7 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="font-sans-tight text-xs uppercase tracking-[0.2em] text-background/50">Phone</label>
+                    <div className="relative mt-2">
+                      <Phone className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-background/40" />
+                      <Input
+                        required
+                        type="tel"
+                        placeholder="+92 300 0000000"
+                        className="h-12 rounded-none border-0 border-b border-background/20 bg-transparent pl-7 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="font-sans-tight text-xs uppercase tracking-[0.2em] text-background/50">Preferred date</label>
+                    <div className="relative mt-2">
+                      <CalendarDays className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-background/40" />
+                      <Input
+                        required
+                        type="date"
+                        className="h-12 rounded-none border-0 border-b border-background/20 bg-transparent pl-7 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 [color-scheme:dark]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <label className="font-sans-tight text-xs uppercase tracking-[0.2em] text-background/50">Service</label>
+                    <Select>
+                      <SelectTrigger className="mt-2 h-12 rounded-none border-0 border-b border-background/20 bg-transparent px-0 text-background shadow-none focus:ring-0 [&>span]:text-background/80 data-[placeholder]:[&>span]:text-background/30">
+                        <SelectValue placeholder="Choose a treatment" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {services.map((s) => (
+                          <SelectItem key={s.title} value={s.title}>{s.title}</SelectItem>
+                        ))}
+                        <SelectItem value="Consultation">General Consultation</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                <Button
+                  type="submit"
+                  className="mt-10 h-14 w-full rounded-full bg-accent text-foreground hover:bg-accent/90 md:w-auto md:px-10"
+                >
+                  Request appointment <ArrowRight className="h-4 w-4" />
+                </Button>
+              </form>
             </div>
           </div>
         </div>
