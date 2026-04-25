@@ -160,74 +160,49 @@ function HomePage() {
         </div>
       </section>
 
-      {/* SERVICES — innovative editorial layout */}
-      <section className="relative overflow-hidden border-y border-border bg-secondary/40">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.5]"
-          style={{
-            backgroundImage:
-              "radial-gradient(60% 50% at 80% 0%, color-mix(in oklab, var(--sage) 18%, transparent), transparent 60%), radial-gradient(50% 40% at 0% 100%, color-mix(in oklab, var(--sage-deep) 12%, transparent), transparent 65%)",
-          }}
-        />
-        <div className="relative mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
-          <div className="grid items-end gap-10 md:grid-cols-12">
-            <div className="md:col-span-7">
-              <SectionLabel>What we do</SectionLabel>
-              <h2 className="mt-6 font-display text-5xl leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
-                Six rooms,<br />
-                <span className="italic text-foreground/55">one quiet practice.</span>
-              </h2>
-            </div>
-            <div className="md:col-span-5">
-              <p className="text-foreground/65">
-                Each treatment is its own discipline — planned slowly, performed precisely. Hover any room to step inside.
-              </p>
-              <Link to="/treatments" className="mt-6 inline-flex items-center gap-2 font-sans-tight text-foreground hover:gap-3">
-                All treatments <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+      {/* SERVICES — minimal symmetric grid */}
+      <section className="border-y border-border bg-background">
+        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
+          <div className="mx-auto max-w-3xl text-center">
+            <SectionLabel>What we do</SectionLabel>
+            <h2 className="mt-6 font-display text-4xl leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
+              Six disciplines.<br />
+              <span className="italic text-foreground/55">One quiet practice.</span>
+            </h2>
+            <p className="mt-6 text-foreground/65">
+              Each treatment is its own discipline — planned slowly, performed precisely.
+            </p>
           </div>
 
-          <div className="mt-16 grid gap-5 md:grid-cols-6 md:grid-rows-2 lg:gap-6">
-            {services.map((s, i) => {
-              // Editorial mosaic: vary spans for asymmetry
-              const spans = [
-                "md:col-span-3 md:row-span-2", // 01 large
-                "md:col-span-3",
-                "md:col-span-2",
-                "md:col-span-2",
-                "md:col-span-2",
-                "md:col-span-3",
-              ];
+          <div className="mt-16 grid grid-cols-1 border-t border-l border-border sm:grid-cols-2 lg:grid-cols-3">
+            {services.map((s) => {
               const Icon = s.icon;
               return (
                 <Link
                   key={s.title}
                   to="/treatments"
-                  className={`group relative isolate flex min-h-[220px] flex-col justify-between overflow-hidden rounded-sm border border-border bg-background p-7 transition-all duration-500 hover:border-foreground/30 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.25)] ${spans[i]}`}
+                  className="group relative flex flex-col border-b border-r border-border bg-background p-10 transition-colors duration-500 hover:bg-sage-soft/40 lg:p-12"
                 >
-                  {/* sage wash on hover */}
-                  <span
-                    aria-hidden
-                    className="absolute inset-0 -z-10 origin-bottom scale-y-0 bg-gradient-to-tr from-sage-soft via-background to-background transition-transform duration-700 ease-out group-hover:scale-y-100"
-                  />
-                  <div className="flex items-start justify-between">
-                    <span className="font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/40">
-                      {s.num} · {s.tag}
+                  <div className="flex items-center justify-between">
+                    <span className="font-sans-tight text-xs uppercase tracking-[0.2em] text-foreground/40">
+                      {s.num}
                     </span>
                     <Icon className="h-5 w-5 text-foreground/40 transition-colors group-hover:text-sage-deep" strokeWidth={1.4} />
                   </div>
-                  <div>
-                    <h3 className="font-display text-3xl leading-tight md:text-4xl">{s.title}</h3>
-                    <p className="mt-3 max-w-md text-sm text-foreground/65">{s.desc}</p>
-                    <span className="mt-5 inline-flex items-center gap-2 font-sans-tight text-xs uppercase tracking-[0.16em] text-foreground/50 transition-all group-hover:gap-3 group-hover:text-foreground">
-                      Explore <ArrowRight className="h-3 w-3" />
-                    </span>
-                  </div>
+                  <h3 className="mt-12 font-display text-2xl leading-tight md:text-3xl">{s.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-foreground/65">{s.desc}</p>
+                  <span className="mt-8 inline-flex items-center gap-2 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/45 transition-all group-hover:gap-3 group-hover:text-foreground">
+                    Explore <ArrowRight className="h-3 w-3" />
+                  </span>
                 </Link>
               );
             })}
+          </div>
+
+          <div className="mt-14 flex justify-center">
+            <Link to="/treatments" className="inline-flex items-center gap-3 rounded-full border border-foreground/30 px-7 py-4 font-sans-tight transition-colors hover:border-foreground">
+              View all treatments <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
