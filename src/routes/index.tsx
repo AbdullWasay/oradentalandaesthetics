@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Star, Quote, Award, Users, Clock, Smile } from "lucide-react";
+import { ArrowRight, Sparkles, Star, Award, Users, Clock, Smile, Scissors, AlignLeft, Gem, Wand2, Baby, Leaf } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
@@ -28,12 +28,12 @@ const stats = [
 ];
 
 const services = [
-  { title: "Cosmetic Dentistry", desc: "Veneers, whitening, smile design — sculpted to your features." },
-  { title: "Clear Aligners", desc: "Near-invisible, 3D-planned aligner therapy for discreet movement." },
-  { title: "Implants & Restorative", desc: "Quiet, considered restorations that age beautifully." },
-  { title: "Aesthetic Treatments", desc: "Subtle facial harmony — botox, fillers, skin care." },
-  { title: "Pediatric Care", desc: "Gentle first visits in a calm, sensory-aware setting." },
-  { title: "Preventive & Hygiene", desc: "Considered routines for a lifetime of healthy teeth." },
+  { icon: Gem, num: "01", title: "Cosmetic Dentistry", desc: "Veneers, whitening, smile design — sculpted to your features.", tag: "Signature" },
+  { icon: AlignLeft, num: "02", title: "Clear Aligners", desc: "Near-invisible, 3D-planned aligner therapy for discreet movement.", tag: "Specialty" },
+  { icon: Scissors, num: "03", title: "Implants & Restorative", desc: "Quiet, considered restorations that age beautifully.", tag: "Precision" },
+  { icon: Wand2, num: "04", title: "Aesthetic Treatments", desc: "Subtle facial harmony — botox, fillers, considered skin care.", tag: "Aesthetic" },
+  { icon: Baby, num: "05", title: "Pediatric Care", desc: "Gentle first visits in a calm, sensory-aware setting.", tag: "Family" },
+  { icon: Leaf, num: "06", title: "Preventive & Hygiene", desc: "Considered routines for a lifetime of healthy teeth.", tag: "Wellness" },
 ];
 
 const pillars = [
@@ -42,10 +42,17 @@ const pillars = [
   { n: "03", t: "Calm", d: "Long appointments. Real conversations. The pace and the space engineered to lower your shoulders before we recline the chair." },
 ];
 
-const testimonials = [
-  { name: "Sana Khalid", role: "Clear aligners · 9 months", quote: "ORA didn't feel like a clinic — it felt like a quiet ritual. My smile is finally mine, and the team made every step calm." },
-  { name: "Hamza Riaz", role: "Veneers", quote: "Dr. Sultan's eye for proportion is extraordinary. People notice something different — they just can't place what." },
-  { name: "Mehwish Tariq", role: "Aesthetic + dental", quote: "The space alone disarms you. Dr. Roha is gentle, precise, and unhurried. I drive across the city to come here." },
+type Testimonial = {
+  name: string; role: string; quote: string; initials: string; tone: "sage" | "ink" | "soft";
+};
+const testimonials: Testimonial[] = [
+  { name: "Sana Khalid", role: "Clear aligners · 9 months", initials: "SK", tone: "sage", quote: "ORA didn't feel like a clinic — it felt like a quiet ritual. My smile is finally mine, and the team made every step calm." },
+  { name: "Hamza Riaz", role: "Veneers", initials: "HR", tone: "ink", quote: "Dr. Sultan's eye for proportion is extraordinary. People notice something different — they just can't place what." },
+  { name: "Mehwish Tariq", role: "Aesthetic + dental", initials: "MT", tone: "soft", quote: "The space alone disarms you. Dr. Roha is gentle, precise, and unhurried. I drive across the city to come here." },
+  { name: "Ayesha Noor", role: "Whitening", initials: "AN", tone: "sage", quote: "A whitening result that actually looks like me — just rested. Subtle, not theatrical. Exactly what I wanted." },
+  { name: "Bilal Ahmed", role: "Implants", initials: "BA", tone: "soft", quote: "Months later I forget which tooth was replaced. Dr. Sultan's restoration is genuinely indistinguishable." },
+  { name: "Zara Imran", role: "Aligners + hygiene", initials: "ZI", tone: "ink", quote: "The most patient, considered care I've experienced. They explained everything without ever rushing." },
+  { name: "Faisal Khan", role: "Smile design", initials: "FK", tone: "sage", quote: "I came in nervous. I left planning my next visit. The atelier feels nothing like a dental clinic." },
 ];
 
 const marqueeItems = [
