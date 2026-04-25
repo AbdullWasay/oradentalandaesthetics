@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Star, Quote, Award, Users, Clock, Smile } from "lucide-react";
+import { ArrowRight, Sparkles, Star, Award, Users, Clock, Smile, Scissors, AlignLeft, Gem, Wand2, Baby, Leaf } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
@@ -28,12 +28,12 @@ const stats = [
 ];
 
 const services = [
-  { title: "Cosmetic Dentistry", desc: "Veneers, whitening, smile design — sculpted to your features." },
-  { title: "Clear Aligners", desc: "Near-invisible, 3D-planned aligner therapy for discreet movement." },
-  { title: "Implants & Restorative", desc: "Quiet, considered restorations that age beautifully." },
-  { title: "Aesthetic Treatments", desc: "Subtle facial harmony — botox, fillers, skin care." },
-  { title: "Pediatric Care", desc: "Gentle first visits in a calm, sensory-aware setting." },
-  { title: "Preventive & Hygiene", desc: "Considered routines for a lifetime of healthy teeth." },
+  { icon: Gem, num: "01", title: "Cosmetic Dentistry", desc: "Veneers, whitening, smile design — sculpted to your features.", tag: "Signature" },
+  { icon: AlignLeft, num: "02", title: "Clear Aligners", desc: "Near-invisible, 3D-planned aligner therapy for discreet movement.", tag: "Specialty" },
+  { icon: Scissors, num: "03", title: "Implants & Restorative", desc: "Quiet, considered restorations that age beautifully.", tag: "Precision" },
+  { icon: Wand2, num: "04", title: "Aesthetic Treatments", desc: "Subtle facial harmony — botox, fillers, considered skin care.", tag: "Aesthetic" },
+  { icon: Baby, num: "05", title: "Pediatric Care", desc: "Gentle first visits in a calm, sensory-aware setting.", tag: "Family" },
+  { icon: Leaf, num: "06", title: "Preventive & Hygiene", desc: "Considered routines for a lifetime of healthy teeth.", tag: "Wellness" },
 ];
 
 const pillars = [
@@ -42,10 +42,17 @@ const pillars = [
   { n: "03", t: "Calm", d: "Long appointments. Real conversations. The pace and the space engineered to lower your shoulders before we recline the chair." },
 ];
 
-const testimonials = [
-  { name: "Sana Khalid", role: "Clear aligners · 9 months", quote: "ORA didn't feel like a clinic — it felt like a quiet ritual. My smile is finally mine, and the team made every step calm." },
-  { name: "Hamza Riaz", role: "Veneers", quote: "Dr. Sultan's eye for proportion is extraordinary. People notice something different — they just can't place what." },
-  { name: "Mehwish Tariq", role: "Aesthetic + dental", quote: "The space alone disarms you. Dr. Roha is gentle, precise, and unhurried. I drive across the city to come here." },
+type Testimonial = {
+  name: string; role: string; quote: string; initials: string; tone: "sage" | "ink" | "soft";
+};
+const testimonials: Testimonial[] = [
+  { name: "Sana Khalid", role: "Clear aligners · 9 months", initials: "SK", tone: "sage", quote: "ORA didn't feel like a clinic — it felt like a quiet ritual. My smile is finally mine, and the team made every step calm." },
+  { name: "Hamza Riaz", role: "Veneers", initials: "HR", tone: "ink", quote: "Dr. Sultan's eye for proportion is extraordinary. People notice something different — they just can't place what." },
+  { name: "Mehwish Tariq", role: "Aesthetic + dental", initials: "MT", tone: "soft", quote: "The space alone disarms you. Dr. Roha is gentle, precise, and unhurried. I drive across the city to come here." },
+  { name: "Ayesha Noor", role: "Whitening", initials: "AN", tone: "sage", quote: "A whitening result that actually looks like me — just rested. Subtle, not theatrical. Exactly what I wanted." },
+  { name: "Bilal Ahmed", role: "Implants", initials: "BA", tone: "soft", quote: "Months later I forget which tooth was replaced. Dr. Sultan's restoration is genuinely indistinguishable." },
+  { name: "Zara Imran", role: "Aligners + hygiene", initials: "ZI", tone: "ink", quote: "The most patient, considered care I've experienced. They explained everything without ever rushing." },
+  { name: "Faisal Khan", role: "Smile design", initials: "FK", tone: "sage", quote: "I came in nervous. I left planning my next visit. The atelier feels nothing like a dental clinic." },
 ];
 
 const marqueeItems = [
@@ -152,26 +159,74 @@ function HomePage() {
         </div>
       </section>
 
-      {/* SERVICES */}
-      <section className="border-y border-border bg-secondary/50">
-        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
-          <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-            <div>
+      {/* SERVICES — innovative editorial layout */}
+      <section className="relative overflow-hidden border-y border-border bg-secondary/40">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.5]"
+          style={{
+            backgroundImage:
+              "radial-gradient(60% 50% at 80% 0%, color-mix(in oklab, var(--sage) 18%, transparent), transparent 60%), radial-gradient(50% 40% at 0% 100%, color-mix(in oklab, var(--sage-deep) 12%, transparent), transparent 65%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
+          <div className="grid items-end gap-10 md:grid-cols-12">
+            <div className="md:col-span-7">
               <SectionLabel>What we do</SectionLabel>
-              <h2 className="mt-5 font-display text-4xl leading-tight md:text-5xl">Care, considered.</h2>
+              <h2 className="mt-6 font-display text-5xl leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
+                Six rooms,<br />
+                <span className="italic text-foreground/55">one quiet practice.</span>
+              </h2>
             </div>
-            <Link to="/treatments" className="font-sans-tight text-foreground/70 hover:text-foreground">All treatments →</Link>
+            <div className="md:col-span-5">
+              <p className="text-foreground/65">
+                Each treatment is its own discipline — planned slowly, performed precisely. Hover any room to step inside.
+              </p>
+              <Link to="/treatments" className="mt-6 inline-flex items-center gap-2 font-sans-tight text-foreground hover:gap-3">
+                All treatments <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
-          <div className="mt-14 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
-            {services.map((s) => (
-              <div key={s.title} className="group bg-background p-10 transition-colors hover:bg-secondary">
-                <div className="flex items-start justify-between">
-                  <h3 className="font-display text-2xl">{s.title}</h3>
-                  <ArrowRight className="h-5 w-5 text-accent opacity-0 transition-opacity group-hover:opacity-100" />
-                </div>
-                <p className="mt-4 text-foreground/65">{s.desc}</p>
-              </div>
-            ))}
+
+          <div className="mt-16 grid gap-5 md:grid-cols-6 md:grid-rows-2 lg:gap-6">
+            {services.map((s, i) => {
+              // Editorial mosaic: vary spans for asymmetry
+              const spans = [
+                "md:col-span-3 md:row-span-2", // 01 large
+                "md:col-span-3",
+                "md:col-span-2",
+                "md:col-span-2",
+                "md:col-span-2",
+                "md:col-span-3",
+              ];
+              const Icon = s.icon;
+              return (
+                <Link
+                  key={s.title}
+                  to="/treatments"
+                  className={`group relative isolate flex min-h-[220px] flex-col justify-between overflow-hidden rounded-sm border border-border bg-background p-7 transition-all duration-500 hover:border-foreground/30 hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.25)] ${spans[i]}`}
+                >
+                  {/* sage wash on hover */}
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 -z-10 origin-bottom scale-y-0 bg-gradient-to-tr from-sage-soft via-background to-background transition-transform duration-700 ease-out group-hover:scale-y-100"
+                  />
+                  <div className="flex items-start justify-between">
+                    <span className="font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/40">
+                      {s.num} · {s.tag}
+                    </span>
+                    <Icon className="h-5 w-5 text-foreground/40 transition-colors group-hover:text-sage-deep" strokeWidth={1.4} />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-3xl leading-tight md:text-4xl">{s.title}</h3>
+                    <p className="mt-3 max-w-md text-sm text-foreground/65">{s.desc}</p>
+                    <span className="mt-5 inline-flex items-center gap-2 font-sans-tight text-xs uppercase tracking-[0.16em] text-foreground/50 transition-all group-hover:gap-3 group-hover:text-foreground">
+                      Explore <ArrowRight className="h-3 w-3" />
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -236,37 +291,105 @@ function HomePage() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-40">
-        <div className="flex items-end justify-between">
-          <div>
-            <SectionLabel>Voices</SectionLabel>
-            <h2 className="mt-6 font-display text-4xl md:text-5xl">Trusted, quietly.</h2>
+      {/* TESTIMONIALS — floating portraits with flip cards */}
+      <section className="relative overflow-hidden bg-background">
+        {/* faint vertical guide lines */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-40"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(to right, transparent 0 calc(100%/8 - 1px), color-mix(in oklab, var(--sage-deep) 18%, transparent) calc(100%/8 - 1px) calc(100%/8))",
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-32 lg:px-10 lg:pt-32 lg:pb-44">
+          {/* Floating cards row */}
+          <div className="relative mx-auto h-[420px] w-full max-w-6xl md:h-[460px]">
+            {testimonials.map((t, i) => {
+              // Hand-placed positions to mimic a staggered portrait constellation
+              const positions = [
+                "left-[2%]   top-[42%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-slow rotate-[-3deg]",
+                "left-[14%]  top-[14%] w-[130px] h-[170px] md:w-[170px] md:h-[220px] float-med  rotate-[2deg]",
+                "left-[28%]  top-[48%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-fast rotate-[-2deg]",
+                "left-[40%]  top-[6%]  w-[140px] h-[180px] md:w-[180px] md:h-[230px] float-slow rotate-[1deg] hidden sm:block",
+                "right-[28%] top-[44%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-med  rotate-[-1deg] hidden sm:block",
+                "right-[12%] top-[10%] w-[130px] h-[170px] md:w-[170px] md:h-[220px] float-fast rotate-[3deg] hidden md:block",
+                "right-[2%]  top-[46%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-slow rotate-[-2deg] hidden md:block",
+              ];
+              const toneBg: Record<Testimonial["tone"], string> = {
+                sage: "bg-gradient-to-br from-sage-soft via-shoji to-sage/30",
+                ink:  "bg-gradient-to-br from-foreground via-foreground to-foreground/85 text-background",
+                soft: "bg-gradient-to-br from-shoji via-secondary to-sage-soft",
+              };
+              const toneInitials: Record<Testimonial["tone"], string> = {
+                sage: "text-sage-deep",
+                ink:  "text-background",
+                soft: "text-foreground/70",
+              };
+              const toneBack: Record<Testimonial["tone"], string> = {
+                sage: "bg-foreground text-background",
+                ink:  "bg-shoji text-foreground border border-border",
+                soft: "bg-sage-deep text-background",
+              };
+              return (
+                <div
+                  key={t.name}
+                  className={`flip-card absolute ${positions[i]} rounded-[14px] shadow-[0_18px_50px_-22px_rgba(0,0,0,0.35)]`}
+                  tabIndex={0}
+                >
+                  <div className="flip-card-inner rounded-[14px]">
+                    {/* FRONT — portrait */}
+                    <div className={`flip-face rounded-[14px] ${toneBg[t.tone]} flex flex-col items-center justify-center p-3`}>
+                      <div className={`font-display text-5xl ${toneInitials[t.tone]} md:text-6xl`}>
+                        {t.initials}
+                      </div>
+                      <div className={`mt-3 font-sans-tight text-[10px] uppercase tracking-[0.16em] ${t.tone === "ink" ? "text-background/70" : "text-foreground/55"}`}>
+                        {t.role.split("·")[0].trim()}
+                      </div>
+                    </div>
+                    {/* BACK — quote */}
+                    <div className={`flip-face flip-back rounded-[14px] ${toneBack[t.tone]} flex flex-col justify-between p-4`}>
+                      <p className="font-display text-[11px] leading-snug md:text-[13px]">
+                        “{t.quote}”
+                      </p>
+                      <div className="mt-2">
+                        <div className="font-display text-sm md:text-base">{t.name}</div>
+                        <div className={`font-sans-tight text-[9px] uppercase tracking-[0.14em] ${t.tone === "ink" ? "text-foreground/55" : "text-background/65"}`}>
+                          {t.role}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div className="hidden items-center gap-1 md:flex">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-4 w-4 fill-accent text-accent" />
-            ))}
+
+          {/* Centered headline */}
+          <div className="relative mx-auto mt-10 max-w-3xl text-center">
+            <span className="inline-block rounded-full bg-secondary px-4 py-1.5 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/70">
+              Testimonials
+            </span>
+            <h2 className="mt-7 font-display text-5xl leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+              Trusted by patients<br />
+              <span className="italic text-foreground/55">who chose quieter care.</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-xl text-foreground/65">
+              Hover any portrait to read why patients from across Islamabad — and beyond — make the drive to ORA.
+            </p>
+            <div className="mt-8 flex items-center justify-center gap-2">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="h-4 w-4 fill-sage-deep text-sage-deep" />
+              ))}
+              <span className="ml-2 font-sans-tight text-sm text-foreground/60">4.9 · 240+ reviews</span>
+            </div>
+            <Link
+              to="/reviews"
+              className="mt-10 inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 font-sans-tight text-background transition-all hover:gap-4"
+            >
+              Read all reviews <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
-        </div>
-        <div className="mt-14 grid gap-px border border-border bg-border md:grid-cols-3">
-          {testimonials.map((t) => (
-            <figure key={t.name} className="bg-background p-10">
-              <Quote className="h-7 w-7 text-accent" />
-              <blockquote className="mt-6 font-display text-xl leading-relaxed text-foreground/85">
-                "{t.quote}"
-              </blockquote>
-              <figcaption className="mt-8">
-                <div className="font-display text-lg">{t.name}</div>
-                <div className="font-sans-tight text-muted-foreground">{t.role}</div>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-        <div className="mt-10 text-center">
-          <Link to="/reviews" className="font-sans-tight text-accent hover:underline">
-            Read all reviews →
-          </Link>
         </div>
       </section>
 
