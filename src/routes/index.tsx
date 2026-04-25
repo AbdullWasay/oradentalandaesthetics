@@ -40,11 +40,8 @@ const services = [
   { icon: Leaf, num: "06", title: "Preventive & Hygiene", desc: "Considered routines for a lifetime of healthy teeth.", tag: "Wellness" },
 ];
 
-const pillars = [
-  { n: "01", t: "Restraint", d: "We do less, more carefully. The smallest intervention that achieves the most natural result — always." },
-  { n: "02", t: "Precision", d: "Digital scans, 3D treatment planning, microscope-aided dentistry. Modern tools, classical hands." },
-  { n: "03", t: "Calm", d: "Long appointments. Real conversations. The pace and the space engineered to lower your shoulders before we recline the chair." },
-];
+
+
 
 type Testimonial = {
   name: string; role: string; quote: string; initials: string; tone: "sage" | "ink" | "soft";
