@@ -169,4 +169,34 @@
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
+
+  /* Flip card */
+  .flip-card { perspective: 1200px; }
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transform-style: preserve-3d;
+  }
+  .flip-card:hover .flip-card-inner,
+  .flip-card:focus-within .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  .flip-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+  }
+  .flip-back { transform: rotateY(180deg); }
+
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .float-slow { animation: floatY 6s ease-in-out infinite; }
+  .float-med  { animation: floatY 5s ease-in-out infinite; }
+  .float-fast { animation: floatY 4.5s ease-in-out infinite; }
 }
