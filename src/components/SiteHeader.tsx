@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import logo from "@/assets/ora-logo.png";
 
 const treatments = [
   { to: "/treatments", hash: "cosmetic", label: "Cosmetic Dentistry" },
@@ -28,14 +27,11 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
         <Link to="/" className="flex items-center gap-4">
-          <img src={logo} alt="ORA" className="h-10 w-10" width={40} height={40} />
-          <div className="flex items-center gap-4">
-            <span className="font-display text-3xl leading-none tracking-tight text-foreground">ORA</span>
-            <span className="hidden h-7 w-px bg-foreground/30 sm:block" />
-            <span className="hidden font-sans-tight text-[0.7rem] text-foreground/70 sm:inline">
-              Dental &amp; Aesthetic Clinic
-            </span>
-          </div>
+          <span className="font-display text-3xl leading-none tracking-tight text-foreground">ORA</span>
+          <span className="hidden h-7 w-px bg-foreground/30 sm:block" />
+          <span className="hidden font-sans-tight text-[0.72rem] uppercase tracking-[0.18em] text-foreground/70 sm:inline">
+            Dental &amp; Aesthetics
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
