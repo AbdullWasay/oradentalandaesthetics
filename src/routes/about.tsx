@@ -85,11 +85,11 @@ function AboutPage() {
                   Dr. Sultan trained in cosmetic and restorative dentistry with a particular obsession for proportion. After a decade across leading clinics, he co-founded ORA to build the kind of practice he always wished existed — slow, sculptural, and quietly excellent.
                 </p>
                 <p className="mt-4 text-foreground/75">
-                  He leads ORA's smile-design, veneer, and Aligno aligner work.
+                  He leads ORA's smile-design, veneer, and clear aligner work.
                 </p>
                 <ul className="mt-8 grid grid-cols-2 gap-4 border-t border-border pt-8 font-sans-tight text-foreground/70">
                   <li>BDS, FCPS Restorative</li>
-                  <li>Certified Aligno Provider</li>
+                  <li>Clear Aligner Specialist</li>
                   <li>10+ years experience</li>
                   <li>Cosmetic Lead</li>
                 </ul>
