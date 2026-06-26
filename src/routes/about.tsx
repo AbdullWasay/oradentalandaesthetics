@@ -10,8 +10,8 @@ import drRoha from "@/assets/dr-roha.jpg";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — ORA Dental & Aesthetic Clinic" },
-      { name: "description", content: "ORA is a dental atelier in F-7 Islamabad founded by Dr. Ahmed Sultan and Dr. Roha Ejaz. Quiet luxury, considered care." },
+      { title: "About — ORA Dental Wellness" },
+      { name: "description", content: "ORA is a dental wellness atelier in Bahria Town Phase 4, Rawalpindi founded by Dr. Ahmed Sultan and Dr. Roha Ejaz. Quiet luxury, considered care." },
       { property: "og:title", content: "About ORA — Dentistry, but slower." },
       { property: "og:description", content: "A clinic shaped like a sanctuary. Meet the doctors and the philosophy." },
     ],
@@ -38,7 +38,7 @@ function AboutPage() {
           like a <span className="italic text-foreground/60">sanctuary.</span>
         </h1>
         <p className="mt-8 max-w-2xl text-lg text-foreground/70">
-          Founded in 2024 in F-7 Islamabad, ORA is the work of two clinicians who believe great dentistry should feel like rest, not procedure. We built a space, a team, and a method around a single idea: care, considered.
+          Founded in Bahria Town Phase 4, Rawalpindi, ORA is the work of two clinicians who believe great dentistry should feel like rest, not procedure. We built a space, a team, and a method around a single idea: care, considered — focused on clear aligners, implants and general dentistry.
         </p>
       </section>
 

@@ -3,12 +3,9 @@ import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 const treatments = [
-  { to: "/treatments", hash: "cosmetic", label: "Cosmetic Dentistry" },
-  { to: "/treatments", hash: "orthodontics", label: "Clear Aligners" },
-  { to: "/treatments", hash: "restorative", label: "Implants & Restorative" },
-  { to: "/treatments", hash: "aesthetic", label: "Aesthetic Treatments" },
-  { to: "/treatments", hash: "family", label: "Family & Pediatric" },
-  { to: "/treatments", hash: "hygiene", label: "Hygiene & Prevention" },
+  { to: "/treatments", hash: "aligners", label: "Clear Aligners" },
+  { to: "/treatments", hash: "implants", label: "Dental Implants" },
+  { to: "/treatments", hash: "general", label: "General Dentistry" },
 ] as const;
 
 const nav = [
@@ -30,7 +27,7 @@ export function SiteHeader() {
           <span className="font-display text-3xl leading-none tracking-tight text-foreground">ORA</span>
           <span className="hidden h-7 w-px bg-foreground/30 sm:block" />
           <span className="hidden font-sans-tight text-[0.72rem] uppercase tracking-[0.18em] text-foreground/70 sm:inline">
-            Dental &amp; Aesthetics
+            Dental Wellness
           </span>
         </Link>
 

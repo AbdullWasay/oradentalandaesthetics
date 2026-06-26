@@ -7,8 +7,8 @@ import { SectionLabel } from "@/components/SectionLabel";
 export const Route = createFileRoute("/reviews")({
   head: () => ({
     meta: [
-      { title: "Reviews — ORA Dental & Aesthetic Clinic" },
-      { name: "description", content: "Read what our patients say about ORA Dental & Aesthetic Clinic in Islamabad." },
+      { title: "Reviews — ORA Dental Wellness" },
+      { name: "description", content: "Read what our patients say about ORA Dental Wellness in Bahria Town, Rawalpindi." },
       { property: "og:title", content: "Patient Reviews — ORA Clinic" },
       { property: "og:description", content: "Trusted, quietly. Voices from the chair." },
     ],
