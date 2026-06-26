@@ -15,10 +15,10 @@ import drRoha from "@/assets/dr-roha.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ORA Dental & Aesthetic Clinic — Islamabad" },
-      { name: "description", content: "Quiet-luxury dentistry and aesthetics in F-7 Islamabad. Specialists in clear aligners. Led by Dr. Ahmed Sultan & Dr. Roha Ejaz." },
-      { property: "og:title", content: "ORA Dental & Aesthetic Clinic" },
-      { property: "og:description", content: "Sculpted smiles. Quiet luxury dentistry in F-7 Islamabad." },
+      { title: "ORA Dental Wellness — Bahria Town, Rawalpindi" },
+      { name: "description", content: "Quiet-luxury dental wellness in Bahria Town Phase 4, Rawalpindi. Specialists in clear aligners, implants and general dentistry." },
+      { property: "og:title", content: "ORA Dental Wellness" },
+      { property: "og:description", content: "Sculpted smiles. Quiet-luxury dental wellness in Bahria Town, Rawalpindi." },
     ],
   }),
   component: HomePage,
@@ -32,10 +32,10 @@ const stats = [
 ];
 
 const services = [
-  { icon: Gem, num: "01", title: "Cosmetic Dentistry", desc: "Veneers, whitening, smile design — sculpted to your features.", tag: "Signature" },
-  { icon: AlignLeft, num: "02", title: "Clear Aligners", desc: "Near-invisible, 3D-planned aligner therapy for discreet movement.", tag: "Specialty" },
-  { icon: Scissors, num: "03", title: "Implants & Restorative", desc: "Quiet, considered restorations that age beautifully.", tag: "Precision" },
-  { icon: Wand2, num: "04", title: "Aesthetic Treatments", desc: "Subtle facial harmony — botox, fillers, considered skin care.", tag: "Aesthetic" },
+  { icon: AlignLeft, num: "01", title: "Clear Aligners", desc: "Near-invisible, 3D-planned aligner therapy for discreet, predictable movement.", tag: "Signature" },
+  { icon: Scissors, num: "02", title: "Dental Implants", desc: "Quiet, considered implant restorations that look, feel and age beautifully.", tag: "Specialty" },
+  { icon: Gem, num: "03", title: "General Dentistry", desc: "Routine check-ups, fillings, crowns and root canals — done gently, done well.", tag: "Everyday" },
+  { icon: Wand2, num: "04", title: "Cosmetic & Whitening", desc: "Veneers, bonding and whitening — sculpted to your features.", tag: "Aesthetic" },
   { icon: Baby, num: "05", title: "Pediatric Care", desc: "Gentle first visits in a calm, sensory-aware setting.", tag: "Family" },
   { icon: Leaf, num: "06", title: "Preventive & Hygiene", desc: "Considered routines for a lifetime of healthy teeth.", tag: "Wellness" },
 ];
@@ -59,10 +59,10 @@ const testimonials: Testimonial[] = [
 const marqueeItems = [
   "Sculpted smiles, considered care",
   "Specialists in clear aligners",
-  "Cosmetic & aesthetic dentistry",
-  "F-7 Markaz · Islamabad",
-  "By appointment only",
-  "Led by Dr. Ahmed Sultan & Dr. Roha Ejaz",
+  "Dental implants · General dentistry",
+  "Bahria Town Phase 4 · Rawalpindi",
+  "By appointment · Walk-ins welcome",
+  "Mon – Sat · 12:00 PM – 9:00 PM",
 ];
 
 function HomePage() {
@@ -74,14 +74,14 @@ function HomePage() {
       <section className="hero-texture relative overflow-hidden">
         <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pt-16 pb-24 lg:grid-cols-12 lg:gap-8 lg:px-10 lg:pt-24 lg:pb-32">
           <div className="lg:col-span-7">
-            <SectionLabel>Islamabad · Est. 2024</SectionLabel>
+            <SectionLabel>Bahria Town · Rawalpindi</SectionLabel>
             <h1 className="fade-up mt-8 font-display text-5xl leading-[1.02] tracking-tight md:text-7xl lg:text-[5.5rem]">
               A quieter way<br />
               to care for<br />
               <span className="italic text-accent-foreground/80">your smile.</span>
             </h1>
             <p className="fade-up mt-8 max-w-xl text-lg leading-relaxed text-foreground/70">
-              ORA is a dental and aesthetic atelier in F-7 Islamabad — where clinical precision meets the calm of a private retreat. Sculpted smiles, considered care.
+              ORA is a dental wellness atelier in Bahria Paradise Commercial, Rawalpindi — specialists in clear aligners, implants and general dentistry. Clinical precision, with the calm of a private retreat.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link to="/contact" className="group inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 font-sans-tight text-background transition-all hover:gap-4">
@@ -242,7 +242,7 @@ function HomePage() {
               Meet Our <span className="italic text-sage-deep">Specialists</span>
             </h2>
             <p className="mt-6 text-foreground/70">
-              An exceptionally trained team of dental surgeons and aesthetic specialists — quietly dedicated to your care in F-7 Islamabad.
+              An exceptionally trained team of dental surgeons and aesthetic specialists — quietly dedicated to your care in Bahria Town Phase 4, Rawalpindi.
             </p>
           </div>
           <div className="mt-16">
@@ -276,36 +276,37 @@ function HomePage() {
 
               <div className="mt-12 space-y-6">
                 <div className="flex items-start gap-4">
-                  <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-background/20">
+                  <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-background/20">
                     <MapPin className="h-4 w-4 text-accent" />
                   </span>
                   <div>
                     <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Visit</p>
-                    <p className="mt-1">G-8, Islamabad, Pakistan</p>
+                    <p className="mt-1 max-w-xs leading-relaxed">Ground Floor, Plot 35, Street 8, Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi 46220</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-background/20">
+                  <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-background/20">
                     <Phone className="h-4 w-4 text-accent" />
                   </span>
                   <div>
                     <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Call</p>
-                    <a href="tel:+923000000000" className="mt-1 block hover:text-accent">+92 300 000 0000</a>
+                    <a href="tel:+923398891919" className="mt-1 block hover:text-accent">0339 8891919</a>
+                    <a href="tel:+92518891919" className="block hover:text-accent">051 8891919</a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-background/20">
+                  <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-background/20">
                     <Clock className="h-4 w-4 text-accent" />
                   </span>
                   <div>
                     <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Hours</p>
-                    <p className="mt-1">Mon – Sat · 10:00 AM – 9:00 PM</p>
+                    <p className="mt-1">Mon – Sat · 12:00 PM – 9:00 PM</p>
                   </div>
                 </div>
               </div>
 
               <a
-                href="https://wa.me/923000000000"
+                href="https://wa.me/923398891919"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-10 inline-flex items-center gap-3 rounded-full bg-accent px-7 py-4 font-sans-tight text-foreground transition-transform hover:-translate-y-0.5"
@@ -345,7 +346,7 @@ function HomePage() {
                       <Input
                         required
                         type="tel"
-                        placeholder="+92 300 0000000"
+                        placeholder="0339 8891919"
                         className="h-12 rounded-none border-0 border-b border-background/20 bg-transparent pl-7 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0"
                       />
                     </div>
@@ -475,7 +476,7 @@ function HomePage() {
               <span className="italic text-foreground/55">who chose quieter care.</span>
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-foreground/65">
-              Hover any portrait to read why patients from across Islamabad — and beyond — make the drive to ORA.
+              Hover any portrait to read why patients from across Rawalpindi and Islamabad make the drive to ORA.
             </p>
             <div className="mt-8 flex items-center justify-center gap-2">
               {Array.from({ length: 5 }).map((_, i) => (
@@ -508,8 +509,8 @@ function HomePage() {
             <Link to="/contact" className="rounded-full bg-foreground px-8 py-4 font-sans-tight text-background hover:bg-foreground/85">
               Book a Consultation
             </Link>
-            <a href="tel:+925100000000" className="rounded-full border border-foreground/30 px-8 py-4 font-sans-tight hover:border-foreground">
-              +92 51 000 0000
+            <a href="tel:+923398891919" className="rounded-full border border-foreground/30 px-8 py-4 font-sans-tight hover:border-foreground">
+              0339 8891919
             </a>
           </div>
         </div>
