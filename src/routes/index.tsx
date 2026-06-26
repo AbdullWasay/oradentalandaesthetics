@@ -484,12 +484,14 @@ function HomePage() {
               ))}
               <span className="ml-2 font-sans-tight text-sm text-foreground/60">4.9 · 240+ reviews</span>
             </div>
-            <Link
-              to="/reviews"
+            <a
+              href="https://www.google.com/search?q=ORA+Dental+Wellness+Reviews"
+              target="_blank"
+              rel="noreferrer"
               className="mt-10 inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 font-sans-tight text-background transition-all hover:gap-4"
             >
-              Read all reviews <ArrowRight className="h-4 w-4" />
-            </Link>
+              Read on Google <ArrowRight className="h-4 w-4" />
+            </a>
           </div>
         </div>
       </section>

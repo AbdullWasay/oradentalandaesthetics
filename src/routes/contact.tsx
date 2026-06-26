@@ -8,10 +8,10 @@ import { SectionLabel } from "@/components/SectionLabel";
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact & Visit — ORA Dental & Aesthetic Clinic, Islamabad" },
-      { name: "description", content: "Visit ORA in F-7 Markaz, Islamabad. Book a consultation with Dr. Ahmed Sultan or Dr. Roha Ejaz." },
-      { property: "og:title", content: "Visit ORA Clinic — F-7 Islamabad" },
-      { property: "og:description", content: "Book a private dental or aesthetic consultation." },
+      { title: "Contact & Visit — ORA Dental Wellness, Rawalpindi" },
+      { name: "description", content: "Visit ORA in Bahria Town Phase 4, Rawalpindi. Book a consultation for aligners, implants or general dentistry." },
+      { property: "og:title", content: "Visit ORA — Bahria Town, Rawalpindi" },
+      { property: "og:description", content: "Book a private dental wellness consultation." },
     ],
   }),
   component: ContactPage,
@@ -29,7 +29,7 @@ function ContactPage() {
           Come <span className="italic text-foreground/60">in.</span>
         </h1>
         <p className="mt-8 max-w-2xl text-lg text-foreground/70">
-          Step into our F-7 atelier or send a note — we'll respond personally within one working day.
+          Step into our Bahria Town atelier or send a note — we'll respond personally within one working day.
         </p>
       </section>
 
@@ -63,10 +63,10 @@ function ContactPage() {
                 <div>
                   <label className="font-sans-tight text-muted-foreground">Interested in</label>
                   <select className="mt-2 w-full border-b border-border bg-transparent py-3 text-foreground focus:border-foreground focus:outline-none" name="service">
-                    <option>General consultation</option>
-                    <option>Aligno clear aligners</option>
-                    <option>Cosmetic / Smile design</option>
-                    <option>Aesthetic treatment</option>
+                    <option>General dentistry</option>
+                    <option>Clear aligners</option>
+                    <option>Dental implants</option>
+                    <option>Cosmetic / Whitening</option>
                     <option>Pediatric / Family</option>
                   </select>
                 </div>
@@ -84,13 +84,13 @@ function ContactPage() {
 
         {/* Info */}
         <aside className="space-y-10 lg:col-span-5">
-          <InfoBlock icon={<MapPin className="h-5 w-5" />} title="Location" lines={["F-7 Markaz", "Islamabad, Pakistan 44000"]} />
-          <InfoBlock icon={<Phone className="h-5 w-5" />} title="Phone" lines={["+92 51 000 0000", "+92 300 000 0000"]} />
-          <InfoBlock icon={<Mail className="h-5 w-5" />} title="Email" lines={["hello@oraclinic.pk", "appointments@oraclinic.pk"]} />
+          <InfoBlock icon={<MapPin className="h-5 w-5" />} title="Location" lines={["Ground Floor, Plot 35, Street 8", "Bahria Paradise Commercial", "Bahria Town Phase 4, Rawalpindi 46220"]} />
+          <InfoBlock icon={<Phone className="h-5 w-5" />} title="Phone" lines={["0339 8891919", "051 8891919"]} />
+          <InfoBlock icon={<Mail className="h-5 w-5" />} title="Email" lines={["info@oradentalwellness.com"]} />
           <InfoBlock
             icon={<Clock className="h-5 w-5" />}
             title="Hours"
-            lines={["Mon – Sat · 10:00 — 20:00", "Sunday · By appointment"]}
+            lines={["Mon – Sat · 12:00 PM – 9:00 PM", "Sunday · By appointment"]}
           />
         </aside>
       </section>
@@ -101,16 +101,16 @@ function ContactPage() {
           <div className="flex items-end justify-between">
             <div>
               <SectionLabel>Find us</SectionLabel>
-              <h2 className="mt-6 font-display text-4xl md:text-5xl">F-7 Markaz, Islamabad</h2>
+              <h2 className="mt-6 font-display text-4xl md:text-5xl">Bahria Paradise Commercial, Rawalpindi</h2>
             </div>
-            <a href="https://maps.google.com/?q=F-7+Markaz+Islamabad" target="_blank" rel="noreferrer" className="hidden font-sans-tight text-accent hover:underline md:inline">
+            <a href="https://maps.google.com/?q=ORA+Dental+Wellness+Bahria+Town+Phase+4+Rawalpindi" target="_blank" rel="noreferrer" className="hidden font-sans-tight text-accent hover:underline md:inline">
               Open in Google Maps →
             </a>
           </div>
           <div className="mt-10 overflow-hidden rounded-sm border border-border">
             <iframe
-              title="ORA Clinic location"
-              src="https://www.google.com/maps?q=F-7+Markaz+Islamabad&output=embed"
+              title="ORA Dental Wellness location"
+              src="https://www.google.com/maps?q=Bahria+Paradise+Commercial+Bahria+Town+Phase+4+Rawalpindi&output=embed"
               className="h-[480px] w-full grayscale"
               loading="lazy"
             />
