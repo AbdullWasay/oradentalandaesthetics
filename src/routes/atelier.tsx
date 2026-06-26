@@ -9,8 +9,8 @@ import reception from "@/assets/clinic-reception.png";
 export const Route = createFileRoute("/atelier")({
   head: () => ({
     meta: [
-      { title: "The Atelier — ORA Dental & Aesthetic Clinic" },
-      { name: "description", content: "Step inside ORA — a dental and aesthetic atelier in F-7 Islamabad. Arched alcoves, sage textiles, hand-thrown ceramics, and shoji light." },
+      { title: "The Atelier — ORA Dental Wellness" },
+      { name: "description", content: "Step inside ORA — a dental wellness atelier in Bahria Town Phase 4, Rawalpindi. Arched alcoves, sage textiles, hand-thrown ceramics, and shoji light." },
       { property: "og:title", content: "The Atelier — ORA Clinic" },
       { property: "og:description", content: "A clinic shaped like a sanctuary." },
     ],

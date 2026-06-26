@@ -11,7 +11,7 @@ export function SiteFooter() {
             <img src={logo} alt="ORA" className="h-10 w-10" width={40} height={40} loading="lazy" />
             <div className="leading-tight">
               <div className="font-display text-2xl">ORA</div>
-              <div className="font-sans-tight text-[0.6rem] text-muted-foreground">Dental & Aesthetic Clinic</div>
+              <div className="font-sans-tight text-[0.6rem] uppercase tracking-[0.18em] text-muted-foreground">Dental Wellness</div>
             </div>
           </div>
           <p className="mt-6 max-w-md font-display text-2xl leading-snug text-foreground/80">
@@ -26,9 +26,10 @@ export function SiteFooter() {
         <div>
           <h4 className="font-sans-tight text-muted-foreground">Visit</h4>
           <ul className="mt-5 space-y-3 text-sm">
-            <li className="flex gap-2"><MapPin className="mt-0.5 h-4 w-4 text-accent" /> F-7 Markaz, Islamabad, Pakistan</li>
-            <li className="flex gap-2"><Phone className="mt-0.5 h-4 w-4 text-accent" /> +92 51 000 0000</li>
-            <li className="flex gap-2"><Mail className="mt-0.5 h-4 w-4 text-accent" /> hello@oraclinic.pk</li>
+            <li className="flex gap-2"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" /> <span>Ground Floor, Plot 35, Street 8, Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi 46220</span></li>
+            <li className="flex gap-2"><Phone className="mt-0.5 h-4 w-4 text-accent" /> <a href="tel:+923398891919" className="hover:text-accent">0339 8891919</a></li>
+            <li className="flex gap-2"><Phone className="mt-0.5 h-4 w-4 text-accent" /> <a href="tel:+92518891919" className="hover:text-accent">051 8891919</a></li>
+            <li className="flex gap-2"><Mail className="mt-0.5 h-4 w-4 text-accent" /> <a href="mailto:info@oradentalwellness.com" className="hover:text-accent">info@oradentalwellness.com</a></li>
           </ul>
         </div>
 
@@ -44,7 +45,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-border/60 px-6 py-6 text-center font-sans-tight text-muted-foreground lg:px-10">
-        © {new Date().getFullYear()} ORA Dental & Aesthetic Clinic — All rights reserved
+        © {new Date().getFullYear()} ORA Dental Wellness — All rights reserved
       </div>
     </footer>
   );
