@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Star, Award, Users, Clock, Smile, Scissors, AlignLeft, Gem, Wand2, Baby, Leaf, MapPin, Phone, CalendarDays, MessageCircle, User as UserIcon } from "lucide-react";
+import { ArrowRight, Sparkles, Star, Award, Users, Clock, Smile, Stethoscope, Sparkle, Activity, Gem, ShieldCheck, Baby, Siren, MapPin, Phone, CalendarDays, MessageCircle, User as UserIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -8,9 +8,10 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
 import { TeamCarousel } from "@/components/TeamCarousel";
 import interior from "@/assets/clinic-interior.png";
-import reception from "@/assets/clinic-reception.png";
+import receptionAsset from "@/assets/ora-reception.png.asset.json";
 import drAhmed from "@/assets/dr-ahmed.jpg";
 import drRoha from "@/assets/dr-roha.jpg";
+const reception = receptionAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,12 +33,14 @@ const stats = [
 ];
 
 const services = [
-  { icon: AlignLeft, num: "01", title: "Clear Aligners", desc: "Near-invisible, 3D-planned aligner therapy for discreet, predictable movement.", tag: "Signature" },
-  { icon: Scissors, num: "02", title: "Dental Implants", desc: "Quiet, considered implant restorations that look, feel and age beautifully.", tag: "Specialty" },
-  { icon: Gem, num: "03", title: "General Dentistry", desc: "Routine check-ups, fillings, crowns and root canals — done gently, done well.", tag: "Everyday" },
-  { icon: Wand2, num: "04", title: "Cosmetic & Whitening", desc: "Veneers, bonding and whitening — sculpted to your features.", tag: "Aesthetic" },
-  { icon: Baby, num: "05", title: "Pediatric Care", desc: "Gentle first visits in a calm, sensory-aware setting.", tag: "Family" },
-  { icon: Leaf, num: "06", title: "Preventive & Hygiene", desc: "Considered routines for a lifetime of healthy teeth.", tag: "Wellness" },
+  { icon: Stethoscope, num: "01", title: "Check-up & Cleaning", desc: "Comprehensive oral exams, scaling and polishing — the foundation of lasting dental health.", tag: "Preventive" },
+  { icon: Sparkle, num: "02", title: "Tooth-Colored Fillings", desc: "Composite fillings and bonding that disappear into your natural enamel.", tag: "Restorative" },
+  { icon: Activity, num: "03", title: "Root Canal Treatment", desc: "Modern, comfortable endodontic therapy to save and preserve your natural tooth.", tag: "Endodontics" },
+  { icon: Gem, num: "04", title: "Crowns & Bridges", desc: "Custom-crafted crowns, bridges and dentures that restore form and function.", tag: "Restorative" },
+  { icon: ShieldCheck, num: "05", title: "Gum Disease Care", desc: "Deep cleaning, scaling & root planing and periodontal maintenance for healthy gums.", tag: "Periodontal" },
+  { icon: Baby, num: "06", title: "Children's Dentistry", desc: "Gentle pediatric care — check-ups, sealants and fillings in a calm setting.", tag: "Family" },
+  { icon: Siren, num: "07", title: "Emergency Care", desc: "Same-day relief for toothache, broken teeth and urgent dental needs.", tag: "Urgent" },
+  { icon: Smile, num: "08", title: "Tooth Extractions", desc: "Simple and surgical extractions, including wisdom-tooth evaluation, done gently.", tag: "Surgical" },
 ];
 
 
