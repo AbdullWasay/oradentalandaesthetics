@@ -95,7 +95,7 @@ function HomePage() {
           {/* Content */}
           <div className="relative z-10 mx-auto flex min-h-[85vh] max-w-7xl items-center px-6 py-20 lg:px-10">
             <div className="max-w-xl text-[var(--shoji)]">
-              <SectionLabel className="text-[var(--shoji)]/80">Bahria Town · Rawalpindi</SectionLabel>
+              <SectionLabel>Bahria Town · Rawalpindi</SectionLabel>
               <h1 className="fade-up mt-8 font-display text-5xl leading-[1.02] tracking-tight md:text-7xl lg:text-[5.5rem]">
                 A quieter way<br />
                 to care for<br />
