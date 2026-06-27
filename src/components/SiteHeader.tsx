@@ -3,9 +3,12 @@ import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 const treatments = [
-  { to: "/treatments", hash: "aligners", label: "Clear Aligners" },
-  { to: "/treatments", hash: "implants", label: "Dental Implants" },
-  { to: "/treatments", hash: "general", label: "General Dentistry" },
+  { to: "/treatments", hash: "preventive", label: "Preventive Dentistry" },
+  { to: "/treatments", hash: "restorative", label: "Restorative Dentistry" },
+  { to: "/treatments", hash: "endodontics", label: "Root Canal Treatment" },
+  { to: "/treatments", hash: "gums", label: "Gum Care" },
+  { to: "/treatments", hash: "pediatric", label: "Children's Dentistry" },
+  { to: "/treatments", hash: "emergency", label: "Emergency Care" },
 ] as const;
 
 const nav = [
