@@ -169,15 +169,15 @@ function HomePage() {
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>What we do</SectionLabel>
             <h2 className="mt-6 font-display text-4xl leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
-              Six disciplines.<br />
-              <span className="italic text-foreground/55">One quiet practice.</span>
+              A full spectrum of care.<br />
+              <span className="italic text-foreground/55">Delivered, quietly.</span>
             </h2>
             <p className="mt-6 text-foreground/65">
-              Each treatment is its own discipline — planned slowly, performed precisely.
+              From routine check-ups to restorative work and urgent care — every treatment is planned slowly and performed precisely.
             </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 border-t border-l border-border sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-16 grid grid-cols-1 border-t border-l border-border sm:grid-cols-2 lg:grid-cols-4">
             {services.map((s) => {
               const Icon = s.icon;
               return (
