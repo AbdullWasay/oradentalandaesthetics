@@ -98,7 +98,7 @@ function HomePage() {
 
           <div className="relative lg:col-span-5">
             <div className="arch-frame relative h-[480px] w-full overflow-hidden bg-secondary md:h-[560px]">
-              <img src={reception} alt="ORA reception" className="h-full w-full object-cover" width={800} height={1000} />
+              <img src={clinicReception} alt="ORA reception" className="h-full w-full object-cover" width={800} height={1000} />
             </div>
           </div>
         </div>
