@@ -8,10 +8,10 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
 import { TeamCarousel } from "@/components/TeamCarousel";
 import interior from "@/assets/clinic-interior.png";
-import receptionAsset from "@/assets/ora-reception.png.asset.json";
+import clinicReceptionAsset from "@/assets/clinic-reception.png.asset.json";
 import drAhmed from "@/assets/dr-ahmed.jpg";
 import drRoha from "@/assets/dr-roha.jpg";
-const reception = receptionAsset.url;
+const clinicReception = clinicReceptionAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -74,31 +74,44 @@ function HomePage() {
       <SiteHeader />
 
       {/* HERO */}
-      <section className="hero-texture relative overflow-hidden">
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pt-16 pb-24 lg:grid-cols-12 lg:gap-8 lg:px-10 lg:pt-24 lg:pb-32">
-          <div className="lg:col-span-7">
-            <SectionLabel>Bahria Town · Rawalpindi</SectionLabel>
-            <h1 className="fade-up mt-8 font-display text-5xl leading-[1.02] tracking-tight md:text-7xl lg:text-[5.5rem]">
-              A quieter way<br />
-              to care for<br />
-              <span className="italic text-accent-foreground/80">your smile.</span>
-            </h1>
-            <p className="fade-up mt-8 max-w-xl text-lg leading-relaxed text-foreground/70">
-              ORA is a dental wellness atelier in Bahria Paradise Commercial, Rawalpindi — specialists in clear aligners, implants and general dentistry. Clinical precision, with the calm of a private retreat.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link to="/contact" className="group inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 font-sans-tight text-background transition-all hover:gap-4">
-                Book a Consultation <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link to="/treatments" className="inline-flex items-center gap-2 rounded-full border border-foreground/30 px-7 py-4 font-sans-tight transition-colors hover:border-foreground">
-                Our Treatments
-              </Link>
-            </div>
-          </div>
+      <section className="relative overflow-hidden">
+        <div className="relative min-h-[85vh] overflow-hidden">
+          {/* Full-width sharp background */}
+          <img
+            src={clinicReception}
+            alt="ORA clinic reception"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
 
-          <div className="relative lg:col-span-5">
-            <div className="arch-frame relative h-[480px] w-full overflow-hidden bg-secondary md:h-[560px]">
-              <img src={reception} alt="ORA reception" className="h-full w-full object-cover" width={800} height={1000} />
+          {/* Left half: blur + green overlay */}
+          <div
+            className="absolute top-0 left-0 h-full w-full md:w-1/2 backdrop-blur-xl"
+            style={{
+              background:
+                "linear-gradient(to right, color-mix(in oklab, var(--sage) 45%, transparent), color-mix(in oklab, var(--sage) 15%, transparent))",
+            }}
+          />
+
+          {/* Content */}
+          <div className="relative z-10 mx-auto flex min-h-[85vh] max-w-7xl items-center px-6 py-20 lg:px-10">
+            <div className="max-w-xl text-[var(--shoji)]">
+              <SectionLabel className="text-[var(--shoji)]/80">Bahria Town · Rawalpindi</SectionLabel>
+              <h1 className="fade-up mt-8 font-display text-5xl leading-[1.02] tracking-tight md:text-7xl lg:text-[5.5rem]">
+                A quieter way<br />
+                to care for<br />
+                <span className="italic text-[var(--shoji)]/80">your smile.</span>
+              </h1>
+              <p className="fade-up mt-8 max-w-lg text-lg leading-relaxed text-[var(--shoji)]/80">
+                ORA is a dental wellness atelier in Bahria Paradise Commercial, Rawalpindi — specialists in clear aligners, implants and general dentistry. Clinical precision, with the calm of a private retreat.
+              </p>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Link to="/contact" className="group inline-flex items-center gap-3 rounded-full bg-[var(--shoji)] px-7 py-4 font-sans-tight text-[var(--ink)] transition-all hover:gap-4">
+                  Book a Consultation <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+                <Link to="/treatments" className="inline-flex items-center gap-2 rounded-full border border-[var(--shoji)]/40 px-7 py-4 font-sans-tight text-[var(--shoji)] transition-colors hover:border-[var(--shoji)]">
+                  Our Treatments
+                </Link>
+              </div>
             </div>
           </div>
         </div>
