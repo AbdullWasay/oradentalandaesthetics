@@ -8,10 +8,10 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
 import { TeamCarousel } from "@/components/TeamCarousel";
 import interior from "@/assets/clinic-interior.png";
-import receptionAsset from "@/assets/ora-reception.png.asset.json";
+import clinicReceptionAsset from "@/assets/clinic-reception.png.asset.json";
 import drAhmed from "@/assets/dr-ahmed.jpg";
 import drRoha from "@/assets/dr-roha.jpg";
-const reception = receptionAsset.url;
+const clinicReception = clinicReceptionAsset.url;
 
 export const Route = createFileRoute("/")({
   head: () => ({
