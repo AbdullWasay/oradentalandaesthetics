@@ -1,5 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Sparkles, Star, Award, Users, Clock, Smile, Stethoscope, Sparkle, Activity, Gem, ShieldCheck, Baby, Siren, MapPin, Phone, CalendarDays, MessageCircle, User as UserIcon } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useState, useCallback, useEffect } from "react";
+import { ArrowRight, Sparkles, Award, Users, Clock, Smile, MapPin, Phone, CalendarDays, MessageCircle, User as UserIcon, Check, Mail } from "lucide-react";
+import { ORA_ADDRESS_FULL, ORA_ADDRESS_LINES, ORA_MAPS_EMBED_URL, ORA_MAPS_SHARE_URL } from "@/lib/location";
+import { TreatmentsSection, services } from "@/components/TreatmentsSection";
+import { CasesSection } from "@/components/CasesSection";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -7,57 +12,32 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
 import { TeamCarousel } from "@/components/TeamCarousel";
-import interior from "@/assets/clinic-interior.png";
-import receptionAsset from "@/assets/ora-reception.png.asset.json";
-import drAhmed from "@/assets/dr-ahmed.jpg";
-import drRoha from "@/assets/dr-roha.jpg";
-const reception = receptionAsset.url;
+import { HomeSplash } from "@/components/HomeSplash";
+import { HomeHero } from "@/components/HomeHero";
+import { GoogleReviews } from "@/components/GoogleReviews";
+import { FaqSection } from "@/components/FaqSection";
+import { submitForm } from "@/lib/submit-form";
+import { getGoogleReviews } from "@/lib/get-google-reviews";
+import { formatReviewCount } from "@/lib/google-reviews";
+import {
+  PAGE_SEO,
+  buildPageLinks,
+  buildPageMeta,
+  homeJsonLdScripts,
+} from "@/lib/seo";
+import aboutUs from "@/assets/about-us.png";
+import drAhmed from "@/assets/doctors/dr-ahmed-sultan.png";
+import drRoha from "@/assets/doctors/dr-roha-ejaz.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: "ORA Dental Wellness — Bahria Town, Rawalpindi" },
-      { name: "description", content: "Quiet-luxury dental wellness in Bahria Town Phase 4, Rawalpindi. Specialists in clear aligners, implants and general dentistry." },
-      { property: "og:title", content: "ORA Dental Wellness" },
-      { property: "og:description", content: "Sculpted smiles. Quiet-luxury dental wellness in Bahria Town, Rawalpindi." },
-    ],
+    meta: buildPageMeta(PAGE_SEO.home),
+    links: buildPageLinks(PAGE_SEO.home),
+    scripts: homeJsonLdScripts(),
   }),
+  loader: () => getGoogleReviews(),
   component: HomePage,
 });
-
-const stats = [
-  { icon: Smile, k: "1,200+", v: "Smiles transformed" },
-  { icon: Users, k: "240+", v: "5-star reviews" },
-  { icon: Award, k: "15+", v: "Years combined experience" },
-  { icon: Clock, k: "98%", v: "Case predictability" },
-];
-
-const services = [
-  { icon: Stethoscope, num: "01", title: "Check-up & Cleaning", desc: "Comprehensive oral exams, scaling and polishing — the foundation of lasting dental health.", tag: "Preventive" },
-  { icon: Sparkle, num: "02", title: "Tooth-Colored Fillings", desc: "Composite fillings and bonding that disappear into your natural enamel.", tag: "Restorative" },
-  { icon: Activity, num: "03", title: "Root Canal Treatment", desc: "Modern, comfortable endodontic therapy to save and preserve your natural tooth.", tag: "Endodontics" },
-  { icon: Gem, num: "04", title: "Crowns & Bridges", desc: "Custom-crafted crowns, bridges and dentures that restore form and function.", tag: "Restorative" },
-  { icon: ShieldCheck, num: "05", title: "Gum Disease Care", desc: "Deep cleaning, scaling & root planing and periodontal maintenance for healthy gums.", tag: "Periodontal" },
-  { icon: Baby, num: "06", title: "Children's Dentistry", desc: "Gentle pediatric care — check-ups, sealants and fillings in a calm setting.", tag: "Family" },
-  { icon: Siren, num: "07", title: "Emergency Care", desc: "Same-day relief for toothache, broken teeth and urgent dental needs.", tag: "Urgent" },
-  { icon: Smile, num: "08", title: "Tooth Extractions", desc: "Simple and surgical extractions, including wisdom-tooth evaluation, done gently.", tag: "Surgical" },
-];
-
-
-
-
-type Testimonial = {
-  name: string; role: string; quote: string; initials: string; tone: "sage" | "ink" | "soft";
-};
-const testimonials: Testimonial[] = [
-  { name: "Sana Khalid", role: "Clear aligners · 9 months", initials: "SK", tone: "sage", quote: "ORA didn't feel like a clinic — it felt like a quiet ritual. My smile is finally mine, and the team made every step calm." },
-  { name: "Hamza Riaz", role: "Veneers", initials: "HR", tone: "ink", quote: "Dr. Sultan's eye for proportion is extraordinary. People notice something different — they just can't place what." },
-  { name: "Mehwish Tariq", role: "Aesthetic + dental", initials: "MT", tone: "soft", quote: "The space alone disarms you. Dr. Roha is gentle, precise, and unhurried. I drive across the city to come here." },
-  { name: "Ayesha Noor", role: "Whitening", initials: "AN", tone: "sage", quote: "A whitening result that actually looks like me — just rested. Subtle, not theatrical. Exactly what I wanted." },
-  { name: "Bilal Ahmed", role: "Implants", initials: "BA", tone: "soft", quote: "Months later I forget which tooth was replaced. Dr. Sultan's restoration is genuinely indistinguishable." },
-  { name: "Zara Imran", role: "Aligners + hygiene", initials: "ZI", tone: "ink", quote: "The most patient, considered care I've experienced. They explained everything without ever rushing." },
-  { name: "Faisal Khan", role: "Smile design", initials: "FK", tone: "sage", quote: "I came in nervous. I left planning my next visit. The atelier feels nothing like a dental clinic." },
-];
 
 const marqueeItems = [
   "Sculpted smiles, considered care",
@@ -69,47 +49,46 @@ const marqueeItems = [
 ];
 
 function HomePage() {
+  const googleReviews = Route.useLoaderData();
+  const submit = useServerFn(submitForm);
+  const [heroReady, setHeroReady] = useState(false);
+
+  const stats = [
+    { icon: Smile, k: "500+", v: "Smiles transformed", short: "Smiles" },
+    { icon: Users, k: formatReviewCount(googleReviews.totalReviews), v: "Google reviews", short: "Reviews" },
+    { icon: Award, k: "5+", v: "Years combined experience", short: "Years" },
+    { icon: Clock, k: "98%", v: "Case predictability", short: "Cases" },
+  ];
+  const [bookingSent, setBookingSent] = useState(false);
+  const [bookingSubmitting, setBookingSubmitting] = useState(false);
+  const [bookingError, setBookingError] = useState<string | null>(null);
+  const [bookingService, setBookingService] = useState("");
+
+  const handleSplashComplete = useCallback(() => setHeroReady(true), []);
+
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (!hash) return;
+    const timer = window.setTimeout(() => {
+      document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+    }, 150);
+    return () => window.clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen">
+      <HomeSplash onComplete={handleSplashComplete} />
       <SiteHeader />
 
       {/* HERO */}
-      <section className="hero-texture relative overflow-hidden">
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 pt-16 pb-24 lg:grid-cols-12 lg:gap-8 lg:px-10 lg:pt-24 lg:pb-32">
-          <div className="lg:col-span-7">
-            <SectionLabel>Bahria Town · Rawalpindi</SectionLabel>
-            <h1 className="fade-up mt-8 font-display text-5xl leading-[1.02] tracking-tight md:text-7xl lg:text-[5.5rem]">
-              A quieter way<br />
-              to care for<br />
-              <span className="italic text-accent-foreground/80">your smile.</span>
-            </h1>
-            <p className="fade-up mt-8 max-w-xl text-lg leading-relaxed text-foreground/70">
-              ORA is a dental wellness atelier in Bahria Paradise Commercial, Rawalpindi — specialists in clear aligners, implants and general dentistry. Clinical precision, with the calm of a private retreat.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link to="/contact" className="group inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 font-sans-tight text-background transition-all hover:gap-4">
-                Book a Consultation <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link to="/treatments" className="inline-flex items-center gap-2 rounded-full border border-foreground/30 px-7 py-4 font-sans-tight transition-colors hover:border-foreground">
-                Our Treatments
-              </Link>
-            </div>
-          </div>
-
-          <div className="relative lg:col-span-5">
-            <div className="arch-frame relative h-[480px] w-full overflow-hidden bg-secondary md:h-[560px]">
-              <img src={reception} alt="ORA reception" className="h-full w-full object-cover" width={800} height={1000} />
-            </div>
-          </div>
-        </div>
-
-        {/* Marquee */}
-        <div className="relative border-y border-border bg-foreground py-5 text-background">
+      <HomeHero ready={heroReady} />
+      {/* Marquee */}
+      <div className="relative border-y border-border bg-[#f3eee4] py-5 text-foreground">
           <div className="flex overflow-hidden">
             <div className="marquee flex shrink-0 items-center gap-16 whitespace-nowrap pr-16 font-sans-tight">
               {marqueeItems.map((t, i) => (
                 <span key={`a-${i}`} className="flex items-center gap-3">
-                  <Sparkles className="h-3 w-3 text-accent" />
+                  <Sparkles className="h-3 w-3 text-[#666d57]" />
                   {t}
                 </span>
               ))}
@@ -117,22 +96,36 @@ function HomePage() {
             <div className="marquee flex shrink-0 items-center gap-16 whitespace-nowrap pr-16 font-sans-tight" aria-hidden>
               {marqueeItems.map((t, i) => (
                 <span key={`b-${i}`} className="flex items-center gap-3">
-                  <Sparkles className="h-3 w-3 text-accent" />
+                  <Sparkles className="h-3 w-3 text-[#666d57]" />
                   {t}
                 </span>
               ))}
             </div>
           </div>
         </div>
-      </section>
 
       {/* STATS */}
-      <section className="border-b border-border bg-background">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px overflow-hidden border-x border-border bg-border lg:grid-cols-4">
+      <section className="border-b border-border bg-[#f7f3ec] md:bg-background">
+        {/* Mobile — quiet 2×2, no boxes */}
+        <div className="grid grid-cols-2 gap-y-6 px-5 py-8 md:hidden">
+          {stats.map((s) => (
+            <div key={s.v} className="text-center">
+              <div className="font-display text-[1.85rem] leading-none tracking-tight text-foreground">
+                {s.k}
+              </div>
+              <div className="mt-1.5 font-sans-tight text-[10px] tracking-[0.2em] uppercase text-foreground/40">
+                {s.short}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop — full KPIs */}
+        <div className="mx-auto hidden max-w-7xl grid-cols-4 gap-px overflow-hidden border-x border-border bg-border md:grid">
           {stats.map((s) => (
             <div key={s.v} className="bg-background px-8 py-12 lg:px-10 lg:py-16">
               <s.icon className="h-6 w-6 text-accent" />
-              <div className="mt-6 font-display text-4xl tracking-tight md:text-5xl">{s.k}</div>
+              <div className="mt-6 font-display text-4xl tracking-tight lg:text-5xl">{s.k}</div>
               <div className="mt-3 font-sans-tight text-sm text-foreground/60">{s.v}</div>
             </div>
           ))}
@@ -140,122 +133,241 @@ function HomePage() {
       </section>
 
       {/* ABOUT TEASER */}
-      <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-40">
-        <div className="grid gap-16 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <div className="arch-frame relative h-[520px] overflow-hidden bg-secondary">
-              <img src={interior} alt="Inside ORA clinic" className="h-full w-full object-cover" loading="lazy" width={800} height={1000} />
-            </div>
-          </div>
-          <div className="lg:col-span-6 lg:col-start-7 lg:pt-12">
+      <section id="atelier" className="mx-auto max-w-7xl scroll-mt-24 px-6 py-20 lg:px-10 lg:py-40">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+          {/* Copy first on mobile so content isn’t buried under the image */}
+          <div className="order-1 lg:order-2 lg:col-span-6 lg:col-start-7 lg:pt-12">
             <SectionLabel>The atelier</SectionLabel>
-            <h2 className="mt-6 font-display text-4xl leading-tight md:text-5xl">
+            <h2 className="mt-5 font-display text-[clamp(2rem,6vw,3rem)] leading-tight md:text-5xl">
               Dentistry, but slower.<br />
               <span className="italic text-foreground/60">Considered, sculptural, calm.</span>
             </h2>
-            <p className="mt-6 text-foreground/70">
+            <p className="mt-5 text-foreground/70 lg:mt-6">
               We designed ORA the way we practice — with restraint. Arched alcoves, sage textiles, hand-thrown ceramics, warm shoji light. Every detail is engineered to lower your shoulders before we ever recline the chair.
             </p>
-            <Link to="/about" className="mt-8 inline-flex items-center gap-2 font-sans-tight text-accent hover:underline">
-              Read our story <ArrowRight className="h-4 w-4" />
-            </Link>
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="mt-7 inline-flex items-center gap-2 font-sans-tight text-[#666d57] hover:underline lg:mt-8"
+            >
+              Book a visit <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+
+          <div className="order-2 lg:order-1 lg:col-span-5">
+            <div className="arch-frame relative h-[280px] overflow-hidden bg-secondary sm:h-[360px] lg:h-[520px]">
+              <img
+                src={aboutUs}
+                alt="Interior of ORA Dental Wellness atelier in Bahria Town Phase 4, with arched alcoves and soft lighting"
+                className="h-full w-full object-cover object-center"
+                loading="lazy"
+                width={800}
+                height={1000}
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* SERVICES — minimal symmetric grid */}
-      <section className="border-y border-border bg-background">
-        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
-          <div className="mx-auto max-w-3xl text-center">
-            <SectionLabel>What we do</SectionLabel>
-            <h2 className="mt-6 font-display text-4xl leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
-              A full spectrum of care.<br />
-              <span className="italic text-foreground/55">Delivered, quietly.</span>
+      {/* DOCTORS — twin portrait panels (above treatments) */}
+      <section
+        id="doctors"
+        className="doctors-duo relative z-20 scroll-mt-24 overflow-hidden bg-[#000000]"
+      >
+        <div className="relative">
+          {/* Mobile masthead — sits above the portraits */}
+          <div className="relative z-30 bg-[#4d5645] px-6 pb-8 pt-12 text-center md:hidden">
+            <p className="font-sans-tight text-[10px] tracking-[0.38em] text-[#d8cdc3]/80">
+              Founders
+            </p>
+            <h2 className="mx-auto mt-3 max-w-3xl font-display text-[clamp(2.2rem,8vw,3rem)] font-light leading-[1.02] tracking-tight text-[#faf8f4]">
+              Two doctors.
             </h2>
-            <p className="mt-6 text-foreground/65">
-              From routine check-ups to restorative work and urgent care — every treatment is planned slowly and performed precisely.
+            <p className="doctors-philosophy mx-auto mt-2 max-w-md font-display text-[clamp(1.15rem,4vw,1.35rem)] italic leading-snug text-[#eae2d6]/90">
+              One philosophy of restraint.
             </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 border-t border-l border-border sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((s) => {
-              const Icon = s.icon;
-              return (
-                <Link
-                  key={s.title}
-                  to="/treatments"
-                  className="group relative flex flex-col border-b border-r border-border bg-background p-10 transition-colors duration-500 hover:bg-sage-soft/40 lg:p-12"
+          {/* Desktop masthead — over portraits */}
+          <div className="pointer-events-none absolute inset-x-0 top-10 z-30 hidden px-6 text-center md:block md:top-14 lg:top-16">
+            <p className="font-sans-tight text-[10px] tracking-[0.38em] text-[#d8cdc3]/80">
+              Founders
+            </p>
+            <h2 className="mx-auto mt-3 max-w-3xl font-display text-[clamp(2.2rem,5.5vw,3.85rem)] font-light leading-[1.02] tracking-tight text-[#faf8f4]">
+              Two doctors.
+            </h2>
+            <p className="doctors-philosophy mx-auto mt-2 max-w-md font-display text-[clamp(1.2rem,2.2vw,1.5rem)] italic leading-snug text-[#eae2d6]/90">
+              One philosophy of restraint.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:min-h-[92vh] md:grid-cols-2">
+            {[
+              {
+                img: drAhmed,
+                name: "Dr. Ahmed Sultan",
+                role: "General Dentist · Aligners Specialist",
+                position: "object-[58%_18%]",
+                align: "md:items-start md:text-left",
+                pad: "md:pl-10 md:pr-8 lg:pl-14",
+              },
+              {
+                img: drRoha,
+                name: "Dr. Roha Ejaz",
+                role: "Cosmetic Dentist",
+                position: "object-[center_14%]",
+                align: "md:items-end md:text-right",
+                pad: "md:pr-10 md:pl-8 lg:pr-14",
+              },
+            ].map((d) => (
+              <article
+                key={d.name}
+                className="doctors-duo-panel group relative isolate min-h-[58vh] overflow-hidden md:min-h-0"
+              >
+                <img
+                  src={d.img}
+                  alt={`Professional portrait of ${d.name}, ${d.role} at ORA Dental Wellness in Bahria Town`}
+                  className={`absolute inset-0 h-full w-full scale-105 object-cover transition-transform duration-[1.6s] ease-out group-hover:scale-110 ${d.position}`}
+                  loading="lazy"
+                  width={1023}
+                  height={1537}
+                />
+                <div className="absolute inset-0 bg-[#000000]/25 transition-colors duration-700 group-hover:bg-[#000000]/15" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/45 to-[#4d5645]/35" />
+                <div className="absolute inset-x-0 top-0 hidden h-44 bg-gradient-to-b from-[#000000]/70 to-transparent md:block" />
+
+                <div
+                  className={`absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-8 pb-10 pt-20 text-center md:pb-14 md:pt-28 ${d.align} ${d.pad}`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-sans-tight text-xs uppercase tracking-[0.2em] text-foreground/40">
-                      {s.num}
-                    </span>
-                    <Icon className="h-5 w-5 text-foreground/40 transition-colors group-hover:text-sage-deep" strokeWidth={1.4} />
-                  </div>
-                  <h3 className="mt-12 font-display text-2xl leading-tight md:text-3xl">{s.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-foreground/65">{s.desc}</p>
-                  <span className="mt-8 inline-flex items-center gap-2 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/45 transition-all group-hover:gap-3 group-hover:text-foreground">
-                    Explore <ArrowRight className="h-3 w-3" />
-                  </span>
-                </Link>
-              );
-            })}
+                  <p className="font-sans-tight text-[9px] tracking-[0.3em] text-[#d8cdc3]">
+                    {d.role}
+                  </p>
+                  <h3 className="mt-3 font-display text-[clamp(1.55rem,2.8vw,2.2rem)] font-normal tracking-tight text-[#faf8f4]">
+                    {d.name}
+                  </h3>
+                </div>
+              </article>
+            ))}
           </div>
 
-          <div className="mt-14 flex justify-center">
-            <Link to="/treatments" className="inline-flex items-center gap-3 rounded-full border border-foreground/30 px-7 py-4 font-sans-tight transition-colors hover:border-foreground">
-              View all treatments <ArrowRight className="h-4 w-4" />
-            </Link>
+          {/* Center seam */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-[30%] z-20 hidden -translate-x-1/2 md:block"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#d8cdc3]/40 bg-[#000000]/45 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-md">
+              <span className="font-display text-lg italic text-[#eae2d6]">&</span>
+            </div>
+          </div>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-[16%] left-1/2 z-20 hidden h-[30%] w-px -translate-x-1/2 bg-gradient-to-b from-[#d8cdc3]/50 via-[#70796b]/35 to-transparent md:block"
+          />
+        </div>
+      </section>
+
+      {/* Bridge CTA — between doctors and treatments */}
+      <section className="relative overflow-hidden">
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(105deg, #eae2d6 0%, #f5f1eb 42%, #eae2d6 78%, #d8cdc3 100%)",
+          }}
+        />
+        {/* Oversized watermark typography */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-0 right-[-4%] flex items-center overflow-hidden"
+        >
+          <span className="select-none font-display text-[clamp(8rem,22vw,18rem)] font-light leading-none tracking-[-0.06em] text-[#d8cdc3]/55">
+            ORA
+          </span>
+        </div>
+
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-20 sm:py-24 lg:grid-cols-12 lg:items-end lg:gap-8 lg:px-10 lg:py-28">
+          <div className="lg:col-span-7">
+            <div className="flex items-center gap-4">
+              <span className="h-px w-10 bg-[#666d57]" />
+              <p className="font-sans-tight text-[10px] tracking-[0.4em] text-[#4d5645]/70">
+                Appointment
+              </p>
+            </div>
+            <h2 className="mt-6 font-display text-[clamp(2.75rem,7vw,5rem)] font-light leading-[0.95] tracking-tight text-[#4d5645]">
+              Come sit
+              <span className="block italic text-[#666d57]">with us.</span>
+            </h2>
+          </div>
+
+          <div className="flex flex-col gap-8 lg:col-span-5 lg:pb-2">
+            <p className="max-w-sm text-[1.05rem] font-light leading-relaxed text-[#70796b]">
+              A quieter chair, considered hands, and care that never hurries the smile.
+            </p>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+              <a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="inline-flex flex-1 items-center justify-center gap-2 bg-[#4d5645] px-7 py-4 font-sans-tight text-[11px] tracking-[0.2em] text-[#f5f1eb] transition-colors hover:bg-[#666d57]"
+              >
+                Book a visit
+                <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href="#treatments"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("treatments")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="inline-flex flex-1 items-center justify-center gap-2 border border-[#4d5645]/30 bg-[#f5f1eb]/70 px-7 py-4 font-sans-tight text-[11px] tracking-[0.2em] text-[#4d5645] transition-colors hover:border-[#4d5645] hover:bg-[#f5f1eb]"
+              >
+                See treatments
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* DOCTORS */}
-      <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-40">
-        <SectionLabel>The hands</SectionLabel>
-        <h2 className="mt-6 max-w-3xl font-display text-4xl leading-tight md:text-5xl">
-          Two doctors. <span className="italic text-foreground/60">One philosophy of restraint.</span>
-        </h2>
+      <TreatmentsSection />
 
-        <div className="mt-16 grid gap-12 md:grid-cols-2">
-          {[
-            { img: drAhmed, name: "Dr. Ahmed Sultan", role: "Cosmetic & Restorative", bio: "An eye for proportion shaped by a decade of cosmetic work — Dr. Sultan leads our smile-design and clear aligner cases." },
-            { img: drRoha, name: "Dr. Roha Ejaz", role: "Aesthetic & Pediatric", bio: "Calm, precise, and unhurried — Dr. Ejaz brings a quiet warmth to aesthetic treatments and family dentistry." },
-          ].map((d) => (
-            <article key={d.name} className="group">
-              <div className="arch-frame relative h-[560px] overflow-hidden bg-secondary">
-                <img src={d.img} alt={d.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" width={768} height={960} />
-              </div>
-              <div className="mt-6 flex items-baseline justify-between">
-                <h3 className="font-display text-3xl">{d.name}</h3>
-                <span className="font-sans-tight text-muted-foreground">{d.role}</span>
-              </div>
-              <p className="mt-3 max-w-md text-foreground/70">{d.bio}</p>
-            </article>
-          ))}
-        </div>
-      </section>
+      <CasesSection />
 
-      {/* MEET OUR TEAM — carousel */}
-      <section className="bg-secondary/40">
-        <div className="mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
+      {/* MEET OUR TEAM — animated carousel */}
+      <section id="team" className="relative scroll-mt-24 overflow-hidden bg-[#f7f3ec]">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-[#666d57]/[0.06] blur-3xl"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -right-24 bottom-0 h-80 w-80 rounded-full bg-[#c4a35a]/[0.08] blur-3xl"
+        />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
           <div className="mx-auto max-w-3xl text-center">
             <SectionLabel>The team</SectionLabel>
-            <h2 className="mt-6 font-display text-4xl leading-tight md:text-5xl">
-              Meet Our <span className="italic text-sage-deep">Specialists</span>
+            <h2 className="mt-5 font-display text-4xl leading-tight md:text-5xl">
+              Meet our <span className="italic text-[#666d57]">specialists.</span>
             </h2>
-            <p className="mt-6 text-foreground/70">
+            <p className="mt-4 text-foreground/70">
               An exceptionally trained team of dental surgeons and aesthetic specialists — quietly dedicated to your care in Bahria Town Phase 4, Rawalpindi.
             </p>
           </div>
-          <div className="mt-16">
+          <div className="mt-10">
             <TeamCarousel />
           </div>
         </div>
       </section>
 
-      {/* BOOK NOW */}
-      <section className="relative overflow-hidden bg-foreground text-background">
+      {/* BOOK NOW / CONTACT */}
+      <section id="contact" className="relative scroll-mt-24 overflow-hidden bg-foreground text-background">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.07]"
@@ -264,10 +376,10 @@ function HomePage() {
               "radial-gradient(circle at 20% 20%, var(--accent) 0, transparent 40%), radial-gradient(circle at 80% 80%, var(--sage-deep) 0, transparent 45%)",
           }}
         />
-        <div className="relative mx-auto max-w-7xl px-6 py-28 lg:px-10 lg:py-36">
-          <div className="grid gap-16 lg:grid-cols-12">
-            {/* LEFT — copy + details */}
-            <div className="lg:col-span-5">
+        <div className="relative mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-36">
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
+            {/* LEFT — copy + details (desktop only) */}
+            <div className="hidden lg:col-span-5 lg:block">
               <SectionLabel><span className="text-background/60">Book now</span></SectionLabel>
               <h2 className="mt-6 font-display text-4xl leading-[1.05] md:text-5xl">
                 Book Your<br />
@@ -284,7 +396,14 @@ function HomePage() {
                   </span>
                   <div>
                     <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Visit</p>
-                    <p className="mt-1 max-w-xs leading-relaxed">Ground Floor, Plot 35, Street 8, Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi 46220</p>
+                    <a
+                      href={ORA_MAPS_SHARE_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-1 block max-w-xs leading-relaxed hover:text-accent"
+                    >
+                      {ORA_ADDRESS_FULL}
+                    </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -295,6 +414,17 @@ function HomePage() {
                     <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Call</p>
                     <a href="tel:+923398891919" className="mt-1 block hover:text-accent">0339 8891919</a>
                     <a href="tel:+92518891919" className="block hover:text-accent">051 8891919</a>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-background/20">
+                    <Mail className="h-4 w-4 text-accent" />
+                  </span>
+                  <div>
+                    <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Email</p>
+                    <a href="mailto:info@oradentalwellness.com" className="mt-1 block hover:text-accent">
+                      info@oradentalwellness.com
+                    </a>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -318,206 +448,304 @@ function HomePage() {
               </a>
             </div>
 
-            {/* RIGHT — form card */}
+            {/* RIGHT — form (form-only on mobile) */}
             <div className="lg:col-span-7">
-              <form
-                onSubmit={(e) => { e.preventDefault(); }}
-                className="relative rounded-3xl border border-background/15 bg-background/[0.03] p-8 backdrop-blur-sm md:p-12"
-              >
-                <div className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
-
-                <h3 className="font-display text-2xl md:text-3xl">Reserve a chair</h3>
-                <p className="mt-2 text-sm text-background/60">We'll confirm by phone within minutes.</p>
-
-                <div className="mt-10 grid gap-6 md:grid-cols-2">
-                  <div className="md:col-span-2">
-                    <label className="font-sans-tight text-xs uppercase tracking-[0.2em] text-background/50">Full name</label>
-                    <div className="relative mt-2">
-                      <UserIcon className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-background/40" />
-                      <Input
-                        required
-                        placeholder="Your name"
-                        className="h-12 rounded-none border-0 border-b border-background/20 bg-transparent pl-7 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0"
-                      />
-                    </div>
+              <div className="mb-5 lg:hidden">
+                <SectionLabel><span className="text-background/60">Book now</span></SectionLabel>
+                <h2 className="mt-3 font-display text-[1.65rem] leading-tight">
+                  Book your <span className="italic text-accent">appointment</span>
+                </h2>
+              </div>
+              {bookingSent ? (
+                <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-background/15 bg-background/[0.03] p-6 text-center backdrop-blur-sm md:min-h-[420px] md:rounded-3xl md:p-12">
+                  <div className="rounded-full bg-accent/30 p-5">
+                    <Check className="h-8 w-8 text-background" />
                   </div>
-
-                  <div>
-                    <label className="font-sans-tight text-xs uppercase tracking-[0.2em] text-background/50">Phone</label>
-                    <div className="relative mt-2">
-                      <Phone className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-background/40" />
-                      <Input
-                        required
-                        type="tel"
-                        placeholder="0339 8891919"
-                        className="h-12 rounded-none border-0 border-b border-background/20 bg-transparent pl-7 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="font-sans-tight text-xs uppercase tracking-[0.2em] text-background/50">Preferred date</label>
-                    <div className="relative mt-2">
-                      <CalendarDays className="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-background/40" />
-                      <Input
-                        required
-                        type="date"
-                        className="h-12 rounded-none border-0 border-b border-background/20 bg-transparent pl-7 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 [color-scheme:dark]"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="md:col-span-2">
-                    <label className="font-sans-tight text-xs uppercase tracking-[0.2em] text-background/50">Service</label>
-                    <Select>
-                      <SelectTrigger className="mt-2 h-12 rounded-none border-0 border-b border-background/20 bg-transparent px-0 text-background shadow-none focus:ring-0 [&>span]:text-background/80 data-[placeholder]:[&>span]:text-background/30">
-                        <SelectValue placeholder="Choose a treatment" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {services.map((s) => (
-                          <SelectItem key={s.title} value={s.title}>{s.title}</SelectItem>
-                        ))}
-                        <SelectItem value="Consultation">General Consultation</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <h3 className="mt-6 font-display text-3xl text-background">Request received.</h3>
+                  <p className="mt-3 max-w-sm text-background/70">We'll confirm your appointment by email or phone shortly.</p>
                 </div>
+              ) : (
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setBookingError(null);
+                    setBookingSubmitting(true);
 
-                <Button
-                  type="submit"
-                  className="mt-10 h-14 w-full rounded-full bg-accent text-foreground hover:bg-accent/90 md:w-auto md:px-10"
+                    const form = e.currentTarget;
+                    const formData = new FormData(form);
+
+                    try {
+                      await submit({
+                        data: {
+                          formType: "booking",
+                          name: String(formData.get("name") ?? ""),
+                          email: String(formData.get("email") ?? ""),
+                          phone: String(formData.get("phone") ?? ""),
+                          preferredDate: String(formData.get("preferredDate") ?? ""),
+                          service: bookingService,
+                        },
+                      });
+                      setBookingSent(true);
+                    } catch {
+                      setBookingError("We couldn't send your request. Please try again or call us directly.");
+                    } finally {
+                      setBookingSubmitting(false);
+                    }
+                  }}
+                  className="relative rounded-2xl border border-background/15 bg-background/[0.03] p-5 backdrop-blur-sm md:rounded-3xl md:p-12"
                 >
-                  Request appointment <ArrowRight className="h-4 w-4" />
-                </Button>
-              </form>
+                  <div className="absolute -top-px left-10 right-10 h-px bg-gradient-to-r from-transparent via-accent to-transparent" />
+
+                  <h3 className="font-display text-xl md:text-3xl">Reserve a chair</h3>
+                  <p className="mt-1 text-sm text-background/60 md:mt-2">We'll confirm by phone within minutes.</p>
+
+                  <div className="mt-5 grid gap-4 md:mt-10 md:grid-cols-2 md:gap-6">
+                    <div className="md:col-span-2">
+                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Full name</label>
+                      <div className="relative mt-1.5 md:mt-2">
+                        <UserIcon className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/40 md:h-4 md:w-4" />
+                        <Input
+                          required
+                          name="name"
+                          disabled={bookingSubmitting}
+                          placeholder="Your name"
+                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 md:h-12 md:pl-7"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Email</label>
+                      <div className="relative mt-1.5 md:mt-2">
+                        <Mail className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/40 md:h-4 md:w-4" />
+                        <Input
+                          required
+                          name="email"
+                          disabled={bookingSubmitting}
+                          type="email"
+                          placeholder="you@email.com"
+                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 md:h-12 md:pl-7"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Phone</label>
+                      <div className="relative mt-1.5 md:mt-2">
+                        <Phone className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/40 md:h-4 md:w-4" />
+                        <Input
+                          required
+                          name="phone"
+                          disabled={bookingSubmitting}
+                          type="tel"
+                          placeholder="0339 8891919"
+                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 md:h-12 md:pl-7"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Preferred date</label>
+                      <div className="relative mt-1.5 md:mt-2">
+                        <CalendarDays className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/40 md:h-4 md:w-4" />
+                        <Input
+                          required
+                          name="preferredDate"
+                          disabled={bookingSubmitting}
+                          type="date"
+                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 [color-scheme:dark] md:h-12 md:pl-7"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Service</label>
+                      <Select
+                        required
+                        disabled={bookingSubmitting}
+                        value={bookingService}
+                        onValueChange={setBookingService}
+                      >
+                        <SelectTrigger className="mt-1.5 h-10 rounded-none border-0 border-b border-background/20 bg-transparent px-0 text-background shadow-none focus:ring-0 [&>span]:text-background/80 data-[placeholder]:[&>span]:text-background/30 md:mt-2 md:h-12">
+                          <SelectValue placeholder="Choose a treatment" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {services.map((s) => (
+                            <SelectItem key={s.title} value={s.title}>{s.title}</SelectItem>
+                          ))}
+                          <SelectItem value="General Consultation">General Consultation</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {bookingError && <p className="mt-4 text-sm text-red-300 md:mt-6">{bookingError}</p>}
+
+                  <Button
+                    type="submit"
+                    disabled={bookingSubmitting || !bookingService}
+                    className="mt-6 h-11 w-full rounded-full bg-accent text-foreground hover:bg-accent/90 disabled:cursor-not-allowed disabled:opacity-60 md:mt-10 md:h-14 md:w-auto md:px-10"
+                  >
+                    {bookingSubmitting ? "Sending…" : "Request appointment"} <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </form>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* TESTIMONIALS — floating portraits with flip cards */}
-      <section className="relative overflow-hidden bg-background">
-        {/* faint vertical guide lines */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-40"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(to right, transparent 0 calc(100%/8 - 1px), color-mix(in oklab, var(--sage-deep) 18%, transparent) calc(100%/8 - 1px) calc(100%/8))",
-          }}
-        />
-        <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-32 lg:px-10 lg:pt-32 lg:pb-44">
-          {/* Floating cards row */}
-          <div className="relative mx-auto h-[420px] w-full max-w-6xl md:h-[460px]">
-            {testimonials.map((t, i) => {
-              // Hand-placed positions to mimic a staggered portrait constellation
-              const positions = [
-                "left-[2%]   top-[42%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-slow rotate-[-3deg]",
-                "left-[14%]  top-[14%] w-[130px] h-[170px] md:w-[170px] md:h-[220px] float-med  rotate-[2deg]",
-                "left-[28%]  top-[48%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-fast rotate-[-2deg]",
-                "left-[40%]  top-[6%]  w-[140px] h-[180px] md:w-[180px] md:h-[230px] float-slow rotate-[1deg] hidden sm:block",
-                "right-[28%] top-[44%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-med  rotate-[-1deg] hidden sm:block",
-                "right-[12%] top-[10%] w-[130px] h-[170px] md:w-[170px] md:h-[220px] float-fast rotate-[3deg] hidden md:block",
-                "right-[2%]  top-[46%] w-[120px] h-[160px] md:w-[150px] md:h-[200px] float-slow rotate-[-2deg] hidden md:block",
-              ];
-              const toneBg: Record<Testimonial["tone"], string> = {
-                sage: "bg-gradient-to-br from-sage-soft via-shoji to-sage/30",
-                ink:  "bg-gradient-to-br from-foreground via-foreground to-foreground/85 text-background",
-                soft: "bg-gradient-to-br from-shoji via-secondary to-sage-soft",
-              };
-              const toneInitials: Record<Testimonial["tone"], string> = {
-                sage: "text-sage-deep",
-                ink:  "text-background",
-                soft: "text-foreground/70",
-              };
-              const toneBack: Record<Testimonial["tone"], string> = {
-                sage: "bg-foreground text-background",
-                ink:  "bg-shoji text-foreground border border-border",
-                soft: "bg-sage-deep text-background",
-              };
-              return (
-                <div
-                  key={t.name}
-                  className={`flip-card absolute ${positions[i]} rounded-[14px] shadow-[0_18px_50px_-22px_rgba(0,0,0,0.35)]`}
-                  tabIndex={0}
-                >
-                  <div className="flip-card-inner rounded-[14px]">
-                    {/* FRONT — portrait */}
-                    <div className={`flip-face rounded-[14px] ${toneBg[t.tone]} flex flex-col items-center justify-center p-3`}>
-                      <div className={`font-display text-5xl ${toneInitials[t.tone]} md:text-6xl`}>
-                        {t.initials}
-                      </div>
-                      <div className={`mt-3 font-sans-tight text-[10px] uppercase tracking-[0.16em] ${t.tone === "ink" ? "text-background/70" : "text-foreground/55"}`}>
-                        {t.role.split("·")[0].trim()}
-                      </div>
-                    </div>
-                    {/* BACK — quote */}
-                    <div className={`flip-face flip-back rounded-[14px] ${toneBack[t.tone]} flex flex-col justify-between p-4`}>
-                      <p className="font-display text-[11px] leading-snug md:text-[13px]">
-                        “{t.quote}”
-                      </p>
-                      <div className="mt-2">
-                        <div className="font-display text-sm md:text-base">{t.name}</div>
-                        <div className={`font-sans-tight text-[9px] uppercase tracking-[0.14em] ${t.tone === "ink" ? "text-foreground/55" : "text-background/65"}`}>
-                          {t.role}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+      <GoogleReviews data={googleReviews} />
 
-          {/* Centered headline */}
-          <div className="relative mx-auto mt-10 max-w-3xl text-center">
-            <span className="inline-block rounded-full bg-secondary px-4 py-1.5 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/70">
-              Testimonials
-            </span>
-            <h2 className="mt-7 font-display text-5xl leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
-              Trusted by patients<br />
-              <span className="italic text-foreground/55">who chose quieter care.</span>
-            </h2>
-            <p className="mx-auto mt-6 max-w-xl text-foreground/65">
-              Hover any portrait to read why patients from across Rawalpindi and Islamabad make the drive to ORA.
-            </p>
-            <div className="mt-8 flex items-center justify-center gap-2">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-4 w-4 fill-sage-deep text-sage-deep" />
-              ))}
-              <span className="ml-2 font-sans-tight text-sm text-foreground/60">4.9 · 240+ reviews</span>
+      <FaqSection />
+
+      {/* VISIT — contact + map */}
+      <section id="visit" className="scroll-mt-24 border-t border-border bg-background">
+        <div className="mx-auto max-w-7xl px-6 py-14 lg:px-10 lg:py-28">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-6">
+            <div>
+              <SectionLabel>Visit</SectionLabel>
+              <h2 className="mt-4 font-display text-3xl leading-tight md:mt-6 md:text-5xl">
+                Come <span className="italic text-foreground/50">in.</span>
+              </h2>
             </div>
             <a
-              href="https://www.google.com/search?q=ORA+Dental+Wellness+Reviews"
+              href={ORA_MAPS_SHARE_URL}
               target="_blank"
               rel="noreferrer"
-              className="mt-10 inline-flex items-center gap-3 rounded-full bg-foreground px-7 py-4 font-sans-tight text-background transition-all hover:gap-4"
+              className="inline-flex items-center gap-2 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/50 transition-colors hover:text-foreground"
             >
-              Read on Google <ArrowRight className="h-4 w-4" />
+              Open in Google Maps <ArrowRight className="h-3.5 w-3.5" />
             </a>
+          </div>
+
+          {/* Mobile — compact detail list */}
+          <ul className="mt-8 divide-y divide-border border-y border-border lg:hidden">
+            <li className="flex gap-3 py-4">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#666d57]" strokeWidth={1.5} />
+              <a
+                href={ORA_MAPS_SHARE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm leading-relaxed text-foreground/80"
+              >
+                {ORA_ADDRESS_FULL}
+              </a>
+            </li>
+            <li className="flex gap-3 py-4">
+              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#666d57]" strokeWidth={1.5} />
+              <div className="flex flex-col gap-1 text-sm">
+                <a href="tel:+923398891919" className="text-foreground/80">
+                  0339 889 1919
+                </a>
+                <a href="tel:+92518891919" className="text-foreground/80">
+                  051 889 1919
+                </a>
+              </div>
+            </li>
+            <li className="flex gap-3 py-4">
+              <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#666d57]" strokeWidth={1.5} />
+              <a href="mailto:info@oradentalwellness.com" className="text-sm text-foreground/80">
+                info@oradentalwellness.com
+              </a>
+            </li>
+            <li className="flex gap-3 py-4">
+              <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#666d57]" strokeWidth={1.5} />
+              <div className="text-sm text-foreground/80">
+                <p>Mon – Sat · 12:00 – 9:00 PM</p>
+                <p className="text-foreground/45">Sunday · By appointment</p>
+              </div>
+            </li>
+          </ul>
+
+          {/* Desktop — detail cards */}
+          <div className="mt-14 hidden gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid lg:grid-cols-4">
+            <div className="bg-background p-8">
+              <MapPin className="h-4 w-4 text-foreground/35" strokeWidth={1.5} />
+              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+                Location
+              </p>
+              <a
+                href={ORA_MAPS_SHARE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 block text-sm leading-relaxed text-foreground/80 transition-colors hover:text-foreground"
+              >
+                {ORA_ADDRESS_LINES.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </a>
+            </div>
+
+            <div className="bg-background p-8">
+              <Phone className="h-4 w-4 text-foreground/35" strokeWidth={1.5} />
+              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+                Phone
+              </p>
+              <ul className="mt-4 space-y-3">
+                <li>
+                  <a
+                    href="tel:+923398891919"
+                    className="flex items-center gap-3 font-display text-xl tracking-[0.04em] text-foreground transition-colors hover:text-[#666d57]"
+                  >
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#666d57]" aria-hidden />
+                    0339 889 1919
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="tel:+92518891919"
+                    className="flex items-center gap-3 font-display text-xl tracking-[0.04em] text-foreground transition-colors hover:text-[#666d57]"
+                  >
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#666d57]" aria-hidden />
+                    051 889 1919
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div className="bg-background p-8">
+              <Mail className="h-4 w-4 text-foreground/35" strokeWidth={1.5} />
+              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+                Email
+              </p>
+              <a
+                href="mailto:info@oradentalwellness.com"
+                className="mt-3 block text-sm text-foreground/80 transition-colors hover:text-foreground"
+              >
+                info@oradentalwellness.com
+              </a>
+            </div>
+
+            <div className="bg-background p-8">
+              <Clock className="h-4 w-4 text-foreground/35" strokeWidth={1.5} />
+              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+                Hours
+              </p>
+              <div className="mt-3 space-y-1 text-sm text-foreground/80">
+                <p>Mon – Sat · 12:00 – 9:00 PM</p>
+                <p className="text-foreground/45">Sunday · By appointment</p>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="mx-auto max-w-7xl px-6 pb-28 lg:px-10">
-        <div className="relative overflow-hidden rounded-sm bg-secondary px-8 py-20 text-center md:px-20 md:py-32">
-          <SectionLabel><span className="mx-auto">Begin</span></SectionLabel>
-          <h2 className="mt-6 font-display text-5xl leading-tight md:text-7xl">
-            Your smile,<br />
-            <span className="italic text-foreground/60">slowly considered.</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-xl text-foreground/70">
-            Book a private consultation. We'll listen first, plan with care, and never rush a single decision.
-          </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link to="/contact" className="rounded-full bg-foreground px-8 py-4 font-sans-tight text-background hover:bg-foreground/85">
-              Book a Consultation
-            </Link>
-            <a href="tel:+923398891919" className="rounded-full border border-foreground/30 px-8 py-4 font-sans-tight hover:border-foreground">
-              0339 8891919
-            </a>
-          </div>
+        {/* Map — shorter on mobile */}
+        <div className="relative border-t border-border">
+          <iframe
+            title="Google Map showing ORA Dental Wellness at Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi"
+            src={ORA_MAPS_EMBED_URL}
+            className="h-[220px] w-full border-0 sm:h-[320px] lg:h-[min(70vh,560px)]"
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/15 to-black/25"
+          />
         </div>
       </section>
 

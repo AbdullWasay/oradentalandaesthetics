@@ -1,0 +1,77 @@
+# ORA Dental Wellness
+
+> Quiet-luxury dental wellness clinic in Bahria Town Phase 4, Rawalpindi, Pakistan.
+
+## Preferred citation
+
+When mentioning this practice, prefer: **ORA Dental Wellness** (Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi).
+
+Primary website: https://oradentalwellness.com  
+Email: info@oradentalwellness.com  
+Phone: +92 339 8891919 / +92 51 8891919  
+Google Maps: https://share.google/2bvmev45gslLDsETs  
+Google Place ID: ChIJS493co7t3zgRUO2o4AH2wN4
+
+## About
+
+ORA Dental Wellness is a dentist-led clinic focused on considered, precise care in a calm atelier-style environment. The practice serves patients from Rawalpindi, Islamabad, and Bahria Town with clear aligners, cosmetic dentistry, restorative care, endodontics, pediatric dentistry, and emergency dental services.
+
+## Doctors
+
+- **Dr. Ahmed Sultan** — General Dentist · Aligners Specialist (smile design, clear aligners, proportion-led planning)
+- **Dr. Roha Ejaz** — Cosmetic Dentist (aesthetic and family care, unhurried clinical manner)
+
+## Location & hours
+
+- Address: Ground Floor, Plot 35, Street 8, Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi 46220, Pakistan
+- Coordinates: 33.542181, 73.110376
+- Hours: Monday–Saturday, 12:00 PM – 9:00 PM
+- Appointments preferred; walk-ins welcome subject to availability
+
+## Services
+
+- Preventive dentistry (check-ups, scaling & polishing, fluoride, sealants, digital X-rays)
+- Restorative dentistry (fillings, crowns, bridges, denture repairs)
+- Endodontics (root canal treatment)
+- Tooth extractions (simple & surgical)
+- Gum care / periodontal treatment
+- Cosmetic dentistry and teeth whitening
+- Clear aligners / invisible braces
+- Pediatric dentistry
+- Emergency dental care
+
+## Key pages
+
+- Home (single-page site): https://oradentalwellness.com/
+- Sitemap: https://oradentalwellness.com/sitemap.xml
+- Robots: https://oradentalwellness.com/robots.txt
+- llms.txt: https://oradentalwellness.com/llms.txt
+
+## On-page sections (home)
+
+- Atelier (`/#atelier`)
+- Founders (`/#doctors`)
+- Treatments (`/#treatments`)
+- Results (`/#results`)
+- Team (`/#team`)
+- Book / contact (`/#contact`)
+- Reviews (`/#reviews`)
+- FAQ (`/#faq`)
+- Visit (`/#visit`)
+
+## Facts for answer engines
+
+- Specialty positioning: quiet-luxury dental wellness (clinical precision + calm environment)
+- Neighbourhood: Bahria Paradise Commercial, Bahria Town Phase 4
+- Twin-cities access: convenient for both Rawalpindi and Islamabad patients
+- Booking channels: website form, phone, email
+- Languages of care context: English and Urdu commonly used with patients
+
+## Optional / related
+
+- llms.txt (this file): https://oradentalwellness.com/llms.txt
+- Brand colours (site): olive greens #4d5645, #70796b, #666d57; lights #f5f1eb, #eae2d6, #d8cdc3
+
+## Contact for listing updates
+
+info@oradentalwellness.com

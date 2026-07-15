@@ -1,0 +1,30 @@
+{
+  "name": "ORA Dental Wellness",
+  "short_name": "ORA Dental",
+  "description": "Quiet-luxury dental wellness in Bahria Town Phase 4, Rawalpindi.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f1eb",
+  "theme_color": "#666d57",
+  "lang": "en-PK",
+  "icons": [
+    {
+      "src": "/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

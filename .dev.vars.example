@@ -1,0 +1,11 @@
+SMTP_HOST=smtp.hostinger.com
+SMTP_PORT=465
+SMTP_SECURE=true
+SMTP_USER=info@oradentalwellness.com
+SMTP_PASS=your-mailbox-password
+SMTP_FROM=info@oradentalwellness.com
+SMTP_TO=info@oradentalwellness.com
+
+# Google Places API (New) — live reviews on the homepage
+GOOGLE_PLACES_API_KEY=your-google-places-api-key
+GOOGLE_PLACE_ID=ChIJ...your-place-id

@@ -1,4 +1,5 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { PAGE_SEO, buildPageLinks, buildPageMeta } from "@/lib/seo";
 
 import appCss from "../styles.css?url";
 
@@ -24,26 +25,29 @@ function NotFoundComponent() {
   );
 }
 
+const rootPage = PAGE_SEO.home;
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ORA Dental Wellness — Bahria Town, Rawalpindi" },
-      { name: "description", content: "Premium dental wellness in Bahria Town Phase 4, Rawalpindi. Specialists in clear aligners, implants and general dentistry." },
-      { property: "og:title", content: "ORA Dental Wellness — Bahria Town, Rawalpindi" },
-      { property: "og:description", content: "Aligners, implants and general dentistry in Bahria Paradise Commercial, Rawalpindi." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "ORA Dental Wellness — Bahria Town, Rawalpindi" },
-      { name: "twitter:description", content: "Aligners, implants and general dentistry in Bahria Paradise Commercial, Rawalpindi." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/273c01a4-5c03-42c2-b2d7-a4be12765ea7/id-preview-a1ac07d2--bbb66ed3-b95d-4bee-ae29-209a2cd6232b.lovable.app-1777103185413.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/273c01a4-5c03-42c2-b2d7-a4be12765ea7/id-preview-a1ac07d2--bbb66ed3-b95d-4bee-ae29-209a2cd6232b.lovable.app-1777103185413.png" },
+      ...buildPageMeta(rootPage),
     ],
     links: [
+      ...buildPageLinks(rootPage),
+      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "512x512" },
+      { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      { rel: "manifest", href: "/site.webmanifest" },
+      { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap",
+      },
       { rel: "stylesheet", href: appCss },
     ],
   }),
@@ -54,7 +58,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en-PK">
       <head>
         <HeadContent />
       </head>
