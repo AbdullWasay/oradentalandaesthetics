@@ -6,11 +6,9 @@ const nav = [
   { href: "#atelier", label: "Atelier" },
   { href: "#doctors", label: "Founders" },
   { href: "#treatments", label: "Treatments" },
-  { href: "#results", label: "Results" },
   { href: "#team", label: "Our Team" },
   { href: "#contact", label: "Contact" },
   { href: "#reviews", label: "Reviews" },
-  { href: "#faq", label: "FAQ" },
 ] as const;
 
 function go(href: string) {

@@ -340,7 +340,7 @@ function HomePage() {
       <CasesSection />
 
       {/* MEET OUR TEAM — animated carousel */}
-      <section id="team" className="relative scroll-mt-24 overflow-hidden bg-[#f7f3ec]">
+      <section id="team" className="relative scroll-mt-24 overflow-hidden bg-secondary/40">
         <div
           aria-hidden
           className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-[#666d57]/[0.06] blur-3xl"
