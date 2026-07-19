@@ -119,7 +119,7 @@ export const FAQ_ITEMS = [
   {
     question: "Which dentists practice at ORA?",
     answer:
-      "ORA is led by Dr. Ahmed Sultan (General Dentist & Aligners Specialist) and Dr. Roha Ejaz (Cosmetic Dentist), supported by a trained clinical team.",
+      "ORA is led by Dr. Ahmed Sultan (General Dentist & Aligners Specialist) and Dr. Roha Ejaz (General & Restorative Dentist), supported by a trained clinical team.",
   },
   {
     question: "How do I book an appointment?",
@@ -294,7 +294,7 @@ export function buildDentistJsonLd() {
       {
         "@type": "Person",
         name: "Dr. Roha Ejaz",
-        jobTitle: "Cosmetic Dentist",
+        jobTitle: "General & Restorative Dentist",
         worksFor: { "@id": `${SITE_URL}/#dentist` },
       },
       {

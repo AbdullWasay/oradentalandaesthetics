@@ -17,7 +17,7 @@ type Member = {
 
 const team: Member[] = [
   { name: "Dr. Ahmed Sultan", role: "General Dentist, Aligners Specialist", img: drAhmed, dwellMs: 7000 },
-  { name: "Dr. Roha Ejaz", role: "Cosmetic Dentist", img: drRoha, dwellMs: 7000 },
+  { name: "Dr. Roha Ejaz", role: "General & Restorative Dentist", img: drRoha, dwellMs: 7000 },
   { name: "Dr. Usman Khattak", role: "Periodontist & Implantologist", img: drUsman, dwellMs: 2200 },
   { name: "Dr. Ozair Shirazi", role: "Oral & Maxillofacial Surgeon", img: drOzair, dwellMs: 2200 },
   {
