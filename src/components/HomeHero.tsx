@@ -16,12 +16,10 @@ function scrollTo(id: string) {
 
 /**
  * Mobile — clinic video atmosphere behind centered copy + social proof.
- * Video only loads under the lg breakpoint so desktop never fetches it.
  */
 function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReviewsData }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const loadMobileMedia = useMediaQuery("(max-width: 1023px)");
   const avatars =
     reviews?.reviews.filter((r) => r.authorPhotoUrl).slice(0, 4) ?? [];
 
@@ -35,11 +33,28 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || reducedMotion || !ready || !loadMobileMedia) return;
+    if (!video || reducedMotion || !ready) return;
+
+    video.defaultMuted = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
     video.playbackRate = 0.85;
-    const play = video.play();
-    if (play && typeof play.catch === "function") play.catch(() => {});
-  }, [ready, reducedMotion, loadMobileMedia]);
+
+    const tryPlay = () => {
+      const play = video.play();
+      if (play && typeof play.catch === "function") play.catch(() => {});
+    };
+
+    tryPlay();
+    video.addEventListener("loadeddata", tryPlay);
+    video.addEventListener("canplay", tryPlay);
+    return () => {
+      video.removeEventListener("loadeddata", tryPlay);
+      video.removeEventListener("canplay", tryPlay);
+    };
+  }, [ready, reducedMotion]);
 
   return (
     <section
@@ -48,21 +63,22 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
       }`}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        {loadMobileMedia && !reducedMotion ? (
+        {!reducedMotion ? (
           <video
             ref={videoRef}
             className="absolute inset-0 h-full w-full scale-105 object-cover"
             muted
+            autoPlay
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             poster="/clinic-video-poster.jpg"
           >
             <source src="/clinic_video_mobile.mp4" type="video/mp4" />
           </video>
         ) : (
           <img
-            src={loadMobileMedia ? heroMobilePoster : undefined}
+            src={heroMobilePoster}
             alt=""
             className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
             width={1080}
