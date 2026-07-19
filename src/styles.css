@@ -435,4 +435,17 @@
       animation: none;
     }
   }
+
+  /* Hide iOS Safari’s big ▶ when muted autoplay is blocked (e.g. Low Power Mode) */
+  .hero-mobile-video::-webkit-media-controls {
+    display: none !important;
+    -webkit-appearance: none;
+  }
+  .hero-mobile-video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+  }
+  .hero-mobile-video::-webkit-media-controls-enclosure {
+    display: none !important;
+  }
 }
