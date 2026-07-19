@@ -113,9 +113,20 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <p className="mt-7 border-t border-border/50 pt-4 text-center font-sans-tight text-[10px] text-muted-foreground">
-          © {new Date().getFullYear()} ORA Dental Wellness
-        </p>
+        <div className="mt-7 space-y-1 border-t border-border/50 pt-4 text-center font-sans-tight text-[10px] text-muted-foreground">
+          <p>© {new Date().getFullYear()} ORA Dental Wellness</p>
+          <p className="text-[9px] text-muted-foreground/70">
+            Developed by{" "}
+            <a
+              href="https://www.linkedin.com/in/abdulwasay308/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-[#666d57]"
+            >
+              Abdul Wasay
+            </a>
+          </p>
+        </div>
       </div>
 
       {/* Desktop */}
@@ -211,8 +222,19 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="hidden border-t border-border/60 px-10 py-6 text-center font-sans-tight text-muted-foreground lg:block">
-        © {new Date().getFullYear()} ORA Dental Wellness — All rights reserved
+      <div className="hidden border-t border-border/60 px-10 py-6 text-center font-sans-tight text-sm text-muted-foreground lg:block">
+        <p>© {new Date().getFullYear()} ORA Dental Wellness — All rights reserved</p>
+        <p className="mt-1 text-[10px] text-muted-foreground/65">
+          Developed by{" "}
+          <a
+            href="https://www.linkedin.com/in/abdulwasay308/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-[#666d57]"
+          >
+            Abdul Wasay
+          </a>
+        </p>
       </div>
     </footer>
   );

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Star } from "lucide-react";
-import heroDesktop from "@/assets/her-section-bg.png";
-import heroMobile from "@/assets/home.png";
+import heroDesktop from "@/assets/her-section-bg.webp";
+import heroMobilePoster from "@/assets/home-poster.webp";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { formatRating, formatReviewCount, type GoogleReviewsData } from "@/lib/google-reviews";
 
 type HomeHeroProps = {
@@ -15,10 +16,12 @@ function scrollTo(id: string) {
 
 /**
  * Mobile — clinic video atmosphere behind centered copy + social proof.
+ * Video only loads under the lg breakpoint so desktop never fetches it.
  */
 function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReviewsData }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const loadMobileMedia = useMediaQuery("(max-width: 1023px)");
   const avatars =
     reviews?.reviews.filter((r) => r.authorPhotoUrl).slice(0, 4) ?? [];
 
@@ -32,11 +35,11 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || reducedMotion || !ready) return;
+    if (!video || reducedMotion || !ready || !loadMobileMedia) return;
     video.playbackRate = 0.85;
     const play = video.play();
     if (play && typeof play.catch === "function") play.catch(() => {});
-  }, [ready, reducedMotion]);
+  }, [ready, reducedMotion, loadMobileMedia]);
 
   return (
     <section
@@ -44,9 +47,8 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
         ready ? "opacity-100" : "opacity-0"
       }`}
     >
-      {/* Clinic video atmosphere */}
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        {!reducedMotion ? (
+        {loadMobileMedia && !reducedMotion ? (
           <video
             ref={videoRef}
             className="absolute inset-0 h-full w-full scale-105 object-cover"
@@ -54,21 +56,21 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
             loop
             playsInline
             preload="metadata"
-            poster={heroMobile}
+            poster="/clinic-video-poster.jpg"
           >
             <source src="/clinic_video_mobile.mp4" type="video/mp4" />
           </video>
         ) : (
           <img
-            src={heroMobile}
+            src={loadMobileMedia ? heroMobilePoster : undefined}
             alt=""
             className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
             width={1080}
-            height={1920}
+            height={1440}
             fetchPriority="high"
+            decoding="async"
           />
         )}
-        {/* Soft cream veil — video peeks through, copy stays clear */}
         <div className="absolute inset-0 bg-[#f5f1eb]/55" />
         <div className="absolute inset-0 bg-[#4d5645]/18 mix-blend-multiply" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85" />
@@ -83,7 +85,8 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
           <span className="h-px w-8 bg-[#666d57]/40" />
         </div>
 
-        <h1
+        {/* Document H1 lives in DesktopHero; mobile uses visual headline only */}
+        <p
           data-speakable
           className="mx-auto mt-6 max-w-[20rem] text-center font-display text-[clamp(2.4rem,9.5vw,3.1rem)] font-light leading-[1.06] tracking-tight text-[#4d5645]"
         >
@@ -91,7 +94,7 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
           <br />
           crafted for{" "}
           <span className="italic text-[#666d57]">your smile.</span>
-        </h1>
+        </p>
 
         <p
           data-speakable
@@ -109,70 +112,68 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
           }}
           className="group mx-auto mt-7 flex w-full max-w-sm items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
         >
-          Book a consultation
-          <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+          Book a visit
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
         </a>
 
-        {reviews && reviews.totalReviews > 0 ? (
-          <div className="mx-auto mt-7 flex max-w-sm items-center justify-center gap-3">
-            <div className="flex -space-x-2.5">
-              {avatars.length > 0 ? (
-                avatars.map((r) => (
-                  <img
-                    key={r.id}
-                    src={r.authorPhotoUrl!}
-                    alt=""
-                    className="h-9 w-9 rounded-full border-2 border-[#f5f1eb] object-cover shadow-sm"
-                  />
-                ))
-              ) : (
+        {reviews && (
+          <div className="mx-auto mt-8 flex items-center justify-center gap-3">
+            <div className="flex -space-x-2">
+              {avatars.map((r) => (
+                <img
+                  key={r.author}
+                  src={r.authorPhotoUrl!}
+                  alt=""
+                  className="h-9 w-9 rounded-full border-2 border-[#f5f1eb] object-cover shadow-sm"
+                  width={36}
+                  height={36}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ))}
+              {avatars.length < 4 && (
                 <span className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#f5f1eb] bg-[#666d57]/15">
-                  <Star className="h-3.5 w-3.5 fill-[#c4a35a] text-[#c4a35a]" />
+                  <Star className="h-3.5 w-3.5 fill-[#666d57] text-[#666d57]" />
                 </span>
               )}
             </div>
             <div className="text-left">
               <div className="flex items-center gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`h-2.5 w-2.5 ${
-                      i < Math.round(reviews.rating)
-                        ? "fill-[#c4a35a] text-[#c4a35a]"
-                        : "text-[#c4a35a]/25"
-                    }`}
-                  />
+                  <Star key={i} className="h-3 w-3 fill-[#666d57] text-[#666d57]" />
                 ))}
-                <span className="ml-1 text-xs font-medium text-[#4d5645]">
-                  {formatRating(reviews.rating)}
-                </span>
               </div>
-              <p className="mt-0.5 text-[11px] text-[#70796b]">
-                {formatReviewCount(reviews.totalReviews)} happy patients
+              <p className="mt-0.5 font-sans-tight text-[10px] tracking-[0.06em] text-[#70796b]">
+                {formatRating(reviews.rating)} · {formatReviewCount(reviews.totalReviews)} Google reviews
               </p>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </section>
   );
 }
 
-/** Desktop — split composition: olive copy plane + reception photograph. */
+/** Desktop — full-bleed reception photograph + olive copy plane. */
 function DesktopHero({ ready }: { ready: boolean }) {
+  const loadDesktopMedia = useMediaQuery("(min-width: 1024px)");
+
   return (
     <section className="relative hidden min-h-[min(calc(100dvh-11.25rem),740px)] overflow-hidden bg-[#666d57] lg:block">
-      <img
-        src={heroDesktop}
-        alt="ORA Dental Wellness reception desk and waiting area in Bahria Town Phase 4, Rawalpindi"
-        className={`pointer-events-none absolute inset-0 h-full w-full object-cover object-center ${
-          ready ? "opacity-100" : "opacity-0"
-        }`}
-        width={1920}
-        height={1080}
-        fetchPriority="high"
-      />
-      {/* Soft lift for copy on the olive panel — keep the photo side clear */}
+      {loadDesktopMedia ? (
+        <img
+          src={heroDesktop}
+          alt="ORA Dental Wellness reception desk and waiting area in Bahria Town Phase 4, Rawalpindi"
+          className={`pointer-events-none absolute inset-0 h-full w-full object-cover object-center ${
+            ready ? "opacity-100" : "opacity-0"
+          }`}
+          width={1750}
+          height={899}
+          fetchPriority="high"
+          decoding="async"
+          sizes="100vw"
+        />
+      ) : null}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#4d5645]/25 via-transparent to-transparent"

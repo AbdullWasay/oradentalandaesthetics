@@ -27,9 +27,9 @@ import {
   homeJsonLdScripts,
   ORA_WHATSAPP_URL,
 } from "@/lib/seo";
-import aboutUs from "@/assets/about-us.png";
-import drAhmed from "@/assets/doctors/dr-ahmed-sultan.png";
-import drRoha from "@/assets/doctors/dr-roha-ejaz.png";
+import aboutUs from "@/assets/about-us.webp";
+import drAhmed from "@/assets/doctors/dr-ahmed-sultan.webp";
+import drRoha from "@/assets/doctors/dr-roha-ejaz.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,7 +58,7 @@ function HomePage() {
   const stats = [
     { icon: Smile, k: "500+", v: "Smiles transformed", short: "Smiles" },
     { icon: Users, k: formatReviewCount(googleReviews.totalReviews), v: "Google reviews", short: "Reviews" },
-    { icon: Award, k: "5+", v: "Years combined experience", short: "Years" },
+    { icon: Award, k: "10+", v: "Years combined experience", short: "Years" },
     { icon: Clock, k: "98%", v: "Case predictability", short: "Cases" },
   ];
   const [bookingSent, setBookingSent] = useState(false);
@@ -82,6 +82,7 @@ function HomePage() {
       <HomeSplash onComplete={handleSplashComplete} />
       <SiteHeader />
 
+      <main id="main">
       {/* HERO */}
       <HomeHero ready={heroReady} reviews={googleReviews} />
       {/* Marquee */}
@@ -168,8 +169,10 @@ function HomePage() {
                 alt="Interior of ORA Dental Wellness atelier in Bahria Town Phase 4, with arched alcoves and soft lighting"
                 className="h-full w-full object-cover object-center"
                 loading="lazy"
+                decoding="async"
                 width={800}
                 height={1000}
+                sizes="(min-width: 1024px) 40vw, 100vw"
               />
             </div>
           </div>
@@ -233,11 +236,13 @@ function HomePage() {
               >
                 <img
                   src={d.img}
-                  alt={`Professional portrait of ${d.name}, ${d.role} at ORA Dental Wellness in Bahria Town`}
+                  alt={`Professional portrait of ${d.name}, ${d.role} at ORA Dental Wellness in Bahria Town, Islamabad`}
                   className={`absolute inset-0 h-full w-full scale-105 object-cover transition-transform duration-[1.6s] ease-out group-hover:scale-110 ${d.position}`}
                   loading="lazy"
-                  width={1023}
-                  height={1537}
+                  decoding="async"
+                  width={680}
+                  height={1020}
+                  sizes="(min-width: 768px) 50vw, 100vw"
                 />
                 <div className="absolute inset-0 bg-[#000000]/25 transition-colors duration-700 group-hover:bg-[#000000]/15" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/45 to-[#4d5645]/35" />
@@ -257,15 +262,6 @@ function HomePage() {
             ))}
           </div>
 
-          {/* Center seam */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 top-[30%] z-20 hidden -translate-x-1/2 md:block"
-          >
-            <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#d8cdc3]/40 bg-[#000000]/45 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-md">
-              <span className="font-display text-lg italic text-[#eae2d6]">&</span>
-            </div>
-          </div>
           <div
             aria-hidden
             className="pointer-events-none absolute bottom-[16%] left-1/2 z-20 hidden h-[30%] w-px -translate-x-1/2 bg-gradient-to-b from-[#d8cdc3]/50 via-[#70796b]/35 to-transparent md:block"
@@ -750,6 +746,8 @@ function HomePage() {
           />
         </div>
       </section>
+
+      </main>
 
       <SiteFooter />
 
