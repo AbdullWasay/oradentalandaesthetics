@@ -9,11 +9,12 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
 
   useEffect(() => {
     const taglineTimer = window.setTimeout(() => setPhase("tagline"), 1050);
-    const exitTimer = window.setTimeout(() => setPhase("exit"), 1850);
-    const doneTimer = window.setTimeout(() => {
-      setVisible(false);
+    const exitTimer = window.setTimeout(() => {
+      setPhase("exit");
+      // Reveal hero under the fading splash so image + copy appear together
       onComplete();
-    }, 2400);
+    }, 1850);
+    const doneTimer = window.setTimeout(() => setVisible(false), 2400);
 
     return () => {
       window.clearTimeout(taglineTimer);
