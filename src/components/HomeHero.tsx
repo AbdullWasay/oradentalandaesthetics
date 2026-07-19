@@ -16,10 +16,12 @@ function scrollTo(id: string) {
 
 /**
  * Mobile — clinic video atmosphere behind centered copy + social proof.
+ * iOS Low Power Mode blocks autoplay; we fall back to a still (never show the native ▶).
  */
 function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReviewsData }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const avatars =
     reviews?.reviews.filter((r) => r.authorPhotoUrl).slice(0, 4) ?? [];
 
@@ -33,28 +35,47 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || reducedMotion || !ready) return;
+    if (!video || reducedMotion) return;
 
     video.defaultMuted = true;
     video.muted = true;
     video.playsInline = true;
-    video.setAttribute("playsinline", "");
-    video.setAttribute("webkit-playsinline", "");
-    video.playbackRate = 0.85;
+    video.setAttribute("playsinline", "true");
+    video.setAttribute("webkit-playsinline", "true");
+    video.controls = false;
+    video.disablePictureInPicture = true;
+
+    const markPlaying = () => setVideoPlaying(true);
+    const markStopped = () => setVideoPlaying(false);
 
     const tryPlay = () => {
-      const play = video.play();
-      if (play && typeof play.catch === "function") play.catch(() => {});
+      video.muted = true;
+      const result = video.play();
+      if (result && typeof result.then === "function") {
+        result.then(markPlaying).catch(markStopped);
+      }
     };
 
     tryPlay();
+    video.addEventListener("playing", markPlaying);
+    video.addEventListener("pause", markStopped);
     video.addEventListener("loadeddata", tryPlay);
     video.addEventListener("canplay", tryPlay);
+
+    // First user gesture unlocks playback even under Low Power Mode on some iOS versions
+    const unlock = () => tryPlay();
+    document.addEventListener("touchstart", unlock, { once: true, passive: true });
+    document.addEventListener("click", unlock, { once: true });
+
     return () => {
+      video.removeEventListener("playing", markPlaying);
+      video.removeEventListener("pause", markStopped);
       video.removeEventListener("loadeddata", tryPlay);
       video.removeEventListener("canplay", tryPlay);
+      document.removeEventListener("touchstart", unlock);
+      document.removeEventListener("click", unlock);
     };
-  }, [ready, reducedMotion]);
+  }, [reducedMotion]);
 
   return (
     <section
@@ -63,30 +84,33 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
       }`}
     >
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* Still always under the video — visible when iOS blocks autoplay */}
+        <img
+          src={heroMobilePoster}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
+          width={1080}
+          height={1440}
+          fetchPriority="high"
+          decoding="async"
+        />
         {!reducedMotion ? (
           <video
             ref={videoRef}
-            className="absolute inset-0 h-full w-full scale-105 object-cover"
+            className={`hero-mobile-video absolute inset-0 h-full w-full scale-105 object-cover transition-opacity duration-500 ${
+              videoPlaying ? "opacity-100" : "opacity-0"
+            }`}
+            src="/clinic_video_mobile.mp4?v=3"
             muted
             autoPlay
             loop
             playsInline
             preload="auto"
-            poster="/clinic-video-poster.jpg"
-          >
-            <source src="/clinic_video_mobile.mp4" type="video/mp4" />
-          </video>
-        ) : (
-          <img
-            src={heroMobilePoster}
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
-            width={1080}
-            height={1440}
-            fetchPriority="high"
-            decoding="async"
+            controls={false}
+            disablePictureInPicture
+            disableRemotePlayback
           />
-        )}
+        ) : null}
         <div className="absolute inset-0 bg-[#f5f1eb]/55" />
         <div className="absolute inset-0 bg-[#4d5645]/18 mix-blend-multiply" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85" />
