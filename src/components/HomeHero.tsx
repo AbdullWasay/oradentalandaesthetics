@@ -161,7 +161,7 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
 /** Desktop — split composition: olive copy plane + reception photograph. */
 function DesktopHero({ ready }: { ready: boolean }) {
   return (
-    <section className="relative hidden min-h-[min(88vh,820px)] overflow-hidden bg-[#666d57] lg:block">
+    <section className="relative hidden min-h-[min(calc(100dvh-11.25rem),740px)] overflow-hidden bg-[#666d57] lg:block">
       <img
         src={heroDesktop}
         alt="ORA Dental Wellness reception desk and waiting area in Bahria Town Phase 4, Rawalpindi"
@@ -178,7 +178,7 @@ function DesktopHero({ ready }: { ready: boolean }) {
         className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#4d5645]/25 via-transparent to-transparent"
       />
 
-      <div className="relative z-10 mx-auto grid max-w-7xl px-10 pt-20 pb-28">
+      <div className="relative z-10 mx-auto grid max-w-7xl px-10 pt-11 pb-[5.5rem] lg:pt-[3.25rem] lg:pb-[6.5rem]">
         <div
           className={`max-w-2xl text-[#f5f1eb] ${ready ? "opacity-100" : "opacity-0"}`}
         >
