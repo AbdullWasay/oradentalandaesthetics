@@ -52,7 +52,6 @@ ORA Dental Wellness is a dentist-led clinic focused on considered, precise care 
 - Atelier (`/#atelier`)
 - Founders (`/#doctors`)
 - Treatments (`/#treatments`)
-- Results (`/#results`)
 - Team (`/#team`)
 - Book / contact (`/#contact`)
 - Reviews (`/#reviews`)

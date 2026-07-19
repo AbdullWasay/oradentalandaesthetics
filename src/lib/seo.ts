@@ -23,6 +23,7 @@ export const ORA_PHONE_PRIMARY = "+923398891919";
 export const ORA_PHONE_DISPLAY = "0339 8891919";
 export const ORA_PHONE_LANDLINE = "+92518891919";
 export const ORA_PHONE_LANDLINE_DISPLAY = "051 8891919";
+export const ORA_WHATSAPP_URL = "https://wa.me/923398891919";
 export const ORA_EMAIL = "info@oradentalwellness.com";
 
 /** Approximate coordinates from the clinic’s Google Maps listing. */

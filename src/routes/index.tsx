@@ -4,7 +4,6 @@ import { useState, useCallback, useEffect } from "react";
 import { ArrowRight, Sparkles, Award, Users, Clock, Smile, MapPin, Phone, CalendarDays, MessageCircle, User as UserIcon, Check, Mail } from "lucide-react";
 import { ORA_ADDRESS_FULL, ORA_ADDRESS_LINES, ORA_MAPS_EMBED_URL, ORA_MAPS_SHARE_URL } from "@/lib/location";
 import { TreatmentsSection, services } from "@/components/TreatmentsSection";
-import { CasesSection } from "@/components/CasesSection";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -14,6 +13,8 @@ import { SectionLabel } from "@/components/SectionLabel";
 import { TeamCarousel } from "@/components/TeamCarousel";
 import { HomeSplash } from "@/components/HomeSplash";
 import { HomeHero } from "@/components/HomeHero";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { StatRoll } from "@/components/StatRoll";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { FaqSection } from "@/components/FaqSection";
 import { submitForm } from "@/lib/submit-form";
@@ -24,6 +25,7 @@ import {
   buildPageLinks,
   buildPageMeta,
   homeJsonLdScripts,
+  ORA_WHATSAPP_URL,
 } from "@/lib/seo";
 import aboutUs from "@/assets/about-us.png";
 import drAhmed from "@/assets/doctors/dr-ahmed-sultan.png";
@@ -81,7 +83,7 @@ function HomePage() {
       <SiteHeader />
 
       {/* HERO */}
-      <HomeHero ready={heroReady} />
+      <HomeHero ready={heroReady} reviews={googleReviews} />
       {/* Marquee */}
       <div className="relative border-y border-border bg-[#f3eee4] py-5 text-foreground">
           <div className="flex overflow-hidden">
@@ -105,15 +107,15 @@ function HomePage() {
         </div>
 
       {/* STATS */}
-      <section className="border-b border-border bg-[#f7f3ec] md:bg-background">
+      <section className="border-b border-border bg-[#4d5645] md:bg-background">
         {/* Mobile — quiet 2×2, no boxes */}
         <div className="grid grid-cols-2 gap-y-6 px-5 py-8 md:hidden">
           {stats.map((s) => (
             <div key={s.v} className="text-center">
-              <div className="font-display text-[1.85rem] leading-none tracking-tight text-foreground">
-                {s.k}
+              <div className="font-display text-[1.85rem] leading-none tracking-tight text-[#f5f1eb]">
+                <StatRoll value={s.k} />
               </div>
-              <div className="mt-1.5 font-sans-tight text-[10px] tracking-[0.2em] uppercase text-foreground/40">
+              <div className="mt-1.5 font-sans-tight text-[10px] tracking-[0.2em] uppercase text-[#f5f1eb]/55">
                 {s.short}
               </div>
             </div>
@@ -125,7 +127,9 @@ function HomePage() {
           {stats.map((s) => (
             <div key={s.v} className="bg-background px-8 py-12 lg:px-10 lg:py-16">
               <s.icon className="h-6 w-6 text-accent" />
-              <div className="mt-6 font-display text-4xl tracking-tight lg:text-5xl">{s.k}</div>
+              <div className="mt-6 font-display text-4xl tracking-tight lg:text-5xl">
+                <StatRoll value={s.k} />
+              </div>
               <div className="mt-3 font-sans-tight text-sm text-foreground/60">{s.v}</div>
             </div>
           ))}
@@ -279,12 +283,12 @@ function HomePage() {
               "linear-gradient(105deg, #eae2d6 0%, #f5f1eb 42%, #eae2d6 78%, #d8cdc3 100%)",
           }}
         />
-        {/* Oversized watermark typography */}
+        {/* Oversized watermark typography — kept fully in-frame so “A” isn’t clipped */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-[-4%] flex items-center overflow-hidden"
+          className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 sm:px-4 lg:px-8"
         >
-          <span className="select-none font-display text-[clamp(8rem,22vw,18rem)] font-light leading-none tracking-[-0.06em] text-[#d8cdc3]/55">
+          <span className="select-none font-display text-[clamp(7rem,18vw,15rem)] font-light leading-[0.85] tracking-[-0.04em] text-[#d8cdc3]/55">
             ORA
           </span>
         </div>
@@ -336,8 +340,6 @@ function HomePage() {
       </section>
 
       <TreatmentsSection />
-
-      <CasesSection />
 
       {/* MEET OUR TEAM — animated carousel */}
       <section id="team" className="relative scroll-mt-24 overflow-hidden bg-secondary/40">
@@ -439,7 +441,7 @@ function HomePage() {
               </div>
 
               <a
-                href="https://wa.me/923398891919"
+                href={ORA_WHATSAPP_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-10 inline-flex items-center gap-3 rounded-full bg-accent px-7 py-4 font-sans-tight text-foreground transition-transform hover:-translate-y-0.5"
@@ -750,6 +752,8 @@ function HomePage() {
       </section>
 
       <SiteFooter />
+
+      <FloatingWhatsApp />
     </div>
   );
 }

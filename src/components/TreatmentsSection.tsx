@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   PreventiveIcon,
   RestorativeIcon,
@@ -12,9 +12,10 @@ import {
   DiagnosticIcon,
   type DentalIconComponent,
 } from "@/components/DentalIcons";
-import smileTeeth from "@/assets/smile-teeth.png";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import toothLineImg from "@/assets/tooth-line.png";
+import toothLinePath from "@/assets/tooth-line-path.json";
 
 type TreatmentCategory = {
   icon: DentalIconComponent;
@@ -236,16 +237,53 @@ function TreatmentsHeading({
   );
 }
 
+/**
+ * Scroll-driven tooth reveal.
+ * Ghost + reveal use the original hand-drawn art for exact silhouette.
+ * A continuous centerline stroke is the reveal mask (with through-band
+ * punch-out until that phase) so the draw stays one unbroken ribbon.
+ */
+const TOOTH_MASK_W = 9;
+/** Horizontal through-line band — erased from mask until throughStart */
+const THROUGH_BAND = { y0: 236, y1: 256, x0: 228, x1: 392 };
+
 function SmileProgress({ progress }: { progress: number }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const artRef = useRef<HTMLImageElement | null>(null);
+  const maskRef = useRef<HTMLCanvasElement | null>(null);
+  const layerRef = useRef<HTMLCanvasElement | null>(null);
+  const [ready, setReady] = useState(false);
   const [smooth, setSmooth] = useState(progress);
   const smoothRef = useRef(progress);
   const frameRef = useRef(0);
 
+  const path = toothLinePath.path as [number, number][];
+  const pw = toothLinePath.w as number;
+  const ph = toothLinePath.h as number;
+  const throughStart =
+    typeof toothLinePath.throughStart === "number"
+      ? toothLinePath.throughStart
+      : Math.floor(path.length * 0.78);
+
+  useEffect(() => {
+    let cancelled = false;
+    const art = new Image();
+    art.onload = () => {
+      if (cancelled) return;
+      artRef.current = art;
+      setReady(true);
+    };
+    art.src = toothLineImg;
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   useEffect(() => {
     const tick = () => {
       const current = smoothRef.current;
-      const next = current + (progress - current) * 0.08;
-      if (Math.abs(progress - next) < 0.0008) {
+      const next = current + (progress - current) * 0.22;
+      if (Math.abs(progress - next) < 0.0003) {
         smoothRef.current = progress;
         setSmooth(progress);
         return;
@@ -259,77 +297,96 @@ function SmileProgress({ progress }: { progress: number }) {
     return () => cancelAnimationFrame(frameRef.current);
   }, [progress]);
 
-  const t = Math.min(1, Math.max(0, smooth));
-  const s = t * t * (3 - 2 * t);
-  // Upper completes first (L→R), then lower (R→L)
-  const upperT = Math.min(1, s / 0.48);
-  const lowerT = Math.min(1, Math.max(0, (s - 0.5) / 0.5));
+  useEffect(() => {
+    if (!ready) return;
+    const canvas = canvasRef.current;
+    const art = artRef.current;
+    if (!canvas || !art) return;
 
-  const feather = 12;
-  const u = upperT * 100;
-  const l = lowerT * 100;
+    if (canvas.width !== pw || canvas.height !== ph) {
+      canvas.width = pw;
+      canvas.height = ph;
+    }
+    if (!maskRef.current) maskRef.current = document.createElement("canvas");
+    if (!layerRef.current) layerRef.current = document.createElement("canvas");
+    const mask = maskRef.current;
+    const layer = layerRef.current;
+    if (mask.width !== pw || mask.height !== ph) {
+      mask.width = pw;
+      mask.height = ph;
+    }
+    if (layer.width !== pw || layer.height !== ph) {
+      layer.width = pw;
+      layer.height = ph;
+    }
 
-  // Upper: left → right
-  const upperMask = `linear-gradient(90deg, #000 0%, #000 ${Math.max(0, u - feather)}%, transparent ${Math.min(100, u + feather)}%)`;
-  // Lower: right → left
-  const lowerMask = `linear-gradient(90deg, transparent ${Math.max(0, 100 - l - feather)}%, #000 ${Math.min(100, 100 - l + feather)}%, #000 100%)`;
+    const ctx = canvas.getContext("2d");
+    const maskCtx = mask.getContext("2d");
+    const layerCtx = layer.getContext("2d");
+    if (!ctx || !maskCtx || !layerCtx) return;
+
+    const t = Math.min(1, Math.max(0, smooth));
+    const exact = t * (path.length - 1);
+    const tip = Math.min(path.length - 1, Math.floor(exact));
+    const tipFrac = exact - tip;
+
+    ctx.clearRect(0, 0, pw, ph);
+
+    // Exact original silhouette as ghost
+    ctx.globalAlpha = 0.22;
+    ctx.drawImage(art, 0, 0);
+    ctx.globalAlpha = 1;
+
+    if (exact <= 0.01) return;
+
+    // Continuous brush mask along the centerline
+    maskCtx.clearRect(0, 0, pw, ph);
+    maskCtx.lineCap = "round";
+    maskCtx.lineJoin = "round";
+    maskCtx.strokeStyle = "#fff";
+    maskCtx.lineWidth = TOOTH_MASK_W;
+    maskCtx.beginPath();
+    maskCtx.moveTo(path[0][0], path[0][1]);
+    for (let i = 1; i <= tip; i++) {
+      maskCtx.lineTo(path[i][0], path[i][1]);
+    }
+    if (tipFrac > 0.001 && tip + 1 < path.length) {
+      const [x0, y0] = path[tip];
+      const [x1, y1] = path[tip + 1];
+      maskCtx.lineTo(x0 + (x1 - x0) * tipFrac, y0 + (y1 - y0) * tipFrac);
+    }
+    maskCtx.stroke();
+
+    // While climbing the crown, erase accidental through-line stubs
+    if (tip < throughStart) {
+      maskCtx.globalCompositeOperation = "destination-out";
+      maskCtx.fillStyle = "#000";
+      maskCtx.fillRect(
+        THROUGH_BAND.x0,
+        THROUGH_BAND.y0,
+        THROUGH_BAND.x1 - THROUGH_BAND.x0,
+        THROUGH_BAND.y1 - THROUGH_BAND.y0,
+      );
+      maskCtx.globalCompositeOperation = "source-over";
+    }
+
+    // Reveal exact art through the mask
+    layerCtx.clearRect(0, 0, pw, ph);
+    layerCtx.drawImage(art, 0, 0);
+    layerCtx.globalCompositeOperation = "destination-in";
+    layerCtx.drawImage(mask, 0, 0);
+    layerCtx.globalCompositeOperation = "source-over";
+
+    ctx.drawImage(layer, 0, 0);
+  }, [ready, smooth, path, pw, ph, throughStart]);
 
   return (
-    <div className="pointer-events-none absolute left-1/2 top-[48%] z-0 h-[30%] w-[44%] -translate-x-1/2 -translate-y-1/2 lg:h-[32%] lg:w-[46%]">
-      {/* Ghost full smile */}
-      <img
-        src={smileTeeth}
-        alt=""
+    <div className="pointer-events-none absolute inset-[4%] z-0 lg:inset-[2%]">
+      <canvas
+        ref={canvasRef}
+        className="h-full w-full object-contain"
         aria-hidden
-        className="absolute inset-0 h-full w-full object-contain opacity-[0.14] grayscale"
-        draggable={false}
       />
-
-      {/* Upper arch — left → right */}
-      <div
-        className="absolute inset-0"
-        style={{
-          opacity: upperT > 0.01 ? 1 : 0,
-          WebkitMaskImage: upperMask,
-          maskImage: upperMask,
-          WebkitMaskRepeat: "no-repeat",
-          maskRepeat: "no-repeat",
-          WebkitMaskSize: "100% 100%",
-          maskSize: "100% 100%",
-          clipPath: "inset(0 0 46% 0)",
-        }}
-      >
-        <img
-          src={smileTeeth}
-          alt=""
-          aria-hidden
-          className="h-full w-full object-contain grayscale contrast-[1.05] brightness-[1.05]"
-          draggable={false}
-        />
-      </div>
-
-      {/* Lower arch — right → left */}
-      <div
-        className="absolute inset-0"
-        style={{
-          opacity: lowerT > 0.01 ? 1 : 0,
-          WebkitMaskImage: lowerMask,
-          maskImage: lowerMask,
-          WebkitMaskRepeat: "no-repeat",
-          maskRepeat: "no-repeat",
-          WebkitMaskSize: "100% 100%",
-          maskSize: "100% 100%",
-          clipPath: "inset(50% 0 0 0)",
-        }}
-      >
-        <img
-          src={smileTeeth}
-          alt=""
-          aria-hidden
-          className="h-full w-full object-contain grayscale contrast-[1.05] brightness-[1.05]"
-          draggable={false}
-        />
-      </div>
     </div>
   );
 }
@@ -358,7 +415,6 @@ function ToothHub({
         const angle = (i / count) * Math.PI * 2 - Math.PI / 2;
         const x = Math.cos(angle) * iconRadius;
         const y = Math.sin(angle) * iconRadius;
-        const Icon = cat.icon;
         const isActive = i === active;
         const isPast = i < active;
         const iconProgress = isPast ? 1 : isActive ? segmentT : 0;
@@ -413,7 +469,7 @@ function ToothHub({
                   )}
                 </svg>
                 <span
-                  className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full transition-all duration-700 ease-out lg:h-8 lg:w-8 ${
+                  className={`relative z-10 flex h-7 w-7 items-center justify-center rounded-full font-sans-tight text-[9px] tracking-[0.06em] transition-all duration-700 ease-out lg:h-8 lg:w-8 lg:text-[10px] ${
                     isActive
                       ? "bg-[#f5f1eb] text-[#4d5645] shadow-[0_4px_14px_-4px_rgba(0,0,0,0.25)]"
                       : isPast
@@ -421,7 +477,7 @@ function ToothHub({
                         : "border border-[#d8cdc3]/30 bg-[#4d5645]/40 text-[#d8cdc3]/80"
                   }`}
                 >
-                  <Icon className="h-3.5 w-3.5 lg:h-4 lg:w-4" />
+                  {cat.num}
                 </span>
               </span>
               <span
@@ -459,6 +515,13 @@ function TreatmentDetailCard({
 }) {
   const Icon = cat.icon;
   const progressPct = ((active + segmentT) / treatmentCategories.length) * 100;
+  const itemCount = cat.items.length;
+  // Map scroll within this category onto one highlighted sub-point
+  const highlightExact = Math.min(
+    itemCount - 0.001,
+    Math.max(0, segmentT) * itemCount,
+  );
+  const highlightIndex = Math.min(itemCount - 1, Math.floor(highlightExact));
 
   return (
     <div className="treatment-detail-card relative w-full">
@@ -510,18 +573,48 @@ function TreatmentDetailCard({
       </div>
 
       <ul className={`mt-6 grid gap-x-8 gap-y-0 ${compact ? "" : "sm:grid-cols-2"}`}>
-        {cat.items.map((item, j) => (
-          <li key={item} className="group border-b border-[#d8cdc3]/80 py-3">
-            <div className="flex items-baseline gap-4">
-              <span className="w-5 shrink-0 font-sans-tight text-[9px] tracking-[0.18em] text-[#70796b]">
-                {String(j + 1).padStart(2, "0")}
-              </span>
-              <span className="text-[0.9rem] font-light leading-snug tracking-wide text-[#4d5645] transition-colors group-hover:text-[#666d57]">
-                {item}
-              </span>
-            </div>
-          </li>
-        ))}
+        {cat.items.map((item, j) => {
+          const isHighlight = j === highlightIndex;
+          const isPast = j < highlightIndex;
+          const isLit = isHighlight || isPast;
+          return (
+            <li
+              key={item}
+              className={`group border-b py-3 transition-[border-color,opacity,transform] duration-500 ease-out ${
+                isHighlight
+                  ? "border-[#666d57]/45"
+                  : isPast
+                    ? "border-[#666d57]/25"
+                    : "border-[#d8cdc3]/80 opacity-40"
+              }`}
+            >
+              <div
+                className={`flex items-baseline gap-4 transition-transform duration-500 ease-out ${
+                  isHighlight ? "translate-x-0.5" : ""
+                }`}
+              >
+                <span
+                  className={`w-5 shrink-0 font-sans-tight text-[9px] tracking-[0.18em] transition-colors duration-500 ${
+                    isLit ? "text-[#4d5645]" : "text-[#70796b]/70"
+                  }`}
+                >
+                  {String(j + 1).padStart(2, "0")}
+                </span>
+                <span
+                  className={`text-[0.9rem] leading-snug tracking-wide transition-[color,font-weight] duration-500 ${
+                    isHighlight
+                      ? "font-normal text-[#4d5645]"
+                      : isPast
+                        ? "font-light text-[#4d5645]"
+                        : "font-light text-[#4d5645]/55"
+                  }`}
+                >
+                  {item}
+                </span>
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
@@ -539,9 +632,9 @@ function MobileTreatments() {
   };
 
   return (
-    <div className="bg-[#f5f1eb] lg:hidden">
+    <div className="bg-[#4d5645] lg:hidden">
       <div className="px-5 pb-16 pt-12">
-        <TreatmentsHeading className="mb-8" tone="onCream" />
+        <TreatmentsHeading className="mb-8" tone="onOlive" />
 
         {/* Discipline pills — scrollable, full labels */}
         <div
@@ -560,8 +653,8 @@ function MobileTreatments() {
                 onClick={() => setActive(i)}
                 className={`shrink-0 rounded-full px-4 py-2.5 font-sans-tight text-[11px] tracking-[0.06em] transition-colors ${
                   isActive
-                    ? "bg-[#4d5645] text-[#f5f1eb]"
-                    : "border border-[#d8cdc3] bg-[#faf8f4] text-[#4d5645]"
+                    ? "bg-[#f5f1eb] text-[#4d5645]"
+                    : "border border-[#f5f1eb]/25 bg-[#666d57]/50 text-[#eae2d6]"
                 }`}
               >
                 {item.short}
@@ -573,19 +666,19 @@ function MobileTreatments() {
         {/* Selected discipline — heading + full list together */}
         <div
           key={cat.title}
-          className="treatment-detail-enter mt-8 border-t border-[#d8cdc3] pt-8"
+          className="treatment-detail-enter mt-8 border-t border-[#f5f1eb]/15 pt-8"
         >
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eae2d6] text-[#4d5645]">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#f5f1eb]/12 text-[#f5f1eb]">
                   <Icon className="h-4 w-4" />
                 </span>
-                <p className="font-sans-tight text-[10px] uppercase tracking-[0.28em] text-[#666d57]/70">
+                <p className="font-sans-tight text-[10px] uppercase tracking-[0.28em] text-[#d8cdc3]/70">
                   {cat.num} · {cat.short}
                 </p>
               </div>
-              <h3 className="mt-4 font-display text-[1.75rem] font-normal leading-[1.1] tracking-tight text-[#4d5645]">
+              <h3 className="mt-4 font-display text-[1.75rem] font-normal leading-[1.1] tracking-tight text-[#f5f1eb]">
                 {cat.title}
               </h3>
             </div>
@@ -595,7 +688,7 @@ function MobileTreatments() {
                 type="button"
                 aria-label="Previous treatment"
                 onClick={() => go(active - 1)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#d8cdc3] text-[#4d5645]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#f5f1eb]/25 text-[#f5f1eb]"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
@@ -603,25 +696,25 @@ function MobileTreatments() {
                 type="button"
                 aria-label="Next treatment"
                 onClick={() => go(active + 1)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#d8cdc3] text-[#4d5645]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#f5f1eb]/25 text-[#f5f1eb]"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
             </div>
           </div>
 
-          <div className="mt-5 h-px w-full bg-[#d8cdc3]">
-            <div className="h-px bg-[#666d57] transition-[width] duration-300" style={{ width: `${progressPct}%` }} />
+          <div className="mt-5 h-px w-full bg-[#f5f1eb]/20">
+            <div className="h-px bg-[#eae2d6] transition-[width] duration-300" style={{ width: `${progressPct}%` }} />
           </div>
 
           <ul className="mt-2">
             {cat.items.map((item, j) => (
-              <li key={item} className="border-b border-[#d8cdc3]/80 py-3.5">
+              <li key={item} className="border-b border-[#f5f1eb]/12 py-3.5">
                 <div className="flex items-start gap-4">
-                  <span className="mt-0.5 w-5 shrink-0 font-sans-tight text-[9px] tracking-[0.18em] text-[#70796b]">
+                  <span className="mt-0.5 w-5 shrink-0 font-sans-tight text-[9px] tracking-[0.18em] text-[#d8cdc3]/60">
                     {String(j + 1).padStart(2, "0")}
                   </span>
-                  <span className="text-[0.95rem] font-light leading-snug text-[#4d5645]">
+                  <span className="text-[0.95rem] font-light leading-snug text-[#f5f1eb]/90">
                     {item}
                   </span>
                 </div>
@@ -629,7 +722,7 @@ function MobileTreatments() {
             ))}
           </ul>
 
-          <p className="mt-6 text-center font-sans-tight text-[10px] tracking-[0.22em] text-[#70796b]">
+          <p className="mt-6 text-center font-sans-tight text-[10px] tracking-[0.22em] text-[#d8cdc3]/55">
             {String(active + 1).padStart(2, "0")} / {String(treatmentCategories.length).padStart(2, "0")}
           </p>
         </div>
