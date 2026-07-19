@@ -217,6 +217,7 @@ function HomePage() {
                 img: drAhmed,
                 name: "Dr. Ahmed Sultan",
                 role: "General Dentist · Aligners Specialist",
+                bio: "A general dentist with a special interest in clear aligner therapy and oral surgery. His expertise spans clear aligners, routine extractions, restorative dentistry, and comprehensive care — always with precision, comfort, and lasting oral health in mind.",
                 position: "object-[58%_18%]",
                 align: "md:items-start md:text-left",
                 pad: "md:pl-10 md:pr-8 lg:pl-14",
@@ -224,7 +225,8 @@ function HomePage() {
               {
                 img: drRoha,
                 name: "Dr. Roha Ejaz",
-                role: "Cosmetic Dentist",
+                role: "General & Restorative Dentist",
+                bio: "A general and restorative dentist with a special interest in cosmetic dentistry. Her work includes aesthetic composites, veneers, smile makeovers, whitening, diastema closure, enameloplasty, and painless root canals — minimally invasive care that elevates every smile.",
                 position: "object-[center_14%]",
                 align: "md:items-end md:text-right",
                 pad: "md:pr-10 md:pl-8 lg:pr-14",
@@ -232,11 +234,12 @@ function HomePage() {
             ].map((d) => (
               <article
                 key={d.name}
-                className="doctors-duo-panel group relative isolate min-h-[58vh] overflow-hidden md:min-h-0"
+                tabIndex={0}
+                className="doctors-duo-panel group relative isolate min-h-[58vh] overflow-hidden outline-none md:min-h-0"
               >
                 <img
                   src={d.img}
-                  alt={`Professional portrait of ${d.name}, ${d.role} at ORA Dental Wellness in Bahria Town, Islamabad`}
+                  alt={`Professional portrait of ${d.name}, ${d.role} at ORA Dental Wellness in Bahria Town, Rawalpindi`}
                   className={`absolute inset-0 h-full w-full scale-105 object-cover transition-transform duration-[1.6s] ease-out group-hover:scale-110 ${d.position}`}
                   loading="lazy"
                   decoding="async"
@@ -244,12 +247,12 @@ function HomePage() {
                   height={1020}
                   sizes="(min-width: 768px) 50vw, 100vw"
                 />
-                <div className="absolute inset-0 bg-[#000000]/25 transition-colors duration-700 group-hover:bg-[#000000]/15" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/45 to-[#4d5645]/35" />
+                <div className="absolute inset-0 bg-[#000000]/25 transition-colors duration-700 group-hover:bg-[#000000]/15 group-focus-within:bg-[#000000]/15" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/55 to-[#4d5645]/35" />
                 <div className="absolute inset-x-0 top-0 hidden h-44 bg-gradient-to-b from-[#000000]/70 to-transparent md:block" />
 
                 <div
-                  className={`absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-8 pb-10 pt-20 text-center md:pb-14 md:pt-28 ${d.align} ${d.pad}`}
+                  className={`absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-8 pb-10 pt-24 text-center md:pb-14 md:pt-32 ${d.align} ${d.pad}`}
                 >
                   <p className="font-sans-tight text-[9px] tracking-[0.3em] text-[#d8cdc3]">
                     {d.role}
@@ -257,6 +260,13 @@ function HomePage() {
                   <h3 className="mt-3 font-display text-[clamp(1.55rem,2.8vw,2.2rem)] font-normal tracking-tight text-[#faf8f4]">
                     {d.name}
                   </h3>
+                  <p
+                    className={`mt-0 max-h-0 max-w-sm overflow-hidden text-[0.82rem] font-light leading-relaxed text-[#eae2d6]/78 opacity-0 transition-all duration-500 ease-out group-hover:mt-4 group-hover:max-h-48 group-hover:opacity-100 group-focus-within:mt-4 group-focus-within:max-h-48 group-focus-within:opacity-100 md:text-[0.88rem] ${
+                      d.align.includes("end") ? "md:ml-auto" : "md:mr-auto"
+                    }`}
+                  >
+                    {d.bio}
+                  </p>
                 </div>
               </article>
             ))}
