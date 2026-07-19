@@ -1,31 +1,33 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import drAhmed from "@/assets/doctors/dr-ahmed-sultan.png";
-import drRoha from "@/assets/doctors/dr-roha-ejaz.png";
-import drUsman from "@/assets/doctors/dr-usman-khattak.png";
-import drOzair from "@/assets/doctors/dr-ozair-shirazi.png";
-import drZain from "@/assets/doctors/dr-zain-iftikhar.png";
+import drAhmed from "@/assets/doctors/dr-ahmed-sultan.webp";
+import drRoha from "@/assets/doctors/dr-roha-ejaz.webp";
+import drUsman from "@/assets/doctors/dr-usman-khattak.webp";
+import drOzair from "@/assets/doctors/dr-ozair-shirazi.webp";
+import drZain from "@/assets/doctors/dr-zain-iftikhar.webp";
 
 type Member = {
   name: string;
   role: string;
   img: string;
+  /** How long this slide stays centered before auto-advancing. */
+  dwellMs: number;
 };
 
 const team: Member[] = [
-  { name: "Dr. Ahmed Sultan", role: "General Dentist, Aligners Specialist", img: drAhmed },
-  { name: "Dr. Roha Ejaz", role: "Cosmetic Dentist", img: drRoha },
-  { name: "Dr. Usman Khattak", role: "Periodontist & Implantologist", img: drUsman },
-  { name: "Dr. Ozair Shirazi", role: "Oral & Maxillofacial Surgeon", img: drOzair },
+  { name: "Dr. Ahmed Sultan", role: "General Dentist, Aligners Specialist", img: drAhmed, dwellMs: 7000 },
+  { name: "Dr. Roha Ejaz", role: "Cosmetic Dentist", img: drRoha, dwellMs: 7000 },
+  { name: "Dr. Usman Khattak", role: "Periodontist & Implantologist", img: drUsman, dwellMs: 2200 },
+  { name: "Dr. Ozair Shirazi", role: "Oral & Maxillofacial Surgeon", img: drOzair, dwellMs: 2200 },
   {
     name: "Dr. Zain Iftikhar",
     role: "Prosthodontist · ITI Member",
     img: drZain,
+    dwellMs: 2200,
   },
 ];
 
-const AUTOPLAY_MS = 4000;
 const SWIPE_THRESHOLD = 50;
 
 type Slot = {
@@ -47,9 +49,10 @@ export function TeamCarousel() {
 
   useEffect(() => {
     if (paused) return;
-    const id = window.setInterval(() => setActive((a) => (a + 1) % len), AUTOPLAY_MS);
-    return () => window.clearInterval(id);
-  }, [paused, len]);
+    const dwell = team[active]?.dwellMs ?? 4000;
+    const id = window.setTimeout(() => setActive((a) => (a + 1) % len), dwell);
+    return () => window.clearTimeout(id);
+  }, [paused, len, active]);
 
   const startX = useRef<number | null>(null);
   const onPointerDown = (e: React.PointerEvent) => {
@@ -158,9 +161,13 @@ export function TeamCarousel() {
             >
               <img
                 src={m.img}
-                alt={`Portrait of ${m.name}, ${m.role} at ORA Dental Wellness`}
+                alt={`Portrait of ${m.name}, ${m.role} at ORA Dental Wellness in Bahria Town, Islamabad`}
                 className={`pointer-events-none h-full w-full object-cover object-[center_18%] transition-transform duration-700 ${isCenter ? "scale-100" : "scale-105"}`}
+                width={480}
+                height={720}
+                sizes="(min-width: 1024px) 28vw, (min-width: 768px) 40vw, 85vw"
                 loading="lazy"
+                decoding="async"
                 draggable={false}
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#4d5645]/95 via-[#4d5645]/28 to-transparent" />

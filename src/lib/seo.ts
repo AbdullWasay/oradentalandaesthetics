@@ -39,7 +39,7 @@ export const ORA_HOURS = {
   display: "Mon – Sat · 12:00 PM – 9:00 PM",
 } as const;
 
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 export const DEFAULT_OG_IMAGE_ALT =
   "ORA Dental Wellness reception in Bahria Town Phase 4, Rawalpindi — calm clinical atelier with soft lighting";
 
@@ -179,7 +179,7 @@ export function buildPageMeta(page: PageSeo): MetaTag[] {
     { property: "og:url", content: url },
     { property: "og:image", content: ogImage },
     { property: "og:image:secure_url", content: ogImage },
-    { property: "og:image:type", content: "image/png" },
+    { property: "og:image:type", content: "image/jpeg" },
     { property: "og:image:width", content: "1200" },
     { property: "og:image:height", content: "630" },
     { property: "og:image:alt", content: ogImageAlt },
@@ -295,6 +295,24 @@ export function buildDentistJsonLd() {
         "@type": "Person",
         name: "Dr. Roha Ejaz",
         jobTitle: "Cosmetic Dentist",
+        worksFor: { "@id": `${SITE_URL}/#dentist` },
+      },
+      {
+        "@type": "Person",
+        name: "Dr. Usman Khattak",
+        jobTitle: "Periodontist & Implantologist",
+        worksFor: { "@id": `${SITE_URL}/#dentist` },
+      },
+      {
+        "@type": "Person",
+        name: "Dr. Ozair Shirazi",
+        jobTitle: "Oral & Maxillofacial Surgeon",
+        worksFor: { "@id": `${SITE_URL}/#dentist` },
+      },
+      {
+        "@type": "Person",
+        name: "Dr. Zain Iftikhar",
+        jobTitle: "Prosthodontist · ITI Member",
         worksFor: { "@id": `${SITE_URL}/#dentist` },
       },
     ],
