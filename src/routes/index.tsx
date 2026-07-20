@@ -17,6 +17,7 @@ import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { StatRoll } from "@/components/StatRoll";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { FaqSection } from "@/components/FaqSection";
+import { FounderPanel } from "@/components/FounderPanel";
 import { submitForm } from "@/lib/submit-form";
 import { getGoogleReviews } from "@/lib/get-google-reviews";
 import { formatReviewCount } from "@/lib/google-reviews";
@@ -232,43 +233,7 @@ function HomePage() {
                 pad: "md:pr-10 md:pl-8 lg:pr-14",
               },
             ].map((d) => (
-              <article
-                key={d.name}
-                tabIndex={0}
-                className="doctors-duo-panel group relative isolate min-h-[58vh] overflow-hidden outline-none md:min-h-0"
-              >
-                <img
-                  src={d.img}
-                  alt={`Professional portrait of ${d.name}, ${d.role} at ORA Dental Wellness in Bahria Town, Rawalpindi`}
-                  className={`absolute inset-0 h-full w-full scale-105 object-cover transition-transform duration-[1.6s] ease-out group-hover:scale-110 ${d.position}`}
-                  loading="lazy"
-                  decoding="async"
-                  width={680}
-                  height={1020}
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                />
-                <div className="absolute inset-0 bg-[#000000]/25 transition-colors duration-700 group-hover:bg-[#000000]/15 group-focus-within:bg-[#000000]/15" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/55 to-[#4d5645]/35" />
-                <div className="absolute inset-x-0 top-0 hidden h-44 bg-gradient-to-b from-[#000000]/70 to-transparent md:block" />
-
-                <div
-                  className={`absolute inset-x-0 bottom-0 z-10 flex flex-col items-center px-8 pb-10 pt-24 text-center md:pb-14 md:pt-32 ${d.align} ${d.pad}`}
-                >
-                  <p className="font-sans-tight text-[9px] tracking-[0.3em] text-[#d8cdc3]">
-                    {d.role}
-                  </p>
-                  <h3 className="mt-3 font-display text-[clamp(1.55rem,2.8vw,2.2rem)] font-normal tracking-tight text-[#faf8f4]">
-                    {d.name}
-                  </h3>
-                  <p
-                    className={`mt-0 max-h-0 max-w-sm overflow-hidden text-[0.82rem] font-light leading-relaxed text-[#eae2d6]/78 opacity-0 transition-all duration-500 ease-out group-hover:mt-4 group-hover:max-h-48 group-hover:opacity-100 group-focus-within:mt-4 group-focus-within:max-h-48 group-focus-within:opacity-100 md:text-[0.88rem] ${
-                      d.align.includes("end") ? "md:ml-auto" : "md:mr-auto"
-                    }`}
-                  >
-                    {d.bio}
-                  </p>
-                </div>
-              </article>
+              <FounderPanel key={d.name} {...d} />
             ))}
           </div>
 
