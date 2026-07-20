@@ -33,5 +33,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://oradentalwellness.com/sitemap.xml
-Host: https://oradentalwellness.com
+Sitemap: https://www.oradentalwellness.com/sitemap.xml

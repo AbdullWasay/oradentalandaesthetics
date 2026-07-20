@@ -14,7 +14,7 @@ const SERVICE_CATALOG = [
 ] as const;
 
 /** Production origin — update if the live domain changes. */
-export const SITE_URL = "https://oradentalwellness.com";
+export const SITE_URL = "https://www.oradentalwellness.com";
 
 export const SITE_NAME = "ORA Dental Wellness";
 export const SITE_TAGLINE = "Quiet-luxury dental wellness in Bahria Town, Rawalpindi";
@@ -248,8 +248,23 @@ export function buildDentistJsonLd() {
     alternateName: ["ORA Dental", "ORA Dental Clinic Bahria Town"],
     description: PAGE_SEO.home.description,
     url: SITE_URL,
-    image: [DEFAULT_OG_IMAGE, `${SITE_URL}/logo.png`],
-    logo: `${SITE_URL}/logo.png`,
+    image: [
+      DEFAULT_OG_IMAGE,
+      {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/google-logo.png`,
+        width: 512,
+        height: 512,
+        caption: SITE_NAME,
+      },
+    ],
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/google-logo.png`,
+      width: 512,
+      height: 512,
+      caption: SITE_NAME,
+    },
     telephone: [ORA_PHONE_PRIMARY, ORA_PHONE_LANDLINE],
     email: ORA_EMAIL,
     priceRange: "$$",

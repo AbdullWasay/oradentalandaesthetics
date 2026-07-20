@@ -1,5 +1,5 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-import { PAGE_SEO, buildPageLinks, buildPageMeta } from "@/lib/seo";
+import { PAGE_SEO, SITE_URL, buildPageLinks, buildPageMeta } from "@/lib/seo";
 
 import appCss from "../styles.css?url";
 
@@ -36,10 +36,16 @@ export const Route = createRootRoute({
     ],
     links: [
       ...buildPageLinks(rootPage),
-      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "512x512" },
-      { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
-      { rel: "icon", href: "/favicon-16x16.png", type: "image/png", sizes: "16x16" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      // Google Search favicon: must be ≥48×48 and a multiple of 48
+      { rel: "icon", href: `${SITE_URL}/favicon-48x48.png`, type: "image/png", sizes: "48x48" },
+      { rel: "icon", href: `${SITE_URL}/favicon-96x96.png`, type: "image/png", sizes: "96x96" },
+      { rel: "icon", href: `${SITE_URL}/favicon-192x192.png`, type: "image/png", sizes: "192x192" },
+      { rel: "icon", href: `${SITE_URL}/favicon.png`, type: "image/png", sizes: "512x512" },
+      { rel: "icon", href: `${SITE_URL}/favicon-32x32.png`, type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: `${SITE_URL}/apple-touch-icon.png`, sizes: "180x180" },
+      { rel: "shortcut icon", href: `${SITE_URL}/favicon-48x48.png`, type: "image/png" },
+      // Helps Google pick a side thumbnail in search results
+      { rel: "image_src", href: `${SITE_URL}/og-image.jpg` },
       { rel: "manifest", href: "/site.webmanifest" },
       { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
