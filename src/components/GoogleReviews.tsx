@@ -8,6 +8,7 @@ import {
 } from "@/lib/google-reviews";
 import { ReviewAvatar } from "@/components/ReviewAvatar";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { trackLeaveReview } from "@/lib/meta-pixel";
 
 /** Slow shared angular speed for every face on every fixed orbit. */
 const ORBIT_SPEED = 0.0022;
@@ -538,6 +539,7 @@ export function GoogleReviews({ data }: GoogleReviewsProps) {
                 href={data.writeReviewUrl}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackLeaveReview()}
                 className="group inline-flex items-center gap-3 rounded-full bg-[#666d57] px-8 py-4 font-sans-tight text-background transition-all hover:gap-4 hover:bg-[#666d57]/90"
               >
                 Leave a review

@@ -1,4 +1,5 @@
 import { ORA_WHATSAPP_URL } from "@/lib/seo";
+import { trackContact } from "@/lib/meta-pixel";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -19,6 +20,7 @@ export function FloatingWhatsApp() {
       href={ORA_WHATSAPP_URL}
       target="_blank"
       rel="noreferrer"
+      onClick={() => trackContact("whatsapp")}
       aria-label="Chat with ORA Dental Wellness on WhatsApp"
       className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#666d57] text-[#f5f1eb] shadow-[0_12px_40px_-10px_rgba(77,86,69,0.65)] transition-transform hover:scale-105 hover:bg-[#4d5645] active:scale-95 md:bottom-7 md:right-7"
     >

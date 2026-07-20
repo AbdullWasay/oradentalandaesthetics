@@ -21,6 +21,7 @@ import { FounderPanel } from "@/components/FounderPanel";
 import { submitForm } from "@/lib/submit-form";
 import { getGoogleReviews } from "@/lib/get-google-reviews";
 import { formatReviewCount } from "@/lib/google-reviews";
+import { trackBookingLead, trackContact } from "@/lib/meta-pixel";
 import {
   PAGE_SEO,
   buildPageLinks,
@@ -415,6 +416,7 @@ function HomePage() {
                 href={ORA_WHATSAPP_URL}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => trackContact("whatsapp")}
                 className="mt-10 inline-flex items-center gap-3 rounded-full bg-accent px-7 py-4 font-sans-tight text-foreground transition-transform hover:-translate-y-0.5"
               >
                 <MessageCircle className="h-4 w-4" /> Chat on WhatsApp
@@ -458,6 +460,7 @@ function HomePage() {
                           service: bookingService,
                         },
                       });
+                      trackBookingLead(bookingService);
                       setBookingSent(true);
                     } catch {
                       setBookingError("We couldn't send your request. Please try again or call us directly.");
