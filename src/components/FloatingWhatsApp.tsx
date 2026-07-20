@@ -14,6 +14,9 @@ function WhatsAppIcon({ className }: { className?: string }) {
   );
 }
 
+
+
+
 export function FloatingWhatsApp() {
   return (
     <a
@@ -28,3 +31,4 @@ export function FloatingWhatsApp() {
     </a>
   );
 }
+
