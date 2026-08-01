@@ -573,6 +573,29 @@ function HomePage() {
 
       <GoogleReviews data={googleReviews} />
 
+      <section
+        id="locations"
+        className="scroll-mt-24 border-y border-border bg-[#f3eee4] px-6 py-16 lg:px-10 lg:py-24"
+      >
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="font-sans-tight text-[10px] uppercase tracking-[0.28em] text-[#666d57]/80">
+            Dental clinic in Rawalpindi
+          </p>
+          <h2
+            data-speakable
+            className="mt-4 font-display text-[clamp(1.75rem,4vw,2.75rem)] font-light leading-tight tracking-tight text-[#4d5645]"
+          >
+            A quieter dental clinic in Bahria Town, Rawalpindi.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-[0.98rem] leading-relaxed text-foreground/70">
+            ORA Dental Wellness serves families across Rawalpindi from Bahria Paradise Commercial,
+            Bahria Town Phase 4 — with clear aligners, restorative and cosmetic dentistry, root canals,
+            and calm specialist-led care. Patients from nearby neighbourhoods and Islamabad also visit
+            for precise treatment without the rush.
+          </p>
+        </div>
+      </section>
+
       <FaqSection />
 
       {/* VISIT — contact + map */}

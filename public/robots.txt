@@ -1,5 +1,11 @@
-# ORA Dental Wellness
+# ORA Dental Wellness — https://www.oradentalwellness.com
 User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
 Allow: /
 
 # AI / answer-engine crawlers

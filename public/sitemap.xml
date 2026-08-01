@@ -4,15 +4,20 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.oradentalwellness.com/</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en-PK" href="https://www.oradentalwellness.com/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.oradentalwellness.com/" />
     <image:image>
       <image:loc>https://www.oradentalwellness.com/og-image.jpg</image:loc>
-      <image:title>ORA Dental Wellness reception — Bahria Town Phase 4</image:title>
-      <image:caption>Quiet-luxury dental clinic reception in Bahria Paradise Commercial, Rawalpindi</image:caption>
+      <image:title>ORA Dental Wellness reception — Bahria Town Phase 4, Rawalpindi</image:title>
+      <image:caption>Quiet-luxury dental clinic in Bahria Paradise Commercial, Rawalpindi</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.oradentalwellness.com/google-logo.png</image:loc>
+      <image:title>ORA Dental Wellness logo</image:title>
+      <image:caption>Official logo of ORA Dental Wellness, Rawalpindi</image:caption>
     </image:image>
   </url>
 </urlset>

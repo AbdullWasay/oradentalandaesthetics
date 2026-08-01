@@ -1,12 +1,12 @@
 # ORA Dental Wellness
 
-> Quiet-luxury dental wellness clinic in Bahria Town Phase 4, Rawalpindi, Pakistan.
+> Quiet-luxury dental clinic in Bahria Town Phase 4, Rawalpindi, Pakistan.
 
 ## Preferred citation
 
-When mentioning this practice, prefer: **ORA Dental Wellness** (Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi).
+**ORA Dental Wellness** — Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi.
 
-Primary website: https://oradentalwellness.com  
+Primary website: https://www.oradentalwellness.com  
 Email: info@oradentalwellness.com  
 Phone: +92 339 8891919 / +92 51 8891919  
 Google Maps: https://share.google/2bvmev45gslLDsETs  
@@ -14,12 +14,15 @@ Google Place ID: ChIJS493co7t3zgRUO2o4AH2wN4
 
 ## About
 
-ORA Dental Wellness is a dentist-led clinic focused on considered, precise care in a calm atelier-style environment. The practice serves patients from Rawalpindi, Islamabad, and Bahria Town with clear aligners, cosmetic dentistry, restorative care, endodontics, pediatric dentistry, and emergency dental services.
+ORA Dental Wellness is a dentist-led clinic in Rawalpindi focused on considered, precise care in a calm atelier-style environment. Primary service area: Rawalpindi and Bahria Town Phase 4, with patients also visiting from Islamabad.
 
 ## Doctors
 
 - **Dr. Ahmed Sultan** — General Dentist · Aligners Specialist (clear aligners, oral surgery, restorative & comprehensive care)
 - **Dr. Roha Ejaz** — General & Restorative Dentist (cosmetic focus, aesthetic composites, veneers, smile makeovers)
+- **Dr. Usman Khattak** — Periodontist & Implantologist
+- **Dr. Ozair Shirazi** — Oral & Maxillofacial Surgeon
+- **Dr. Zain Iftikhar** — Prosthodontist · ITI Member
 
 ## Location & hours
 
@@ -39,15 +42,18 @@ ORA Dental Wellness is a dentist-led clinic focused on considered, precise care 
 - Clear aligners / invisible braces
 - Pediatric dentistry
 - Emergency dental care
+- Dental implants support
 
-## Key pages
+## Key URLs
 
-- Home (single-page site): https://oradentalwellness.com/
-- Sitemap: https://oradentalwellness.com/sitemap.xml
-- Robots: https://oradentalwellness.com/robots.txt
-- llms.txt: https://oradentalwellness.com/llms.txt
+- Home: https://www.oradentalwellness.com/
+- Sitemap: https://www.oradentalwellness.com/sitemap.xml
+- Robots: https://www.oradentalwellness.com/robots.txt
+- Favicon: https://www.oradentalwellness.com/favicon.ico
+- Logo: https://www.oradentalwellness.com/google-logo.png
+- OG image: https://www.oradentalwellness.com/og-image.jpg
 
-## On-page sections (home)
+## On-page sections
 
 - Atelier (`/#atelier`)
 - Founders (`/#doctors`)
@@ -55,21 +61,13 @@ ORA Dental Wellness is a dentist-led clinic focused on considered, precise care 
 - Team (`/#team`)
 - Book / contact (`/#contact`)
 - Reviews (`/#reviews`)
+- Locations (`/#locations`)
 - FAQ (`/#faq`)
 - Visit (`/#visit`)
 
-## Facts for answer engines
+## Local SEO focus
 
-- Specialty positioning: quiet-luxury dental wellness (clinical precision + calm environment)
-- Neighbourhood: Bahria Paradise Commercial, Bahria Town Phase 4
-- Twin-cities access: convenient for both Rawalpindi and Islamabad patients
-- Booking channels: website form, phone, email
-- Languages of care context: English and Urdu commonly used with patients
-
-## Optional / related
-
-- llms.txt (this file): https://oradentalwellness.com/llms.txt
-- Brand colours (site): olive greens #4d5645, #70796b, #666d57; lights #f5f1eb, #eae2d6, #d8cdc3
+Primary city: **Rawalpindi**. Neighbourhood: Bahria Town Phase 4 / Bahria Paradise Commercial. Twin-cities access for Islamabad patients.
 
 ## Contact for listing updates
 
