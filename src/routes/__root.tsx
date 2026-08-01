@@ -36,13 +36,12 @@ export const Route = createRootRoute({
     ],
     links: [
       ...buildPageLinks(rootPage),
-      // Prefer circular SVG in modern tabs; PNGs keep transparent corners for Chrome/Safari.
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
-      { rel: "icon", href: "/favicon.ico", sizes: "any" },
-      { rel: "icon", href: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
-      { rel: "icon", href: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
-      { rel: "icon", href: "/favicon.png", type: "image/png", sizes: "512x512" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      // Solid square ORA mark. Cache-bust so browsers drop the broken striped icon.
+      { rel: "icon", href: "/favicon-48x48.png?v=4", type: "image/png", sizes: "48x48" },
+      { rel: "icon", href: "/favicon-96x96.png?v=4", type: "image/png", sizes: "96x96" },
+      { rel: "icon", href: "/favicon.ico?v=4", sizes: "any" },
+      { rel: "icon", href: "/favicon.png?v=4", type: "image/png", sizes: "512x512" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=4", sizes: "180x180" },
       // Helps Google pick a side thumbnail in search results
       { rel: "image_src", href: `${SITE_URL}/og-image.jpg` },
       { rel: "manifest", href: "/site.webmanifest" },
