@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ClinicTourRouteImport } from './routes/clinic-tour'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ClinicTourRoute = ClinicTourRouteImport.update({
+  id: '/clinic-tour',
+  path: '/clinic-tour',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +25,39 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clinic-tour': typeof ClinicTourRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clinic-tour': typeof ClinicTourRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/clinic-tour': typeof ClinicTourRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/clinic-tour'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/clinic-tour'
+  id: '__root__' | '/' | '/clinic-tour'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClinicTourRoute: typeof ClinicTourRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/clinic-tour': {
+      id: '/clinic-tour'
+      path: '/clinic-tour'
+      fullPath: '/clinic-tour'
+      preLoaderRoute: typeof ClinicTourRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClinicTourRoute: ClinicTourRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

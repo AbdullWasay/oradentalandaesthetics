@@ -4,17 +4,26 @@ import { Menu, X } from "lucide-react";
 import logoWhite from "@/assets/logo_white.png";
 
 const nav = [
-  { href: "#atelier", label: "Atelier" },
-  { href: "#doctors", label: "Founders" },
-  { href: "#treatments", label: "Treatments" },
-  { href: "#team", label: "Our Team" },
-  { href: "#contact", label: "Contact" },
-  { href: "#reviews", label: "Reviews" },
+  { href: "/#atelier", label: "Atelier" },
+  { href: "/#doctors", label: "Founders" },
+  { href: "/#treatments", label: "Treatments" },
+  { href: "/#team", label: "Our Team" },
+  { href: "/#contact", label: "Contact" },
+  { href: "/#reviews", label: "Reviews" },
 ] as const;
 
 function scrollToHash(href: string) {
-  const id = href.replace("#", "");
+  const id = href.replace(/^\/?#/, "");
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function goToSection(href: string) {
+  const hash = href.replace(/^\/?#/, "");
+  if (window.location.pathname !== "/") {
+    window.location.assign(`/#${hash}`);
+    return;
+  }
+  scrollToHash(href);
 }
 
 export function SiteHeader() {
@@ -22,7 +31,7 @@ export function SiteHeader() {
 
   const go = (href: string) => {
     setOpen(false);
-    scrollToHash(href);
+    goToSection(href);
   };
 
   return (
@@ -63,10 +72,17 @@ export function SiteHeader() {
               {n.label}
             </a>
           ))}
+          <Link
+            to="/clinic-tour"
+            onClick={() => setOpen(false)}
+            className="font-sans-tight text-foreground/70 transition-colors hover:text-foreground"
+          >
+            Tour
+          </Link>
         </nav>
 
         <a
-          href="#contact"
+          href="/#contact"
           onClick={(e) => {
             e.preventDefault();
             go("#contact");
@@ -134,15 +150,30 @@ export function SiteHeader() {
                   {n.label}
                 </a>
               ))}
+              <Link
+                to="/clinic-tour"
+                className="py-3 font-sans-tight text-foreground/80 transition-colors hover:text-foreground"
+                style={{
+                  transitionDelay: open ? `${40 + nav.length * 35}ms` : "0ms",
+                  transform: open ? "translateY(0)" : "translateY(-6px)",
+                  opacity: open ? 1 : 0,
+                  transitionProperty: "opacity, transform",
+                  transitionDuration: "280ms",
+                  transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+                }}
+                onClick={() => setOpen(false)}
+              >
+                Clinic tour
+              </Link>
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={(e) => {
                   e.preventDefault();
                   go("#contact");
                 }}
                 className="mt-2 rounded-full bg-foreground px-5 py-3 text-center font-sans-tight text-background transition-transform duration-300 hover:scale-[1.01]"
                 style={{
-                  transitionDelay: open ? `${40 + nav.length * 35}ms` : "0ms",
+                  transitionDelay: open ? `${40 + (nav.length + 1) * 35}ms` : "0ms",
                   transform: open ? "translateY(0)" : "translateY(-6px)",
                   opacity: open ? 1 : 0,
                   transitionProperty: "opacity, transform",

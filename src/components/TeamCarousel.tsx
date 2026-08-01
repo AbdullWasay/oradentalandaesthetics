@@ -161,7 +161,7 @@ export function TeamCarousel() {
             >
               <img
                 src={m.img}
-                alt={`Portrait of ${m.name}, ${m.role} at ORA Dental Wellness in Bahria Town, Islamabad`}
+                alt={`Portrait of ${m.name}, ${m.role} at ORA Dental Wellness in Bahria Town, Rawalpindi`}
                 className={`pointer-events-none h-full w-full object-cover object-[center_18%] transition-transform duration-700 ${isCenter ? "scale-100" : "scale-105"}`}
                 width={480}
                 height={720}

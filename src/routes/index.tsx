@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState, useCallback, useEffect } from "react";
 import { ArrowRight, Sparkles, Award, Users, Clock, Smile, MapPin, Phone, CalendarDays, MessageCircle, User as UserIcon, Check, Mail } from "lucide-react";
@@ -18,6 +18,7 @@ import { StatRoll } from "@/components/StatRoll";
 import { GoogleReviews } from "@/components/GoogleReviews";
 import { FaqSection } from "@/components/FaqSection";
 import { FounderPanel } from "@/components/FounderPanel";
+import { EmailLink } from "@/components/EmailLink";
 import { submitForm } from "@/lib/submit-form";
 import { getGoogleReviews } from "@/lib/get-google-reviews";
 import { formatReviewCount } from "@/lib/google-reviews";
@@ -152,16 +153,24 @@ function HomePage() {
             <p className="mt-5 text-foreground/70 lg:mt-6">
               We designed ORA the way we practice — with restraint. Arched alcoves, sage textiles, hand-thrown ceramics, warm shoji light. Every detail is engineered to lower your shoulders before we ever recline the chair.
             </p>
-            <a
-              href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="mt-7 inline-flex items-center gap-2 font-sans-tight text-[#666d57] hover:underline lg:mt-8"
-            >
-              Book a visit <ArrowRight className="h-4 w-4" />
-            </a>
+            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 lg:mt-8">
+              <a
+                href="/#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="inline-flex items-center gap-2 font-sans-tight text-[#666d57] hover:underline"
+              >
+                Book a visit <ArrowRight className="h-4 w-4" />
+              </a>
+              <Link
+                to="/clinic-tour"
+                className="inline-flex items-center gap-2 font-sans-tight text-foreground/50 transition-colors hover:text-[#666d57]"
+              >
+                Watch the tour <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
 
           <div className="order-2 lg:order-1 lg:col-span-5">
@@ -187,15 +196,24 @@ function HomePage() {
         className="doctors-duo relative z-20 scroll-mt-24 overflow-hidden bg-[#000000]"
       >
         <div className="relative">
+          {/* Single outline heading — visuals below are aria-hidden duplicates */}
+          <h2 className="sr-only">Two doctors. One philosophy of restraint.</h2>
+
           {/* Mobile masthead — sits above the portraits */}
           <div className="relative z-30 bg-[#4d5645] px-6 pb-8 pt-12 text-center md:hidden">
             <p className="font-sans-tight text-[10px] tracking-[0.38em] text-[#d8cdc3]/80">
               Founders
             </p>
-            <h2 className="mx-auto mt-3 max-w-3xl font-display text-[clamp(2.2rem,8vw,3rem)] font-light leading-[1.02] tracking-tight text-[#faf8f4]">
+            <p
+              aria-hidden
+              className="mx-auto mt-3 max-w-3xl font-display text-[clamp(2.2rem,8vw,3rem)] font-light leading-[1.02] tracking-tight text-[#faf8f4]"
+            >
               Two doctors.
-            </h2>
-            <p className="doctors-philosophy mx-auto mt-2 max-w-md font-display text-[clamp(1.15rem,4vw,1.35rem)] italic leading-snug text-[#eae2d6]/90">
+            </p>
+            <p
+              aria-hidden
+              className="doctors-philosophy mx-auto mt-2 max-w-md font-display text-[clamp(1.15rem,4vw,1.35rem)] italic leading-snug text-[#eae2d6]/90"
+            >
               One philosophy of restraint.
             </p>
           </div>
@@ -205,10 +223,16 @@ function HomePage() {
             <p className="font-sans-tight text-[10px] tracking-[0.38em] text-[#d8cdc3]/80">
               Founders
             </p>
-            <h2 className="mx-auto mt-3 max-w-3xl font-display text-[clamp(2.2rem,5.5vw,3.85rem)] font-light leading-[1.02] tracking-tight text-[#faf8f4]">
+            <p
+              aria-hidden
+              className="mx-auto mt-3 max-w-3xl font-display text-[clamp(2.2rem,5.5vw,3.85rem)] font-light leading-[1.02] tracking-tight text-[#faf8f4]"
+            >
               Two doctors.
-            </h2>
-            <p className="doctors-philosophy mx-auto mt-2 max-w-md font-display text-[clamp(1.2rem,2.2vw,1.5rem)] italic leading-snug text-[#eae2d6]/90">
+            </p>
+            <p
+              aria-hidden
+              className="doctors-philosophy mx-auto mt-2 max-w-md font-display text-[clamp(1.2rem,2.2vw,1.5rem)] italic leading-snug text-[#eae2d6]/90"
+            >
               One philosophy of restraint.
             </p>
           </div>
@@ -352,13 +376,17 @@ function HomePage() {
         />
         <div className="relative mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-36">
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-16">
+            <h2 className="sr-only">Book your appointment today at ORA Dental Wellness</h2>
             {/* LEFT — copy + details (desktop only) */}
             <div className="hidden lg:col-span-5 lg:block">
               <SectionLabel><span className="text-background/60">Book now</span></SectionLabel>
-              <h2 className="mt-6 font-display text-4xl leading-[1.05] md:text-5xl">
+              <p
+                aria-hidden
+                className="mt-6 font-display text-4xl leading-[1.05] md:text-5xl"
+              >
                 Book Your<br />
                 <span className="italic text-accent">Appointment</span> Today
-              </h2>
+              </p>
               <p className="mt-6 max-w-md text-background/70">
                 Walk-ins welcome. Reserve a time that suits you and our team will confirm within minutes.
               </p>
@@ -396,9 +424,7 @@ function HomePage() {
                   </span>
                   <div>
                     <p className="font-sans-tight text-xs uppercase tracking-[0.18em] text-background/50">Email</p>
-                    <a href="mailto:info@oradentalwellness.com" className="mt-1 block hover:text-accent">
-                      info@oradentalwellness.com
-                    </a>
+                    <EmailLink className="mt-1 block hover:text-accent" />
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -427,9 +453,12 @@ function HomePage() {
             <div className="lg:col-span-7">
               <div className="mb-5 lg:hidden">
                 <SectionLabel><span className="text-background/60">Book now</span></SectionLabel>
-                <h2 className="mt-3 font-display text-[1.65rem] leading-tight">
+                <p
+                  aria-hidden
+                  className="mt-3 font-display text-[1.65rem] leading-tight"
+                >
                   Book your <span className="italic text-accent">appointment</span>
-                </h2>
+                </p>
               </div>
               {bookingSent ? (
                 <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-background/15 bg-background/[0.03] p-6 text-center backdrop-blur-sm md:min-h-[420px] md:rounded-3xl md:p-12">
@@ -644,9 +673,7 @@ function HomePage() {
             </li>
             <li className="flex gap-3 py-4">
               <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#666d57]" strokeWidth={1.5} />
-              <a href="mailto:info@oradentalwellness.com" className="text-sm text-foreground/80">
-                info@oradentalwellness.com
-              </a>
+              <EmailLink className="text-sm text-foreground/80" />
             </li>
             <li className="flex gap-3 py-4">
               <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#666d57]" strokeWidth={1.5} />
@@ -710,12 +737,7 @@ function HomePage() {
               <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/40">
                 Email
               </p>
-              <a
-                href="mailto:info@oradentalwellness.com"
-                className="mt-3 block text-sm text-foreground/80 transition-colors hover:text-foreground"
-              >
-                info@oradentalwellness.com
-              </a>
+              <EmailLink className="mt-3 block text-sm text-foreground/80 transition-colors hover:text-foreground" />
             </div>
 
             <div className="bg-background p-8">

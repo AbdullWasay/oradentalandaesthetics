@@ -1,18 +1,24 @@
+import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import logoWhite from "@/assets/logo_white.png";
 import { ORA_ADDRESS_LINES, ORA_MAPS_SHARE_URL } from "@/lib/location";
+import { EmailLink } from "@/components/EmailLink";
 
 const nav = [
-  { href: "#atelier", label: "Atelier" },
-  { href: "#doctors", label: "Founders" },
-  { href: "#treatments", label: "Treatments" },
-  { href: "#team", label: "Our Team" },
-  { href: "#contact", label: "Contact" },
-  { href: "#reviews", label: "Reviews" },
+  { href: "/#atelier", label: "Atelier" },
+  { href: "/#doctors", label: "Founders" },
+  { href: "/#treatments", label: "Treatments" },
+  { href: "/#team", label: "Our Team" },
+  { href: "/#contact", label: "Contact" },
+  { href: "/#reviews", label: "Reviews" },
 ] as const;
 
 function go(href: string) {
-  const hash = href.replace("#", "");
+  const hash = href.replace(/^\/?#/, "");
+  if (window.location.pathname !== "/") {
+    window.location.assign(`/#${hash}`);
+    return;
+  }
   document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
 }
 
@@ -65,13 +71,10 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
-                <a
-                  href="mailto:info@oradentalwellness.com"
-                  className="inline-flex items-center gap-1.5 break-all"
-                >
+                <EmailLink className="inline-flex items-center gap-1.5 break-all">
                   <Mail className="h-3 w-3 shrink-0 text-[#666d57]" />
                   info@oradentalwellness.com
-                </a>
+                </EmailLink>
               </li>
               <li>
                 <a
@@ -109,6 +112,9 @@ export function SiteFooter() {
                   </a>
                 </li>
               ))}
+              <li>
+                <Link to="/clinic-tour">Clinic tour</Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -162,7 +168,7 @@ export function SiteFooter() {
           </div>
 
           <div>
-            <h4 className="font-sans-tight text-muted-foreground">Visit</h4>
+            <p className="font-sans-tight text-muted-foreground">Visit</p>
             <ul className="mt-5 space-y-3 text-sm">
               <li className="flex gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
@@ -182,15 +188,13 @@ export function SiteFooter() {
               </li>
               <li className="flex gap-2">
                 <Mail className="mt-0.5 h-4 w-4 text-accent" />
-                <a href="mailto:info@oradentalwellness.com" className="hover:text-accent">
-                  info@oradentalwellness.com
-                </a>
+                <EmailLink className="hover:text-accent" />
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-sans-tight text-muted-foreground">Explore</h4>
+            <p className="font-sans-tight text-muted-foreground">Explore</p>
             <ul className="mt-5 space-y-3 text-sm">
               {nav.map((n) => (
                 <li key={n.href}>
@@ -206,6 +210,11 @@ export function SiteFooter() {
                   </a>
                 </li>
               ))}
+              <li>
+                <Link to="/clinic-tour" className="hover:text-accent">
+                  Clinic tour
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

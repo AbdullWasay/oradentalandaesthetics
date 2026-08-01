@@ -87,7 +87,7 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
         {/* Still always under the video — visible when iOS blocks autoplay */}
         <img
           src={heroMobilePoster}
-          alt=""
+          alt="ORA Dental Wellness clinic interior in Bahria Town Phase 4, Rawalpindi"
           className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
           width={1080}
           height={1440}
@@ -141,20 +141,20 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
           className="mx-auto mt-4 max-w-[20rem] text-center text-[0.98rem] font-light leading-relaxed text-[#70796b]"
         >
           Experience dentistry that blends clinical precision with exceptional comfort
-          at ORA Dental Wellness in Bahria Town Phase 4, Rawalpindi.
+          at ORA Dental Wellness — your dentist in Bahria Town Phase 4, Rawalpindi.
         </p>
 
-        <a
-          href="#contact"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollTo("contact");
-          }}
-          className="group mx-auto mt-7 flex w-full max-w-sm items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
-        >
-          Book a visit
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-        </a>
+            <a
+              href="/#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollTo("contact");
+              }}
+              className="group mx-auto mt-7 flex w-full max-w-sm items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
+            >
+              Book a visit
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </a>
 
         {reviews && (
           <div className="mx-auto mt-8 flex items-center justify-center gap-3">
@@ -163,7 +163,7 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
                 <img
                   key={r.author}
                   src={r.authorPhotoUrl!}
-                  alt=""
+                  alt={`${r.author}, Google review for ORA Dental Wellness`}
                   className="h-9 w-9 rounded-full border-2 border-[#f5f1eb] object-cover shadow-sm"
                   width={36}
                   height={36}
@@ -223,9 +223,9 @@ function DesktopHero({ ready }: { ready: boolean }) {
         <div
           className={`max-w-2xl text-[#f5f1eb] ${ready ? "opacity-100" : "opacity-0"}`}
         >
-          <div className="flex items-center gap-3 font-sans-tight text-[#f5f1eb]/80">
+            <div className="flex items-center gap-3 font-sans-tight text-[#f5f1eb]/80">
             <span className="h-px w-8 bg-[#f5f1eb]/70" />
-            Bahria Town · Rawalpindi
+            Dentist in Rawalpindi · Bahria Town
           </div>
 
           <h1
@@ -245,12 +245,12 @@ function DesktopHero({ ready }: { ready: boolean }) {
             className="mt-8 max-w-lg text-lg leading-relaxed text-[#f5f1eb]/85"
           >
             Experience dentistry that blends clinical precision with exceptional comfort at ORA Dental
-            Wellness in Bahria Town Phase 4, Rawalpindi.
+            Wellness — a calm dentist practice in Bahria Town Phase 4, Rawalpindi.
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
             <a
-              href="#contact"
+              href="/#contact"
               onClick={(e) => {
                 e.preventDefault();
                 scrollTo("contact");
@@ -261,7 +261,7 @@ function DesktopHero({ ready }: { ready: boolean }) {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="#treatments"
+              href="/#treatments"
               onClick={(e) => {
                 e.preventDefault();
                 scrollTo("treatments");

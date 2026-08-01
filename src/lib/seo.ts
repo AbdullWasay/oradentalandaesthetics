@@ -57,11 +57,11 @@ export type PageSeo = {
 export const PAGE_SEO = {
   home: {
     path: "/",
-    title: "ORA Dental Wellness | Best Dentist in Islamabad & Rawalpindi",
+    title: "ORA Dental Wellness | Dental Clinic in Rawalpindi",
     description:
-      "ORA Dental Wellness is a top-rated dental clinic in Bahria Town Phase 4, Rawalpindi. Clear aligners, restorative & cosmetic dentistry, root canals, and family care by Dr. Ahmed Sultan & Dr. Roha Ejaz. Book online today.",
+      "ORA Dental Wellness — dentist in Bahria Town Phase 4, Rawalpindi. Clear aligners, cosmetic & restorative care by Dr. Ahmed Sultan & Dr. Roha Ejaz. Book online.",
     keywords:
-      "best dental clinic Rawalpindi, dental clinic Rawalpindi, dentist Rawalpindi, dentist Bahria Town, dental clinic Bahria Town Phase 4, clear aligners Rawalpindi, cosmetic dentist Rawalpindi, root canal Rawalpindi, teeth whitening Rawalpindi, ORA Dental Wellness, best dental clinic, best dentist, best dental clinic near me, dental clinic near me, best dentist near me",
+      "dentist Rawalpindi, dental clinic Rawalpindi, dentist Bahria Town, dental clinic Bahria Town Phase 4, clear aligners Rawalpindi, cosmetic dentist Rawalpindi, root canal Rawalpindi, ORA Dental Wellness, dental clinic near me",
   },
   treatments: {
     path: "/treatments",
@@ -98,6 +98,17 @@ export const PAGE_SEO = {
     description:
       "Read Google patient reviews for ORA Dental Wellness in Bahria Town Phase 4, Rawalpindi.",
     keywords: "ORA Dental reviews Rawalpindi, dentist reviews Bahria Town",
+  },
+  clinicTour: {
+    path: "/clinic-tour",
+    title: "Clinic Tour | ORA Dental Wellness Rawalpindi",
+    description:
+      "Watch a short clinic tour of ORA Dental Wellness in Bahria Town Phase 4, Rawalpindi. See the atelier, then book a visit.",
+    keywords:
+      "ORA Dental clinic tour, dental clinic Rawalpindi video, Bahria Town dentist tour, ORA Dental Wellness walkthrough",
+    ogImage: `${SITE_URL}/clinic-video-poster.jpg`,
+    ogImageAlt:
+      "Still from the ORA Dental Wellness clinic tour video — Bahria Town Phase 4, Rawalpindi",
   },
 } as const satisfies Record<string, PageSeo>;
 
@@ -629,6 +640,82 @@ export function pageJsonLdScripts(page: PageSeo, crumbName: string) {
         { name: crumbName, path: page.path },
       ]),
     ),
+  ];
+}
+
+export function buildClinicTourVideoJsonLd() {
+  const page = PAGE_SEO.clinicTour;
+  const pageUrl = absoluteUrl(page.path);
+  const contentUrl = absoluteUrl("/clinic_video_mobile.mp4");
+  const thumbnailUrl = absoluteUrl("/clinic-video-poster.jpg");
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": `${pageUrl}#video`,
+    name: "ORA Dental Wellness clinic tour — Bahria Town Phase 4, Rawalpindi",
+    description: page.description,
+    thumbnailUrl: [thumbnailUrl],
+    contentUrl,
+    embedUrl: pageUrl,
+    uploadDate: "2026-07-20",
+    duration: "PT17S",
+    inLanguage: "en",
+    isFamilyFriendly: true,
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/google-logo.png"),
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": pageUrl,
+      name: page.title,
+      url: pageUrl,
+      description: page.description,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+    },
+    about: { "@id": `${SITE_URL}/#dentist` },
+    contentLocation: {
+      "@type": "Place",
+      name: SITE_NAME,
+      address: postalAddress(),
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: ORA_GEO.latitude,
+        longitude: ORA_GEO.longitude,
+      },
+    },
+  };
+}
+
+export function clinicTourJsonLdScripts() {
+  const page = PAGE_SEO.clinicTour;
+  return [
+    ...pageJsonLdScripts(page, "Clinic tour"),
+    jsonLdScript(buildClinicTourVideoJsonLd()),
+    jsonLdScript({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": absoluteUrl(page.path),
+      url: absoluteUrl(page.path),
+      name: page.title,
+      description: page.description,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: { "@id": `${SITE_URL}/#dentist` },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/clinic-video-poster.jpg"),
+      },
+      video: { "@id": `${absoluteUrl(page.path)}#video` },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", "main p"],
+      },
+    }),
   ];
 }
 

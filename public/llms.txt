@@ -47,11 +47,13 @@ ORA Dental Wellness is a dentist-led clinic in Rawalpindi focused on considered,
 ## Key URLs
 
 - Home: https://www.oradentalwellness.com/
+- Clinic tour video: https://www.oradentalwellness.com/clinic-tour
 - Sitemap: https://www.oradentalwellness.com/sitemap.xml
 - Robots: https://www.oradentalwellness.com/robots.txt
 - Favicon: https://www.oradentalwellness.com/favicon.ico
 - Logo: https://www.oradentalwellness.com/google-logo.png
 - OG image: https://www.oradentalwellness.com/og-image.jpg
+- Clinic tour video file: https://www.oradentalwellness.com/clinic_video_mobile.mp4
 
 ## On-page sections
 
@@ -64,6 +66,7 @@ ORA Dental Wellness is a dentist-led clinic in Rawalpindi focused on considered,
 - Locations (`/#locations`)
 - FAQ (`/#faq`)
 - Visit (`/#visit`)
+- Clinic tour page (`/clinic-tour`)
 
 ## Local SEO focus
 
