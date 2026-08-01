@@ -36,7 +36,8 @@ export const Route = createRootRoute({
     ],
     links: [
       ...buildPageLinks(rootPage),
-      // Google Search favicon (hostname-level). Keep URLs stable + relative so www/apex both resolve.
+      // Prefer circular SVG in modern tabs; PNGs keep transparent corners for Chrome/Safari.
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "icon", href: "/favicon.ico", sizes: "any" },
       { rel: "icon", href: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
       { rel: "icon", href: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },

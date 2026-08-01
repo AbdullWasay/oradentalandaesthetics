@@ -15,27 +15,26 @@ export function ClinicTourPage() {
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
-      <main id="main">
-        <section className="relative overflow-hidden border-b border-border">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgba(102,109,87,0.12),transparent_55%),radial-gradient(ellipse_at_90%_40%,rgba(77,86,69,0.08),transparent_50%)]"
-          />
-          <div className="relative mx-auto max-w-7xl px-6 pb-10 pt-14 lg:px-10 lg:pb-14 lg:pt-20">
+      <main id="main" className="border-b border-border">
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-12 lg:items-center lg:gap-14 lg:px-10 lg:py-20">
+          <div className="lg:col-span-5">
             <SectionLabel>Clinic tour</SectionLabel>
-            <h1 className="mt-5 max-w-3xl font-display text-[clamp(2.4rem,7vw,4.25rem)] leading-[1.05] tracking-tight">
+            <h1 className="mt-5 font-display text-[clamp(2.2rem,5vw,3.5rem)] leading-[1.05] tracking-tight text-[#4d5645]">
               Step inside{" "}
-              <span className="italic text-foreground/55">ORA.</span>
+              <span className="italic text-[#666d57]">ORA.</span>
             </h1>
-            <p className="mt-5 max-w-xl text-base leading-relaxed text-foreground/70 md:text-lg">
+            <p className="mt-5 max-w-md text-base font-light leading-relaxed text-foreground/65">
               A short walk through our Bahria Town Phase 4 atelier — soft light,
               quiet rooms, and the calm we designed for every visit.
+            </p>
+            <p className="mt-4 font-sans-tight text-[11px] tracking-[0.12em] text-foreground/40">
+              Bahria Paradise Commercial · Rawalpindi · 17 seconds
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 to="/"
                 hash="contact"
-                className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 font-sans-tight text-background transition-transform hover:scale-[1.01]"
+                className="inline-flex items-center gap-2 rounded-full bg-[#4d5645] px-6 py-3 font-sans-tight text-[11px] tracking-[0.14em] text-[#f5f1eb] transition-colors hover:bg-[#666d57]"
               >
                 Book a visit <ArrowRight className="h-4 w-4" />
               </Link>
@@ -50,48 +49,29 @@ export function ClinicTourPage() {
               </a>
             </div>
           </div>
-        </section>
 
-        <section
-          aria-label="ORA Dental Wellness clinic tour video"
-          className="bg-sage-deep"
-        >
-          <div className="mx-auto max-w-5xl">
-            <video
-              className="mx-auto block max-h-[min(85vh,880px)] w-full bg-black object-contain"
-              controls
-              playsInline
-              preload="metadata"
-              poster={VIDEO_POSTER}
-              title="ORA Dental Wellness clinic tour — Bahria Town Phase 4, Rawalpindi"
-            >
-              <source src={VIDEO_SRC} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </section>
-
-        <section className="border-t border-border bg-secondary/30">
-          <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-14 lg:flex-row lg:items-end lg:justify-between lg:px-10 lg:py-20">
-            <div className="max-w-xl">
-              <SectionLabel>Visit</SectionLabel>
-              <h2 className="mt-4 font-display text-3xl leading-tight md:text-4xl">
-                Ready when you are.
-              </h2>
-              <p className="mt-3 text-foreground/65">
-                Bahria Paradise Commercial · Phase 4, Rawalpindi · Mon–Sat,
-                12:00–9:00 PM
+          <div className="flex justify-center lg:col-span-7 lg:justify-end">
+            <div className="w-full max-w-[min(100%,22rem)]">
+              <div className="overflow-hidden rounded-[1.75rem] border border-[#4d5645]/15 bg-[#1a1c18] shadow-[0_32px_80px_-40px_rgba(77,86,69,0.55)]">
+                <video
+                  className="aspect-[9/16] w-full bg-black object-cover"
+                  style={{ aspectRatio: "9 / 16" }}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster={VIDEO_POSTER}
+                  title="ORA Dental Wellness clinic tour — Bahria Town Phase 4, Rawalpindi"
+                >
+                  <source src={VIDEO_SRC} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <p className="mt-4 text-center font-sans-tight text-[10px] tracking-[0.18em] text-foreground/35">
+                Portrait clinic walkthrough
               </p>
             </div>
-            <Link
-              to="/"
-              hash="contact"
-              className="inline-flex items-center gap-2 font-sans-tight text-[#666d57] hover:underline"
-            >
-              Reserve a chair <ArrowRight className="h-4 w-4" />
-            </Link>
           </div>
-        </section>
+        </div>
       </main>
 
       <SiteFooter />

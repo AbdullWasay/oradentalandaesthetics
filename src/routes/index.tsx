@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState, useCallback, useEffect } from "react";
 import { ArrowRight, Sparkles, Award, Users, Clock, Smile, MapPin, Phone, CalendarDays, MessageCircle, User as UserIcon, Check, Mail } from "lucide-react";
@@ -164,12 +164,6 @@ function HomePage() {
               >
                 Book a visit <ArrowRight className="h-4 w-4" />
               </a>
-              <Link
-                to="/clinic-tour"
-                className="inline-flex items-center gap-2 font-sans-tight text-foreground/50 transition-colors hover:text-[#666d57]"
-              >
-                Watch the tour <ArrowRight className="h-4 w-4" />
-              </Link>
             </div>
           </div>
 
@@ -360,6 +354,52 @@ function HomePage() {
           </div>
           <div className="mt-10">
             <TeamCarousel />
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="locations"
+        className="scroll-mt-24 overflow-hidden border-y border-border/60 bg-secondary/25"
+      >
+        <div className="grid lg:grid-cols-2">
+          <div className="order-2 flex flex-col justify-center px-6 py-14 sm:px-10 lg:order-1 lg:py-24 lg:pr-12 lg:pl-[max(1.5rem,calc((100vw-80rem)/2+2.5rem))]">
+            <SectionLabel>Rawalpindi</SectionLabel>
+            <h2
+              data-speakable
+              className="mt-5 max-w-xl font-display text-[clamp(2rem,4.5vw,3.25rem)] font-light leading-[1.08] tracking-tight text-[#4d5645]"
+            >
+              Care that feels local.
+              <br />
+              <span className="italic text-[#666d57]">Bahria Town, Phase 4.</span>
+            </h2>
+            <p className="mt-6 max-w-md text-[1.05rem] font-light leading-relaxed text-foreground/65">
+              ORA sits in Bahria Paradise Commercial — a calm dental clinic for Rawalpindi
+              families, and for patients who travel in from Islamabad. Clear aligners,
+              restorative and cosmetic dentistry, root canals, and considered specialist care —
+              without the rush.
+            </p>
+            <a
+              href={ORA_MAPS_SHARE_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-8 inline-flex items-center gap-2 font-sans-tight text-[#666d57] transition-colors hover:text-[#4d5645]"
+            >
+              Find us on Google Maps <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+
+          <div className="order-1 relative aspect-[5/4] w-full lg:order-2 lg:aspect-auto lg:min-h-[560px]">
+            <img
+              src="/aligners.webp"
+              alt="Clear dental aligner held in hand — clear aligner care at ORA Dental Wellness in Bahria Town Phase 4, Rawalpindi"
+              className="absolute inset-0 h-full w-full object-cover object-right"
+              width={1157}
+              height={932}
+              loading="lazy"
+              decoding="async"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+            />
           </div>
         </div>
       </section>
@@ -601,29 +641,6 @@ function HomePage() {
       </section>
 
       <GoogleReviews data={googleReviews} />
-
-      <section
-        id="locations"
-        className="scroll-mt-24 border-y border-border bg-[#f3eee4] px-6 py-16 lg:px-10 lg:py-24"
-      >
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="font-sans-tight text-[10px] uppercase tracking-[0.28em] text-[#666d57]/80">
-            Dental clinic in Rawalpindi
-          </p>
-          <h2
-            data-speakable
-            className="mt-4 font-display text-[clamp(1.75rem,4vw,2.75rem)] font-light leading-tight tracking-tight text-[#4d5645]"
-          >
-            A quieter dental clinic in Bahria Town, Rawalpindi.
-          </h2>
-          <p className="mx-auto mt-5 max-w-2xl text-[0.98rem] leading-relaxed text-foreground/70">
-            ORA Dental Wellness serves families across Rawalpindi from Bahria Paradise Commercial,
-            Bahria Town Phase 4 — with clear aligners, restorative and cosmetic dentistry, root canals,
-            and calm specialist-led care. Patients from nearby neighbourhoods and Islamabad also visit
-            for precise treatment without the rush.
-          </p>
-        </div>
-      </section>
 
       <FaqSection />
 

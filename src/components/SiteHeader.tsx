@@ -72,13 +72,6 @@ export function SiteHeader() {
               {n.label}
             </a>
           ))}
-          <Link
-            to="/clinic-tour"
-            onClick={() => setOpen(false)}
-            className="font-sans-tight text-foreground/70 transition-colors hover:text-foreground"
-          >
-            Tour
-          </Link>
         </nav>
 
         <a
@@ -150,21 +143,6 @@ export function SiteHeader() {
                   {n.label}
                 </a>
               ))}
-              <Link
-                to="/clinic-tour"
-                className="py-3 font-sans-tight text-foreground/80 transition-colors hover:text-foreground"
-                style={{
-                  transitionDelay: open ? `${40 + nav.length * 35}ms` : "0ms",
-                  transform: open ? "translateY(0)" : "translateY(-6px)",
-                  opacity: open ? 1 : 0,
-                  transitionProperty: "opacity, transform",
-                  transitionDuration: "280ms",
-                  transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-                }}
-                onClick={() => setOpen(false)}
-              >
-                Clinic tour
-              </Link>
               <a
                 href="/#contact"
                 onClick={(e) => {
@@ -173,7 +151,7 @@ export function SiteHeader() {
                 }}
                 className="mt-2 rounded-full bg-foreground px-5 py-3 text-center font-sans-tight text-background transition-transform duration-300 hover:scale-[1.01]"
                 style={{
-                  transitionDelay: open ? `${40 + (nav.length + 1) * 35}ms` : "0ms",
+                  transitionDelay: open ? `${40 + nav.length * 35}ms` : "0ms",
                   transform: open ? "translateY(0)" : "translateY(-6px)",
                   opacity: open ? 1 : 0,
                   transitionProperty: "opacity, transform",

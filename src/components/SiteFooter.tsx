@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import logoWhite from "@/assets/logo_white.png";
 import { ORA_ADDRESS_LINES, ORA_MAPS_SHARE_URL } from "@/lib/location";
@@ -112,9 +111,6 @@ export function SiteFooter() {
                   </a>
                 </li>
               ))}
-              <li>
-                <Link to="/clinic-tour">Clinic tour</Link>
-              </li>
             </ul>
           </div>
         </div>
@@ -210,11 +206,6 @@ export function SiteFooter() {
                   </a>
                 </li>
               ))}
-              <li>
-                <Link to="/clinic-tour" className="hover:text-accent">
-                  Clinic tour
-                </Link>
-              </li>
             </ul>
           </div>
         </div>
