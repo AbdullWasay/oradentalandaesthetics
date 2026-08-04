@@ -57,7 +57,7 @@ export type PageSeo = {
 export const PAGE_SEO = {
   home: {
     path: "/",
-    title: "ORA Dental Wellness | Dental Clinic in Rawalpindi",
+    title: "ORA Dental Wellness | Dental Clinic Rawalpindi",
     description:
       "ORA Dental Wellness — dentist in Bahria Town Phase 4, Rawalpindi. Clear aligners, cosmetic & restorative care by Dr. Ahmed Sultan & Dr. Roha Ejaz. Book online.",
     keywords:
@@ -265,6 +265,7 @@ function openingHoursSpecification() {
 }
 
 function logoImage() {
+  // Solid 512×512 square (no transparency) — required for Google Search / Knowledge Graph logo.
   return {
     "@type": "ImageObject",
     "@id": `${SITE_URL}/#logo`,
@@ -273,6 +274,7 @@ function logoImage() {
     width: 512,
     height: 512,
     caption: SITE_NAME,
+    encodingFormat: "image/png",
   };
 }
 

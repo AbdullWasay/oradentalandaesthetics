@@ -36,16 +36,46 @@ export const Route = createRootRoute({
     ],
     links: [
       ...buildPageLinks(rootPage),
-      // Circular ORA mark (transparent corners). PNG first — Google needs ≥48px; skip broken SVG-first.
-      { rel: "icon", href: "/favicon-48x48.png?v=5", type: "image/png", sizes: "48x48" },
-      { rel: "icon", href: "/favicon-96x96.png?v=5", type: "image/png", sizes: "96x96" },
-      { rel: "icon", href: "/favicon.ico?v=5", sizes: "any" },
-      { rel: "icon", href: "/favicon.png?v=5", type: "image/png", sizes: "512x512" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=5", sizes: "180x180" },
-      // Helps Google pick a side thumbnail in search results
-      { rel: "image_src", href: `${SITE_URL}/og-image.jpg` },
-      { rel: "manifest", href: "/site.webmanifest" },
-      { rel: "sitemap", type: "application/xml", href: "/sitemap.xml" },
+      // Google Search favicon: solid square PNG ≥48×48 (absolute URL + cache-bust).
+      // Prefer google-logo / favicon.png family — full-bleed sage square, no transparent corners.
+      {
+        rel: "icon",
+        href: `${SITE_URL}/favicon-48x48.png?v=6`,
+        type: "image/png",
+        sizes: "48x48",
+      },
+      {
+        rel: "icon",
+        href: `${SITE_URL}/favicon-96x96.png?v=6`,
+        type: "image/png",
+        sizes: "96x96",
+      },
+      {
+        rel: "icon",
+        href: `${SITE_URL}/favicon-192x192.png?v=6`,
+        type: "image/png",
+        sizes: "192x192",
+      },
+      {
+        rel: "icon",
+        href: `${SITE_URL}/favicon.png?v=6`,
+        type: "image/png",
+        sizes: "512x512",
+      },
+      {
+        rel: "shortcut icon",
+        href: `${SITE_URL}/favicon.ico?v=6`,
+        type: "image/x-icon",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: `${SITE_URL}/apple-touch-icon.png?v=6`,
+        sizes: "180x180",
+      },
+      // Organization / Knowledge Graph logo (same solid square asset)
+      { rel: "image_src", href: `${SITE_URL}/google-logo.png` },
+      { rel: "manifest", href: `${SITE_URL}/site.webmanifest` },
+      { rel: "sitemap", type: "application/xml", href: `${SITE_URL}/sitemap.xml` },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
