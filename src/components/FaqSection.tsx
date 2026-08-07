@@ -14,6 +14,7 @@ const HIGHLIGHTS = [
   { icon: MessageCircle, label: "Appointments preferred" },
 ] as const;
 
+
 export function FaqSection() {
   return (
     <section
