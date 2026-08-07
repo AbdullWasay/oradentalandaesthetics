@@ -36,43 +36,42 @@ export const Route = createRootRoute({
     ],
     links: [
       ...buildPageLinks(rootPage),
-      // Google Search favicon: solid square PNG ≥48×48 (absolute URL + cache-bust).
-      // Prefer google-logo / favicon.png family — full-bleed sage square, no transparent corners.
+      // Google Search favicon — stable URLs (no cache-bust query). Must be ≥48×48 square PNG.
+      // Small sizes use ORA-only crop (clearer in SERP); google-logo.png stays full brand for schema.
       {
         rel: "icon",
-        href: `${SITE_URL}/favicon-48x48.png?v=6`,
+        href: `${SITE_URL}/favicon-48x48.png`,
         type: "image/png",
         sizes: "48x48",
       },
       {
         rel: "icon",
-        href: `${SITE_URL}/favicon-96x96.png?v=6`,
+        href: `${SITE_URL}/favicon-96x96.png`,
         type: "image/png",
         sizes: "96x96",
       },
       {
         rel: "icon",
-        href: `${SITE_URL}/favicon-192x192.png?v=6`,
+        href: `${SITE_URL}/favicon-192x192.png`,
         type: "image/png",
         sizes: "192x192",
       },
       {
         rel: "icon",
-        href: `${SITE_URL}/favicon.png?v=6`,
+        href: `${SITE_URL}/favicon.png`,
         type: "image/png",
         sizes: "512x512",
       },
       {
         rel: "shortcut icon",
-        href: `${SITE_URL}/favicon.ico?v=6`,
+        href: `${SITE_URL}/favicon.ico`,
         type: "image/x-icon",
       },
       {
         rel: "apple-touch-icon",
-        href: `${SITE_URL}/apple-touch-icon.png?v=6`,
+        href: `${SITE_URL}/apple-touch-icon.png`,
         sizes: "180x180",
       },
-      // Organization / Knowledge Graph logo (same solid square asset)
       { rel: "image_src", href: `${SITE_URL}/google-logo.png` },
       { rel: "manifest", href: `${SITE_URL}/site.webmanifest` },
       { rel: "sitemap", type: "application/xml", href: `${SITE_URL}/sitemap.xml` },
