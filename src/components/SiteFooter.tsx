@@ -2,6 +2,7 @@ import { Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
 import logoWhite from "@/assets/logo_white.png";
 import { ORA_ADDRESS_LINES, ORA_MAPS_SHARE_URL } from "@/lib/location";
 import { EmailLink } from "@/components/EmailLink";
+import { smoothScrollTo } from "@/lib/smooth-scroll";
 
 const nav = [
   { href: "/#atelier", label: "Atelier" },
@@ -18,7 +19,7 @@ function go(href: string) {
     window.location.assign(`/#${hash}`);
     return;
   }
-  document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
+  smoothScrollTo(hash);
 }
 
 export function SiteFooter() {

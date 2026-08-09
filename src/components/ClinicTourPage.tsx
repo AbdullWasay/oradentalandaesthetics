@@ -1,10 +1,14 @@
-import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { ORA_WHATSAPP_URL } from "@/lib/seo";
+import { ContactLeadPopup } from "@/components/ContactLeadPopup";
+import {
+  ORA_PHONE_DISPLAY,
+  ORA_PHONE_PRIMARY,
+  ORA_WHATSAPP_URL,
+} from "@/lib/seo";
 import { trackContact } from "@/lib/meta-pixel";
 
 const VIDEO_SRC = "/clinic_video_mobile.mp4";
@@ -31,21 +35,22 @@ export function ClinicTourPage() {
               Bahria Paradise Commercial · Rawalpindi · 17 seconds
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link
-                to="/"
-                hash="contact"
-                className="inline-flex items-center gap-2 rounded-full bg-[#4d5645] px-6 py-3 font-sans-tight text-[11px] tracking-[0.14em] text-[#f5f1eb] transition-colors hover:bg-[#666d57]"
-              >
-                Book a visit <ArrowRight className="h-4 w-4" />
-              </Link>
               <a
                 href={ORA_WHATSAPP_URL}
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => trackContact("whatsapp")}
+                className="inline-flex items-center gap-2 rounded-full bg-[#4d5645] px-6 py-3 font-sans-tight text-[11px] tracking-[0.14em] text-[#f5f1eb] transition-colors hover:bg-[#666d57]"
+              >
+                Chat on WhatsApp <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href={`tel:${ORA_PHONE_PRIMARY}`}
+                onClick={() => trackContact("phone")}
                 className="inline-flex items-center gap-2 font-sans-tight text-[#666d57] transition-colors hover:text-[#4d5645]"
               >
-                WhatsApp us
+                <Phone className="h-3.5 w-3.5" />
+                Call {ORA_PHONE_DISPLAY}
               </a>
             </div>
           </div>
@@ -75,6 +80,7 @@ export function ClinicTourPage() {
       </main>
 
       <SiteFooter />
+      <ContactLeadPopup />
       <FloatingWhatsApp />
     </div>
   );

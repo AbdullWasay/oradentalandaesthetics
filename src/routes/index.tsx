@@ -28,8 +28,12 @@ import {
   buildPageLinks,
   buildPageMeta,
   homeJsonLdScripts,
+  ORA_PHONE_DISPLAY,
+  ORA_PHONE_PRIMARY,
   ORA_WHATSAPP_URL,
 } from "@/lib/seo";
+import { ContactLeadPopup } from "@/components/ContactLeadPopup";
+import { smoothScrollTo } from "@/lib/smooth-scroll";
 import aboutUs from "@/assets/about-us.webp";
 import drAhmed from "@/assets/doctors/dr-ahmed-sultan.webp";
 import drRoha from "@/assets/doctors/dr-roha-ejaz.webp";
@@ -75,8 +79,8 @@ function HomePage() {
     const hash = window.location.hash.replace("#", "");
     if (!hash) return;
     const timer = window.setTimeout(() => {
-      document.getElementById(hash)?.scrollIntoView({ behavior: "smooth" });
-    }, 150);
+      smoothScrollTo(hash, { duration: 1.7 });
+    }, 200);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -153,16 +157,23 @@ function HomePage() {
             <p className="mt-5 text-foreground/70 lg:mt-6">
               We designed ORA the way we practice — with restraint. Arched alcoves, sage textiles, hand-thrown ceramics, warm shoji light. Every detail is engineered to lower your shoulders before we ever recline the chair.
             </p>
-            <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3 lg:mt-8">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:mt-8">
               <a
-                href="/#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="inline-flex items-center gap-2 font-sans-tight text-[#666d57] hover:underline"
+                href={ORA_WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackContact("whatsapp")}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#666d57] px-6 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#f5f1eb] transition-colors hover:bg-[#4d5645]"
               >
-                Book a visit <ArrowRight className="h-4 w-4" />
+                Chat on WhatsApp <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href={`tel:${ORA_PHONE_PRIMARY}`}
+                onClick={() => trackContact("phone")}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-[#4d5645]/30 px-6 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#4d5645] transition-colors hover:border-[#4d5645] hover:bg-[#4d5645]/5"
+              >
+                <Phone className="h-3.5 w-3.5" />
+                Call {ORA_PHONE_DISPLAY}
               </a>
             </div>
           </div>
@@ -303,26 +314,22 @@ function HomePage() {
             </p>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch">
               <a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                }}
+                href={ORA_WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackContact("whatsapp")}
                 className="inline-flex flex-1 items-center justify-center gap-2 bg-[#4d5645] px-7 py-4 font-sans-tight text-[11px] tracking-[0.2em] text-[#f5f1eb] transition-colors hover:bg-[#666d57]"
               >
-                Book a visit
+                Chat on WhatsApp
                 <ArrowRight className="h-4 w-4" />
               </a>
               <a
-                href="#treatments"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.getElementById("treatments")?.scrollIntoView({ behavior: "smooth" });
-                }}
+                href={`tel:${ORA_PHONE_PRIMARY}`}
+                onClick={() => trackContact("phone")}
                 className="inline-flex flex-1 items-center justify-center gap-2 border border-[#4d5645]/30 bg-[#f5f1eb]/70 px-7 py-4 font-sans-tight text-[11px] tracking-[0.2em] text-[#4d5645] transition-colors hover:border-[#4d5645] hover:bg-[#f5f1eb]"
               >
-                See treatments
-                <ArrowRight className="h-4 w-4" />
+                Call now
+                <Phone className="h-4 w-4" />
               </a>
             </div>
           </div>
@@ -791,6 +798,7 @@ function HomePage() {
 
       <SiteFooter />
 
+      <ContactLeadPopup />
       <FloatingWhatsApp />
     </div>
   );

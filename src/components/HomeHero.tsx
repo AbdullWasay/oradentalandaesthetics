@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Phone, Star } from "lucide-react";
 import heroDesktop from "@/assets/her-section-bg.webp";
 import heroMobilePoster from "@/assets/home-poster.webp";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { formatRating, formatReviewCount, type GoogleReviewsData } from "@/lib/google-reviews";
+import {
+  ORA_PHONE_DISPLAY,
+  ORA_PHONE_PRIMARY,
+  ORA_WHATSAPP_URL,
+} from "@/lib/seo";
+import { trackContact } from "@/lib/meta-pixel";
 
 type HomeHeroProps = {
   ready: boolean;
   reviews?: GoogleReviewsData;
 };
-
-function scrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-}
 
 /**
  * Mobile — clinic video atmosphere behind centered copy + social proof.
@@ -144,17 +146,26 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
           at ORA Dental Wellness — your dentist in Bahria Town Phase 4, Rawalpindi.
         </p>
 
-            <a
-              href="/#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollTo("contact");
-              }}
-              className="group mx-auto mt-7 flex w-full max-w-sm items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
-            >
-              Book a visit
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-            </a>
+            <div className="mx-auto mt-7 flex w-full max-w-sm flex-col gap-2.5">
+              <a
+                href={ORA_WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackContact("whatsapp")}
+                className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
+              >
+                Chat on WhatsApp
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </a>
+              <a
+                href={`tel:${ORA_PHONE_PRIMARY}`}
+                onClick={() => trackContact("phone")}
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-[#4d5645]/30 bg-[#f5f1eb]/55 px-6 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#4d5645] transition-colors active:bg-[#f5f1eb]/80"
+              >
+                <Phone className="h-3.5 w-3.5" />
+                Call {ORA_PHONE_DISPLAY}
+              </a>
+            </div>
 
         {reviews && (
           <div className="mx-auto mt-8 flex items-center justify-center gap-3">
@@ -250,25 +261,22 @@ function DesktopHero({ ready }: { ready: boolean }) {
 
           <div className="mt-10 flex flex-wrap gap-4">
             <a
-              href="/#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollTo("contact");
-              }}
+              href={ORA_WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => trackContact("whatsapp")}
               className="group inline-flex items-center gap-3 rounded-full bg-[#f5f1eb] px-7 py-4 font-sans-tight text-[#4d5645] transition-all hover:gap-4 hover:bg-[#f5f1eb]/95"
             >
-              Book a Consultation
+              Chat on WhatsApp
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="/#treatments"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollTo("treatments");
-              }}
+              href={`tel:${ORA_PHONE_PRIMARY}`}
+              onClick={() => trackContact("phone")}
               className="inline-flex items-center gap-2 rounded-full border border-[#f5f1eb]/55 px-7 py-4 font-sans-tight text-[#f5f1eb] transition-colors hover:border-[#f5f1eb]"
             >
-              Our treatments
+              <Phone className="h-4 w-4" />
+              Call {ORA_PHONE_DISPLAY}
             </a>
           </div>
         </div>

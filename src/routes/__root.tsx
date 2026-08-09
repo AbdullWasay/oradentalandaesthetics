@@ -1,5 +1,6 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { PAGE_SEO, SITE_URL, buildPageLinks, buildPageMeta } from "@/lib/seo";
+import { SmoothScroll } from "@/lib/smooth-scroll";
 
 import appCss from "../styles.css?url";
 
@@ -145,5 +146,10 @@ fbq('track','PageView');`,
 }
 
 function RootComponent() {
-  return <Outlet />;
+  return (
+    <>
+      <SmoothScroll />
+      <Outlet />
+    </>
+  );
 }

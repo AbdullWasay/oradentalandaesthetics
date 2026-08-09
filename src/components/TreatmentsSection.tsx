@@ -16,6 +16,7 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import toothLineImg from "@/assets/tooth-line.png";
 import toothLinePath from "@/assets/tooth-line-path.json";
+import { smoothScrollTo } from "@/lib/smooth-scroll";
 
 type TreatmentCategory = {
   icon: DentalIconComponent;
@@ -823,7 +824,7 @@ function DesktopTreatments() {
     const panel = trackRefs.current[index];
     if (!panel) return;
     const y = panel.getBoundingClientRect().top + window.scrollY - CONTENT_STICKY_PX;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    smoothScrollTo(y, { duration: 1.4, offset: 0 });
   };
 
   return (
