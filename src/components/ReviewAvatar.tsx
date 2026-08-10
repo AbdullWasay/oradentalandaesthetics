@@ -2,14 +2,14 @@ import { useState } from "react";
 import { initialsFromName, compactGooglePhotoUrl, type GoogleReview } from "@/lib/google-reviews";
 
 const AVATAR_COLORS = [
-  "#4d5645",
   "#3f4638",
-  "#555c48",
-  "#454c3c",
-  "#5c5340",
-  "#4a5140",
-  "#3d4536",
-  "#5a5040",
+  "#343a2e",
+  "#2f3529",
+  "#3a4034",
+  "#454b3c",
+  "#2a3024",
+  "#383e32",
+  "#32382c",
 ];
 
 function colorForName(name: string): string {

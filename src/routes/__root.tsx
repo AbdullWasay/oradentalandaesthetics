@@ -96,7 +96,8 @@ export const Route = createRootRoute({
         fetchPriority: "high",
         media: "(min-width: 1024px)",
       },
-      // Critical CSS must stay render-blocking (print-media defer collapsed scores ~95→57)
+      // Discover CSS early, then apply as normal blocking stylesheet
+      { rel: "preload", as: "style", href: appCss },
       { rel: "stylesheet", href: appCss },
     ],
   }),
@@ -109,6 +110,12 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-PK">
       <head>
+        {/* Tiny paint hint before full CSS — does not replace the stylesheet */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: "html{background:#666d57}body{margin:0;background:#f5f1eb;color:#4d5645}",
+          }}
+        />
         {/* Non-blocking Google Fonts only */}
         <link id="ora-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
         <script

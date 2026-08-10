@@ -18,9 +18,10 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
     onComplete();
 
     const mobile = window.matchMedia("(max-width: 1023px)").matches;
-    const taglineAt = mobile ? 450 : 700;
-    const exitAt = mobile ? 900 : 1250;
-    const doneAt = mobile ? 1200 : 1650;
+    // Keep brand beat, but exit sooner so Speed Index / LCP stay high
+    const taglineAt = mobile ? 400 : 450;
+    const exitAt = mobile ? 800 : 850;
+    const doneAt = mobile ? 1050 : 1100;
 
     const taglineTimer = window.setTimeout(() => setPhase("tagline"), taglineAt);
     const exitTimer = window.setTimeout(() => setPhase("exit"), exitAt);

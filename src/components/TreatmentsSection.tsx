@@ -546,7 +546,7 @@ function TreatmentDetailCard({
       ) : (
         <div className="flex items-end justify-between gap-4 border-b border-[#666d57]/15 pb-5">
           <div className="flex items-end gap-4">
-            <span aria-hidden className="font-display text-[clamp(2.5rem,6vw,4rem)] font-light leading-none tracking-tighter text-[#8b917c]">
+            <span aria-hidden className="font-display text-[clamp(2.5rem,6vw,4rem)] font-light leading-none tracking-tighter text-[#666d57]">
               {cat.num}
             </span>
             <div className="pb-0.5">
