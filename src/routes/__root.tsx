@@ -81,7 +81,7 @@ export const Route = createRootRoute({
       { rel: "sitemap", type: "application/xml", href: `${SITE_URL}/sitemap.xml` },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      // LCP posters — media-scoped so mobile/desktop only fetch what they need
+      // LCP posters — media-scoped so each viewport only preloads its hero
       {
         rel: "preload",
         as: "image",
@@ -96,7 +96,8 @@ export const Route = createRootRoute({
         fetchPriority: "high",
         media: "(min-width: 1024px)",
       },
-      // Loaded non-blocking via RootShell (media=print → all)
+      // Critical CSS must stay render-blocking (print-media defer collapsed scores ~95→57)
+      { rel: "stylesheet", href: appCss },
     ],
   }),
   shellComponent: RootShell,
@@ -108,17 +109,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-PK">
       <head>
-        {/* Non-blocking CSS — avoids render-blocking ~370ms on Slow 4G */}
-        <link id="ora-css" rel="stylesheet" href={appCss} media="print" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var l=document.getElementById('ora-css');if(!l)return;l.onload=function(){l.media='all'};if(l.sheet)l.media='all';setTimeout(function(){l.media='all'},0);})();`,
-          }}
-        />
-        <noscript>
-          <link rel="stylesheet" href={appCss} />
-        </noscript>
-        {/* Non-blocking Google Fonts */}
+        {/* Non-blocking Google Fonts only */}
         <link id="ora-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
         <script
           dangerouslySetInnerHTML={{
@@ -128,7 +119,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <noscript>
           <link rel="stylesheet" href={FONT_CSS} />
         </noscript>
-        {/* GTM + Meta: after first interaction or 15s — keeps mobile Lighthouse clean */}
+        {/* Defer GTM + Meta until after load / idle — protects FCP/LCP/TBT */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){function loadTags(){if(window.__oraTagsLoaded)return;window.__oraTagsLoaded=1;
@@ -142,10 +133,9 @@ n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','2916628175360380');fbq('track','PageView');}
-function arm(){['pointerdown','keydown','touchstart'].forEach(function(e){
-window.addEventListener(e,loadTags,{once:true,passive:true});});
-setTimeout(loadTags,15000);}
-if(document.readyState==='complete')arm();else window.addEventListener('load',arm);})();`,
+function schedule(){if('requestIdleCallback' in window){requestIdleCallback(loadTags,{timeout:6000});}
+else{setTimeout(loadTags,3500);}}
+if(document.readyState==='complete')schedule();else window.addEventListener('load',schedule);})();`,
           }}
         />
         <noscript>

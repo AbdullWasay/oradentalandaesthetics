@@ -130,7 +130,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
           width={540}
           height={720}
           fetchPriority="high"
-          decoding="sync"
+          decoding="async"
         />
         {loadVideo && !reducedMotion ? (
           <video

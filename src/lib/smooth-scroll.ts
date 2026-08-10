@@ -108,15 +108,10 @@ export function SmoothScroll() {
       void boot();
     };
 
-    // Mobile: wait longer — Lenis isn't needed for LCP and adds main-thread work
-    const isMobile = window.matchMedia("(max-width: 1023px)").matches;
-    const idleTimeout = isMobile ? 12000 : 4000;
-    const fallbackMs = isMobile ? 10000 : 2000;
-
     if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(start, { timeout: idleTimeout });
+      idleId = window.requestIdleCallback(start, { timeout: 5000 });
     } else {
-      timeoutId = setTimeout(start, fallbackMs);
+      timeoutId = setTimeout(start, 2500);
     }
 
     return () => {
