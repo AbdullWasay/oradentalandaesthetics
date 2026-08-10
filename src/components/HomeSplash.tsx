@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import horizontalLogo from "@/assets/horizontal-logo-dark.webp";
+import logoWhite from "@/assets/logo_white.webp";
 
 type SplashPhase = "brand" | "tagline" | "exit";
 
-/**
- * Desktop brand intro only.
- * Mobile skips splash to avoid LCP/Speed Index delay and layout shift.
- */
+/** Brand intro splash — solid olive on mobile and desktop. */
 export function HomeSplash({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<SplashPhase>("brand");
   const [visible, setVisible] = useState(true);
@@ -14,14 +12,14 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
     onComplete();
 
-    if (window.matchMedia("(max-width: 1023px)").matches) {
-      setVisible(false);
-      return;
-    }
+    const mobile = window.matchMedia("(max-width: 1023px)").matches;
+    const taglineAt = mobile ? 400 : 350;
+    const exitAt = mobile ? 850 : 700;
+    const doneAt = mobile ? 1100 : 900;
 
-    const taglineTimer = window.setTimeout(() => setPhase("tagline"), 350);
-    const exitTimer = window.setTimeout(() => setPhase("exit"), 700);
-    const doneTimer = window.setTimeout(() => setVisible(false), 900);
+    const taglineTimer = window.setTimeout(() => setPhase("tagline"), taglineAt);
+    const exitTimer = window.setTimeout(() => setPhase("exit"), exitAt);
+    const doneTimer = window.setTimeout(() => setVisible(false), doneAt);
 
     return () => {
       window.clearTimeout(taglineTimer);
@@ -30,38 +28,39 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
     };
   }, [onComplete]);
 
-  // Don't SSR-paint splash on first HTML for mobile crawlers: hide until we know desktop
-  // Desktop: visible from first paint via lg styles; mobile: null after effect (and CSS lg-only)
   if (!visible) return null;
 
   const showRest = phase === "tagline" || phase === "exit";
 
   return (
     <div
-      className={`splash-screen fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-[#666d57] lg:flex ${phase === "exit" ? "splash-fade-out" : ""}`}
+      className={`splash-screen fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#666d57] ${phase === "exit" ? "splash-fade-out" : ""}`}
       aria-hidden={phase === "exit"}
     >
       <div className="grain absolute inset-0 opacity-[0.08]" aria-hidden />
 
       <div className="relative flex flex-col items-center px-6 text-center">
         <div className="splash-brand-show flex flex-col items-center">
-          <img
-            src={horizontalLogo}
-            alt="ORA Dental Wellness"
-            className="h-auto w-[260px]"
-            width={260}
-            height={64}
-            decoding="async"
-            fetchPriority="low"
-          />
-          <p className="mt-6 font-sans-tight text-[0.65rem] tracking-[0.22em] text-shoji/55 md:text-xs">
+          <picture>
+            <source media="(min-width: 1024px)" srcSet={horizontalLogo} />
+            <img
+              src={logoWhite}
+              alt="ORA Dental Wellness"
+              className="h-auto w-[min(200px,58vw)] lg:w-[260px]"
+              width={212}
+              height={64}
+              decoding="async"
+              fetchPriority="low"
+            />
+          </picture>
+          <p className="mt-6 font-sans-tight text-[0.65rem] tracking-[0.22em] text-shoji/90 md:text-xs lg:text-shoji/55">
             Dental Wellness
           </p>
         </div>
 
         <div className={`mt-6 flex flex-col items-center ${showRest ? "splash-rest-show" : "opacity-0"}`}>
-          <div className="splash-divider h-px w-0 bg-shoji/40 splash-divider-show" />
-          <p className="mt-7 font-sans-tight text-[0.62rem] tracking-[0.26em] text-shoji/85 md:text-xs">
+          <div className="splash-divider h-px w-0 bg-shoji/50 splash-divider-show lg:bg-shoji/40" />
+          <p className="mt-7 font-sans-tight text-[0.62rem] tracking-[0.26em] text-shoji md:text-xs lg:text-shoji/85">
             Aligners · Implants · Dentistry
           </p>
         </div>

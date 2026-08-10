@@ -9,6 +9,7 @@ import {
   ORA_WHATSAPP_URL,
 } from "@/lib/seo";
 import { trackContact } from "@/lib/meta-pixel";
+import { ReviewAvatar } from "@/components/ReviewAvatar";
 
 type HomeHeroProps = {
   ready: boolean;
@@ -23,6 +24,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
+  const avatars = reviews?.reviews.filter((r) => r.authorPhotoUrl).slice(0, 4) ?? [];
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -32,8 +34,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  // Defer heavy video well after Lighthouse's critical window.
-  // Poster is LCP; video only loads on slow idle (~12–20s) and skips Save-Data / 2G.
+  // Defer heavy video well after first paint. Poster is LCP.
   useEffect(() => {
     if (reducedMotion) return;
 
@@ -59,7 +60,6 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
       }
     };
 
-    // Wait for window load, then another beat, so first paint stays lean
     const afterLoad = () => {
       timeoutId = setTimeout(schedule, 4000);
     };
@@ -147,15 +147,12 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
             disableRemotePlayback
           />
         ) : null}
-        {/* Keep washes light so the clinic photo reads across the full hero (not a white top half) */}
-        <div className="absolute inset-0 bg-[#4d5645]/20 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/35 via-[#f5f1eb]/25 to-[#f5f1eb]/80" />
       </div>
 
       <div className="relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8">
         <div className="flex items-center justify-center gap-2.5">
           <span className="h-px w-8 bg-[#666d57]/40" />
-          <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57]">
+          <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57] drop-shadow-[0_1px_8px_rgba(245,241,235,0.9)]">
             Bahria Town · Rawalpindi
           </p>
           <span className="h-px w-8 bg-[#666d57]/40" />
@@ -163,7 +160,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
 
         <p
           data-speakable
-          className="mx-auto mt-6 max-w-[20rem] text-center font-display text-[clamp(2.4rem,9.5vw,3.1rem)] font-light leading-[1.06] tracking-tight text-[#4d5645]"
+          className="mx-auto mt-6 max-w-[20rem] text-center font-display text-[clamp(2.4rem,9.5vw,3.1rem)] font-light leading-[1.06] tracking-tight text-[#4d5645] drop-shadow-[0_1px_12px_rgba(245,241,235,0.9)]"
         >
           Every detail,
           <br />
@@ -173,7 +170,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
 
         <p
           data-speakable
-          className="mx-auto mt-4 max-w-[20rem] text-center text-[0.98rem] font-light leading-relaxed text-[#70796b]"
+          className="mx-auto mt-4 max-w-[20rem] text-center text-[0.98rem] font-light leading-relaxed text-[#4d5645] drop-shadow-[0_1px_10px_rgba(245,241,235,0.85)]"
         >
           Experience dentistry that blends clinical precision with exceptional comfort
           at ORA Dental Wellness — your dentist in Bahria Town Phase 4, Rawalpindi.
@@ -194,7 +191,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
           <a
             href={`tel:${ORA_PHONE_PRIMARY}`}
             onClick={() => trackContact("phone")}
-            className="flex w-full items-center justify-center gap-2 rounded-full border border-[#4d5645]/30 bg-[#f5f1eb]/55 px-6 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#4d5645] transition-colors active:bg-[#f5f1eb]/80"
+            className="flex w-full items-center justify-center gap-2 rounded-full border border-[#4d5645]/30 bg-[#f5f1eb]/80 px-6 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#4d5645] transition-colors active:bg-[#f5f1eb]"
           >
             <Phone className="h-3.5 w-3.5" />
             Call {ORA_PHONE_DISPLAY}
@@ -202,15 +199,32 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
         </div>
 
         {reviews && (
-          <div className="mx-auto mt-8 flex items-center justify-center gap-2">
-            <div className="flex items-center gap-1" aria-hidden>
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-3.5 w-3.5 fill-[#666d57] text-[#666d57]" />
+          <div className="mx-auto mt-8 flex items-center justify-center gap-3">
+            <div className="flex -space-x-2">
+              {avatars.map((r) => (
+                <ReviewAvatar
+                  key={r.id}
+                  review={r}
+                  className="h-9 w-9 border-2 border-[#f5f1eb] shadow-sm ring-0"
+                  textClassName="text-[0.7rem]"
+                />
               ))}
+              {avatars.length < 4 && (
+                <span className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#f5f1eb] bg-[#666d57]/15">
+                  <Star className="h-3.5 w-3.5 fill-[#666d57] text-[#666d57]" />
+                </span>
+              )}
             </div>
-            <p className="font-sans-tight text-[10px] tracking-[0.06em] text-[#70796b]">
-              {formatRating(reviews.rating)} · {formatReviewCount(reviews.totalReviews)} Google reviews
-            </p>
+            <div className="text-left">
+              <div className="flex items-center gap-1">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-3 w-3 fill-[#666d57] text-[#666d57]" />
+                ))}
+              </div>
+              <p className="mt-0.5 font-sans-tight text-[10px] tracking-[0.06em] text-[#4d5645]">
+                {formatRating(reviews.rating)} · {formatReviewCount(reviews.totalReviews)} Google reviews
+              </p>
+            </div>
           </div>
         )}
       </div>
@@ -220,8 +234,6 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
 
 /** Desktop — full-bleed reception photograph + olive copy plane. */
 function DesktopHero({ ready }: { ready: boolean }) {
-  // Always render the LCP image in SSR HTML (section is CSS-hidden on mobile).
-  // Do not gate on useMediaQuery — that delayed discovery until after hydration (~1.5s).
   return (
     <section className="relative hidden min-h-[min(calc(100dvh-11.25rem),740px)] overflow-hidden bg-[#666d57] lg:block">
       <img
