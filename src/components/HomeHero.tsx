@@ -119,24 +119,8 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
   }, [loadVideo, reducedMotion]);
 
   return (
-    <section
-      className="ora-m-hero relative flex h-[calc(100svh-7.75rem)] min-h-[520px] max-h-[720px] flex-col overflow-hidden bg-[#f5f1eb] lg:hidden"
-      style={{
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-        minHeight: 520,
-        maxHeight: 720,
-        height: "calc(100svh - 7.75rem)",
-        overflow: "hidden",
-        backgroundColor: "#f5f1eb",
-      }}
-    >
-      <div
-        aria-hidden
-        className="ora-m-hero-media pointer-events-none absolute inset-0 overflow-hidden"
-        style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}
-      >
+    <section className="relative flex h-[calc(100svh-7.75rem)] min-h-[520px] max-h-[720px] flex-col overflow-hidden bg-[#f5f1eb] lg:hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <img
           src={heroMobilePoster}
           alt="ORA Dental Wellness clinic interior in Bahria Town Phase 4, Rawalpindi"
@@ -144,15 +128,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
           width={540}
           height={720}
           fetchPriority="high"
-          decoding="sync"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center 28%",
-          }}
+          decoding="async"
         />
         {loadVideo && !reducedMotion ? (
           <video
@@ -171,33 +147,12 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
             disableRemotePlayback
           />
         ) : null}
-        <div className="absolute inset-0 bg-[#f5f1eb]/55" />
-        <div className="absolute inset-0 bg-[#4d5645]/18 mix-blend-multiply" />
-        <div
-          className="ora-m-hero-wash absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85"
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to bottom, rgba(245,241,235,.7), rgba(245,241,235,.45), rgba(245,241,235,.85))",
-          }}
-        />
+        {/* Keep washes light so the clinic photo reads across the full hero (not a white top half) */}
+        <div className="absolute inset-0 bg-[#4d5645]/20 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/35 via-[#f5f1eb]/25 to-[#f5f1eb]/80" />
       </div>
 
-      <div
-        className="ora-m-hero-copy relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8"
-        style={{
-          position: "relative",
-          zIndex: 10,
-          display: "flex",
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          padding: "2rem 1.25rem 2.5rem",
-          textAlign: "center",
-          color: "#4d5645",
-        }}
-      >
+      <div className="relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8">
         <div className="flex items-center justify-center gap-2.5">
           <span className="h-px w-8 bg-[#666d57]/40" />
           <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57]">
@@ -230,31 +185,11 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
             target="_blank"
             rel="noreferrer"
             onClick={() => trackContact("whatsapp")}
-            style={{
-              color: "#f5f1eb",
-              backgroundColor: "#4d5645",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.6rem",
-              width: "100%",
-              maxWidth: "24rem",
-              margin: "0.75rem auto 0",
-              padding: "1rem 1.5rem",
-              borderRadius: 999,
-              textDecoration: "none",
-              fontSize: 11,
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              fontFamily: "system-ui, sans-serif",
-            }}
-            className="ora-m-cta group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
+            style={{ color: "#f5f1eb", backgroundColor: "#4d5645" }}
+            className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
           >
             Chat on WhatsApp
-            <ArrowRight
-              className="h-4 w-4 text-[#f5f1eb] transition-transform group-hover:translate-x-0.5"
-              style={{ color: "#f5f1eb" }}
-            />
+            <ArrowRight className="h-4 w-4 text-[#f5f1eb] transition-transform group-hover:translate-x-0.5" />
           </a>
           <a
             href={`tel:${ORA_PHONE_PRIMARY}`}
@@ -266,7 +201,6 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
           </a>
         </div>
 
-        {/* Text + stars only — no Google CDN photos competing with LCP on mobile */}
         {reviews && (
           <div className="mx-auto mt-8 flex items-center justify-center gap-2">
             <div className="flex items-center gap-1" aria-hidden>
@@ -289,7 +223,7 @@ function DesktopHero({ ready }: { ready: boolean }) {
   // Always render the LCP image in SSR HTML (section is CSS-hidden on mobile).
   // Do not gate on useMediaQuery — that delayed discovery until after hydration (~1.5s).
   return (
-    <section className="ora-d-hero relative hidden min-h-[min(calc(100dvh-11.25rem),740px)] overflow-hidden bg-[#666d57] lg:block">
+    <section className="relative hidden min-h-[min(calc(100dvh-11.25rem),740px)] overflow-hidden bg-[#666d57] lg:block">
       <img
         src={heroDesktop}
         alt="ORA Dental Wellness reception desk and waiting area in Bahria Town Phase 4, Rawalpindi"

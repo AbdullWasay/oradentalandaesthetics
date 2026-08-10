@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import horizontalLogo from "@/assets/horizontal-logo-dark.webp";
-import logoWhite from "@/assets/logo_white.webp";
 
 type SplashPhase = "brand" | "tagline" | "exit";
 
 /**
- * Brand intro splash — desktop only.
- * Mobile skips it so FCP/LCP/Speed Index stay high (critical CSS also hides .splash-screen ≤1023px).
+ * Desktop brand intro only.
+ * Mobile skips splash to avoid LCP/Speed Index delay and layout shift.
  */
 export function HomeSplash({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<SplashPhase>("brand");
@@ -15,7 +14,6 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
     onComplete();
 
-    // Mobile: no splash (critical CSS also forces .splash-screen { display:none })
     if (window.matchMedia("(max-width: 1023px)").matches) {
       setVisible(false);
       return;
@@ -32,13 +30,15 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
     };
   }, [onComplete]);
 
+  // Don't SSR-paint splash on first HTML for mobile crawlers: hide until we know desktop
+  // Desktop: visible from first paint via lg styles; mobile: null after effect (and CSS lg-only)
   if (!visible) return null;
 
   const showRest = phase === "tagline" || phase === "exit";
 
   return (
     <div
-      className={`splash-screen fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#666d57] ${phase === "exit" ? "splash-fade-out" : ""}`}
+      className={`splash-screen fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-[#666d57] lg:flex ${phase === "exit" ? "splash-fade-out" : ""}`}
       aria-hidden={phase === "exit"}
     >
       <div className="grain absolute inset-0 opacity-[0.08]" aria-hidden />
