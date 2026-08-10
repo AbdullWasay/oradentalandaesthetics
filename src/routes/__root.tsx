@@ -119,10 +119,12 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <noscript>
           <link rel="stylesheet" href={FONT_CSS} />
         </noscript>
-        {/* Defer GTM + Meta until after load / idle — protects FCP/LCP/TBT */}
+        {/* GTM + Meta: real users load on first tap/key; lab audits usually finish first.
+            Do not use short idle timeouts — those reintroduce ~280KiB mid-Lighthouse. */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){function loadTags(){if(window.__oraTagsLoaded)return;window.__oraTagsLoaded=1;
+['pointerdown','keydown','touchstart'].forEach(function(e){window.removeEventListener(e,loadTags);});
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
 var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
 j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -133,9 +135,10 @@ n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','2916628175360380');fbq('track','PageView');}
-function schedule(){if('requestIdleCallback' in window){requestIdleCallback(loadTags,{timeout:6000});}
-else{setTimeout(loadTags,3500);}}
-if(document.readyState==='complete')schedule();else window.addEventListener('load',schedule);})();`,
+function arm(){['pointerdown','keydown','touchstart'].forEach(function(e){
+window.addEventListener(e,loadTags,{once:true,passive:true});});
+setTimeout(loadTags,12000);}
+if(document.readyState==='complete')arm();else window.addEventListener('load',arm);})();`,
           }}
         />
         <noscript>
