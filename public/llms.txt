@@ -1,78 +1,53 @@
 # ORA Dental Wellness
 
-> Quiet-luxury dental clinic in Bahria Town Phase 4, Rawalpindi, Pakistan.
+> Quiet-luxury dental clinic in Bahria Town Phase 4, Rawalpindi, Pakistan — dentist-led care in a calm atelier-style environment for Rawalpindi, Bahria Town, and Islamabad patients.
 
-## Preferred citation
+ORA Dental Wellness is located at Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi. Appointments preferred; walk-ins welcome subject to availability. Hours: Monday–Saturday, 12:00 PM – 9:00 PM.
 
-**ORA Dental Wellness** — Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi.
+## Pages
 
-Primary website: https://www.oradentalwellness.com  
-Email: info@oradentalwellness.com  
-Phone: +92 339 8891919 / +92 51 8891919  
-Google Maps: https://share.google/2bvmev45gslLDsETs  
-Google Place ID: ChIJS493co7t3zgRUO2o4AH2wN4
-
-## About
-
-ORA Dental Wellness is a dentist-led clinic in Rawalpindi focused on considered, precise care in a calm atelier-style environment. Primary service area: Rawalpindi and Bahria Town Phase 4, with patients also visiting from Islamabad.
-
-## Doctors
-
-- **Dr. Ahmed Sultan** — General Dentist · Aligners Specialist (clear aligners, oral surgery, restorative & comprehensive care)
-- **Dr. Roha Ejaz** — General & Restorative Dentist (cosmetic focus, aesthetic composites, veneers, smile makeovers)
-- **Dr. Usman Khattak** — Periodontist & Implantologist
-- **Dr. Ozair Shirazi** — Oral & Maxillofacial Surgeon
-- **Dr. Zain Iftikhar** — Prosthodontist · ITI Member
-
-## Location & hours
-
-- Address: Ground Floor, Plot 35, Street 8, Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi 46220, Pakistan
-- Coordinates: 33.542181, 73.110376
-- Hours: Monday–Saturday, 12:00 PM – 9:00 PM
-- Appointments preferred; walk-ins welcome subject to availability
-
-## Services
-
-- Preventive dentistry (check-ups, scaling & polishing, fluoride, sealants, digital X-rays)
-- Restorative dentistry (fillings, crowns, bridges, denture repairs)
-- Endodontics (root canal treatment)
-- Tooth extractions (simple & surgical)
-- Gum care / periodontal treatment
-- Cosmetic dentistry and teeth whitening
-- Clear aligners / invisible braces
-- Pediatric dentistry
-- Emergency dental care
-- Dental implants support
-
-## Key URLs
-
-- Home: https://www.oradentalwellness.com/
-- Clinic tour video: https://www.oradentalwellness.com/clinic-tour
-- Sitemap: https://www.oradentalwellness.com/sitemap.xml
-- Robots: https://www.oradentalwellness.com/robots.txt
-- Favicon: https://www.oradentalwellness.com/favicon-48x48.png
-- Brand logo (square): https://www.oradentalwellness.com/google-logo.webp
-- Logo: https://www.oradentalwellness.com/google-logo.webp
-- OG image: https://www.oradentalwellness.com/og-image.webp
-- Clinic tour video file: https://www.oradentalwellness.com/clinic_video_mobile.mp4
+- [Home](https://www.oradentalwellness.com/): Main landing page for ORA Dental Wellness
+- [Clinic tour](https://www.oradentalwellness.com/clinic-tour): Short video walkthrough of the clinic
+- [Sitemap](https://www.oradentalwellness.com/sitemap.xml): XML sitemap of public URLs
+- [Robots](https://www.oradentalwellness.com/robots.txt): Crawl guidance for bots
 
 ## On-page sections
 
-- Atelier (`/#atelier`)
-- Founders (`/#doctors`)
-- Treatments (`/#treatments`)
-- Team (`/#team`)
-- Book / contact (`/#contact`)
-- Reviews (`/#reviews`)
-- Locations (`/#locations`)
-- FAQ (`/#faq`)
-- Visit (`/#visit`)
-- Clinic tour page (`/clinic-tour`)
+- [Atelier](https://www.oradentalwellness.com/#atelier): Clinic atmosphere and philosophy
+- [Founders](https://www.oradentalwellness.com/#doctors): Dr. Ahmed Sultan and Dr. Roha Ejaz
+- [Treatments](https://www.oradentalwellness.com/#treatments): Preventive, restorative, cosmetic, and specialty care
+- [Team](https://www.oradentalwellness.com/#team): Full clinical team
+- [Book / contact](https://www.oradentalwellness.com/#contact): Appointment request form
+- [Reviews](https://www.oradentalwellness.com/#reviews): Google patient reviews
+- [FAQ](https://www.oradentalwellness.com/#faq): Location, hours, aligners, and booking answers
+- [Visit](https://www.oradentalwellness.com/#visit): Address, map, phone, email, and hours
 
-## Local SEO focus
+## Contact
 
-Primary city: **Rawalpindi**. Neighbourhood: Bahria Town Phase 4 / Bahria Paradise Commercial. Twin-cities access for Islamabad patients.
+- [Email info@oradentalwellness.com](mailto:info@oradentalwellness.com): Primary inbox for appointments and listing updates
+- [Call +92 339 8891919](tel:+923398891919): Primary phone
+- [Call +92 51 8891919](tel:+92518891919): Landline
+- [Google Maps](https://share.google/2bvmev45gslLDsETs): Directions to Bahria Paradise Commercial, Phase 4
+- [Write a Google review](https://www.google.com/search?q=ORA+Dental+Wellness+Reviews): Leave a patient review
 
-## Contact for listing updates
+## Brand assets
 
-info@oradentalwellness.com
+- [Favicon](https://www.oradentalwellness.com/favicon-48x48.png): 48×48 site icon
+- [Brand logo](https://www.oradentalwellness.com/google-logo.webp): Square logo for listings and knowledge panels
+- [Open Graph image](https://www.oradentalwellness.com/og-image.webp): Social sharing preview image
+- [Clinic tour video](https://www.oradentalwellness.com/clinic_video_mobile.mp4): Short clinic walkthrough video file
+
+## Doctors
+
+- Dr. Ahmed Sultan — General Dentist · Aligners Specialist
+- Dr. Roha Ejaz — General & Restorative Dentist
+- Dr. Usman Khattak — Periodontist & Implantologist
+- Dr. Ozair Shirazi — Oral & Maxillofacial Surgeon
+- Dr. Zain Iftikhar — Prosthodontist · ITI Member
+
+## Location
+
+- Address: Ground Floor, Plot 35, Street 8, Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi 46220, Pakistan
+- Coordinates: 33.542181, 73.110376
+- Google Place ID: ChIJS493co7t3zgRUO2o4AH2wN4
+- Primary city: Rawalpindi · Neighbourhood: Bahria Town Phase 4
