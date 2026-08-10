@@ -7,7 +7,7 @@ import heroDesktop from "@/assets/her-section-bg.webp";
 import appCss from "../styles.css?url";
 
 const FONT_CSS =
-  "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@400;500&display=swap";
+  "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@400;500&display=optional";
 
 function NotFoundComponent() {
   return (

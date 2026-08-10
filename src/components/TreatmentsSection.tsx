@@ -17,6 +17,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import toothLineImg from "@/assets/tooth-line.webp";
 import toothLinePath from "@/assets/tooth-line-path.json";
 import { smoothScrollTo } from "@/lib/smooth-scroll";
+import { bookingServices } from "@/lib/booking-services";
 
 type TreatmentCategory = {
   icon: DentalIconComponent;
@@ -152,20 +153,7 @@ export const treatmentCategories: TreatmentCategory[] = [
   },
 ];
 
-export const services = [
-  { title: "Dental Check-up & Consultation" },
-  { title: "Teeth Cleaning (Scaling & Polishing)" },
-  { title: "Tooth-Colored Fillings" },
-  { title: "Root Canal Treatment" },
-  { title: "Tooth Extractions" },
-  { title: "Crowns & Bridges" },
-  { title: "Dentures" },
-  { title: "Gum Disease Treatment" },
-  { title: "Children's Dentistry" },
-  { title: "Emergency Dental Care" },
-  { title: "Digital X-rays" },
-  { title: "Preventive Dental Care" },
-];
+export const services = bookingServices.map((s) => ({ title: s.title }));
 
 const NAV_TOP_REM = "4.5rem"; // match sticky header (~72px)
 const NAV_TOP_PX = 72;

@@ -1,27 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, lazy, Suspense } from "react";
 import { ArrowRight, Sparkles, Award, Users, Clock, Smile, MapPin, Phone, CalendarDays, MessageCircle, User as UserIcon, Check, Mail } from "lucide-react";
 import { ORA_ADDRESS_FULL, ORA_ADDRESS_LINES, ORA_MAPS_EMBED_URL, ORA_MAPS_SHARE_URL } from "@/lib/location";
-import { TreatmentsSection, services } from "@/components/TreatmentsSection";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SectionLabel } from "@/components/SectionLabel";
-import { TeamCarousel } from "@/components/TeamCarousel";
 import { HomeSplash } from "@/components/HomeSplash";
 import { HomeHero } from "@/components/HomeHero";
-import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { StatRoll } from "@/components/StatRoll";
-import { GoogleReviews } from "@/components/GoogleReviews";
-import { FaqSection } from "@/components/FaqSection";
 import { FounderPanel } from "@/components/FounderPanel";
 import { EmailLink } from "@/components/EmailLink";
 import { submitForm } from "@/lib/submit-form";
 import { getGoogleReviews } from "@/lib/get-google-reviews";
 import { formatReviewCount } from "@/lib/google-reviews";
+import { bookingServices } from "@/lib/booking-services";
 import { trackBookingLead, trackContact } from "@/lib/meta-pixel";
 import {
   PAGE_SEO,
@@ -32,11 +28,29 @@ import {
   ORA_PHONE_PRIMARY,
   ORA_WHATSAPP_URL,
 } from "@/lib/seo";
-import { ContactLeadPopup } from "@/components/ContactLeadPopup";
 import { smoothScrollTo } from "@/lib/smooth-scroll";
 import aboutUs from "@/assets/about-us.webp";
 import drAhmed from "@/assets/doctors/dr-ahmed-sultan.webp";
 import drRoha from "@/assets/doctors/dr-roha-ejaz.webp";
+
+const TreatmentsSection = lazy(() =>
+  import("@/components/TreatmentsSection").then((m) => ({ default: m.TreatmentsSection })),
+);
+const TeamCarousel = lazy(() =>
+  import("@/components/TeamCarousel").then((m) => ({ default: m.TeamCarousel })),
+);
+const GoogleReviews = lazy(() =>
+  import("@/components/GoogleReviews").then((m) => ({ default: m.GoogleReviews })),
+);
+const FaqSection = lazy(() =>
+  import("@/components/FaqSection").then((m) => ({ default: m.FaqSection })),
+);
+const ContactLeadPopup = lazy(() =>
+  import("@/components/ContactLeadPopup").then((m) => ({ default: m.ContactLeadPopup })),
+);
+const FloatingWhatsApp = lazy(() =>
+  import("@/components/FloatingWhatsApp").then((m) => ({ default: m.FloatingWhatsApp })),
+);
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -336,7 +350,9 @@ function HomePage() {
         </div>
       </section>
 
-      <TreatmentsSection />
+      <Suspense fallback={null}>
+        <TreatmentsSection />
+      </Suspense>
 
       {/* MEET OUR TEAM — animated carousel */}
       <section id="team" className="relative scroll-mt-24 overflow-hidden bg-secondary/40">
@@ -360,7 +376,9 @@ function HomePage() {
             </p>
           </div>
           <div className="mt-10">
-            <TeamCarousel />
+            <Suspense fallback={null}>
+              <TeamCarousel />
+            </Suspense>
           </div>
         </div>
       </section>
@@ -634,7 +652,7 @@ function HomePage() {
                           <SelectValue placeholder="Choose a treatment" />
                         </SelectTrigger>
                         <SelectContent>
-                          {services.map((s) => (
+                          {bookingServices.map((s) => (
                             <SelectItem key={s.title} value={s.title}>{s.title}</SelectItem>
                           ))}
                           <SelectItem value="General Consultation">General Consultation</SelectItem>
@@ -659,9 +677,13 @@ function HomePage() {
         </div>
       </section>
 
-      <GoogleReviews data={googleReviews} />
+      <Suspense fallback={null}>
+        <GoogleReviews data={googleReviews} />
+      </Suspense>
 
-      <FaqSection />
+      <Suspense fallback={null}>
+        <FaqSection />
+      </Suspense>
 
       {/* VISIT — contact + map */}
       <section id="visit" className="scroll-mt-24 border-t border-border bg-background">
@@ -810,8 +832,10 @@ function HomePage() {
 
       <SiteFooter />
 
-      <ContactLeadPopup />
-      <FloatingWhatsApp />
+      <Suspense fallback={null}>
+        <ContactLeadPopup />
+        <FloatingWhatsApp />
+      </Suspense>
     </div>
   );
 }
