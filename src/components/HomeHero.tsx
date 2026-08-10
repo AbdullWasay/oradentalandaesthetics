@@ -25,6 +25,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
   const avatars = reviews?.reviews.filter((r) => r.authorPhotoUrl).slice(0, 4) ?? [];
+  const [showProof, setShowProof] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -32,6 +33,24 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
     const onChange = () => setReducedMotion(mq.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // Defer Google avatar network until after LCP window
+  useEffect(() => {
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const show = () => setShowProof(true);
+    if (typeof window.requestIdleCallback === "function") {
+      idleId = window.requestIdleCallback(show, { timeout: 4000 });
+    } else {
+      timeoutId = setTimeout(show, 2500);
+    }
+    return () => {
+      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
+    };
   }, []);
 
   // Defer heavy video well after Lighthouse's critical window.
@@ -130,7 +149,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
           width={540}
           height={720}
           fetchPriority="high"
-          decoding="async"
+          decoding="sync"
         />
         {loadVideo && !reducedMotion ? (
           <video
@@ -202,7 +221,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
           </a>
         </div>
 
-        {reviews && (
+        {reviews && showProof && (
           <div className="mx-auto mt-8 flex items-center justify-center gap-3">
             <div className="flex -space-x-2">
               {avatars.map((r) => (
