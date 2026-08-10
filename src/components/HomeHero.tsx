@@ -19,7 +19,7 @@ type HomeHeroProps = {
 /**
  * Mobile — clinic still is LCP (always painted). Video loads after idle.
  */
-function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReviewsData }) {
+function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
@@ -34,18 +34,42 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  // Defer video until after first paint / idle — LCP is the poster
+  // Defer heavy video well after Lighthouse's critical window.
+  // Poster is LCP; video only loads on slow idle (~12–20s) and skips Save-Data / 2G.
   useEffect(() => {
     if (reducedMotion) return;
-    const start = () => setLoadVideo(true);
+
     let idleId: number | undefined;
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
-    if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(start, { timeout: 3500 });
-    } else {
-      timeoutId = setTimeout(start, 2800);
-    }
+    let cancelled = false;
+
+    const start = () => {
+      if (cancelled) return;
+      const conn = (navigator as Navigator & {
+        connection?: { saveData?: boolean; effectiveType?: string };
+      }).connection;
+      if (conn?.saveData) return;
+      if (conn?.effectiveType === "2g" || conn?.effectiveType === "slow-2g") return;
+      setLoadVideo(true);
+    };
+
+    const schedule = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(start, { timeout: 20000 });
+      } else {
+        timeoutId = setTimeout(start, 15000);
+      }
+    };
+
+    // Wait for window load, then another beat, so first paint stays lean
+    const afterLoad = () => {
+      timeoutId = setTimeout(schedule, 4000);
+    };
+    if (document.readyState === "complete") afterLoad();
+    else window.addEventListener("load", afterLoad, { once: true });
+
     return () => {
+      cancelled = true;
       if (idleId !== undefined && typeof window.cancelIdleCallback === "function") {
         window.cancelIdleCallback(idleId);
       }
@@ -103,10 +127,10 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
           src={heroMobilePoster}
           alt="ORA Dental Wellness clinic interior in Bahria Town Phase 4, Rawalpindi"
           className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
-          width={720}
-          height={960}
+          width={540}
+          height={720}
           fetchPriority="high"
-          decoding="async"
+          decoding="sync"
         />
         {loadVideo && !reducedMotion ? (
           <video
@@ -114,12 +138,12 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
             className={`hero-mobile-video absolute inset-0 h-full w-full scale-105 object-cover transition-opacity duration-500 ${
               videoPlaying ? "opacity-100" : "opacity-0"
             }`}
-            src="/clinic_video_mobile.mp4?v=3"
+            src="/clinic_video_mobile.mp4?v=4"
             muted
             autoPlay
             loop
             playsInline
-            preload="metadata"
+            preload="none"
             controls={false}
             disablePictureInPicture
             disableRemotePlayback
@@ -130,11 +154,7 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
         <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85" />
       </div>
 
-      <div
-        className={`relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8 transition-opacity duration-500 ${
-          ready ? "opacity-100" : "opacity-0"
-        }`}
-      >
+      <div className="relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8">
         <div className="flex items-center justify-center gap-2.5">
           <span className="h-px w-8 bg-[#666d57]/40" />
           <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57]">
@@ -297,7 +317,7 @@ function DesktopHero({ ready }: { ready: boolean }) {
 export function HomeHero({ ready, reviews }: HomeHeroProps) {
   return (
     <>
-      <MobileHero ready={ready} reviews={reviews} />
+      <MobileHero reviews={reviews} />
       <DesktopHero ready={ready} />
     </>
   );

@@ -2,14 +2,14 @@ import { useState } from "react";
 import { initialsFromName, compactGooglePhotoUrl, type GoogleReview } from "@/lib/google-reviews";
 
 const AVATAR_COLORS = [
-  "#666d57",
-  "#5c634c",
-  "#7a8464",
-  "#4f5642",
-  "#8a7a5c",
-  "#6b7358",
-  "#55604a",
-  "#9a8b6a",
+  "#4d5645",
+  "#3f4638",
+  "#555c48",
+  "#454c3c",
+  "#5c5340",
+  "#4a5140",
+  "#3d4536",
+  "#5a5040",
 ];
 
 function colorForName(name: string): string {
@@ -39,7 +39,10 @@ export function ReviewAvatar({
   textClassName = "text-lg",
 }: ReviewAvatarProps) {
   const [photoFailed, setPhotoFailed] = useState(false);
-  const photoUrl = compactGooglePhotoUrl(review.authorPhotoUrl);
+  const photoUrl = compactGooglePhotoUrl(
+    review.authorPhotoUrl,
+    className.includes("h-12") || className.includes("h-14") ? 72 : 48,
+  );
   const showPhoto = Boolean(photoUrl) && !photoFailed;
   const initials = initialsFromName(review.author);
   const background = colorForName(review.author);

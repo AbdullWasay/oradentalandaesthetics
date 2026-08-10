@@ -53,7 +53,7 @@ export function FaqSection() {
               {HIGHLIGHTS.map(({ icon: Icon, label }) => (
                 <li
                   key={label}
-                  className="flex items-center gap-3 font-sans-tight text-sm text-foreground/55"
+                  className="flex items-center gap-3 font-sans-tight text-sm text-foreground/75"
                 >
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#666d57]/15 bg-background/70 text-[#666d57]">
                     <Icon className="h-4 w-4" strokeWidth={1.6} />
@@ -80,14 +80,14 @@ export function FaqSection() {
                   >
                     <AccordionTrigger className="group gap-4 py-5 hover:no-underline sm:py-6 [&>svg]:hidden">
                       <span className="flex min-w-0 flex-1 items-start gap-4 text-left">
-                        <span className="mt-0.5 font-sans-tight text-[10px] tracking-[0.18em] text-[#666d57]/70">
+                        <span className="mt-0.5 font-sans-tight text-[10px] tracking-[0.18em] text-[#4d5645]">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                         <span className="font-display text-[1.1rem] font-normal leading-snug text-foreground sm:text-[1.25rem]">
                           {item.question}
                         </span>
                       </span>
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f3eee4] text-[#5c564e] transition-colors group-data-[state=open]:bg-[#666d57] group-data-[state=open]:text-[#f5f1eb]">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#f3eee4] text-[#4d5645] transition-colors group-data-[state=open]:bg-[#666d57] group-data-[state=open]:text-[#f5f1eb]">
                         <ChevronDown className="h-4 w-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                       </span>
                     </AccordionTrigger>

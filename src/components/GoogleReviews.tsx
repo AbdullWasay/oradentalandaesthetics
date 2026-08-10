@@ -144,14 +144,14 @@ function Stars({ rating, className = "" }: { rating: number; className?: string 
 function ReviewsHeader({ data }: { data: GoogleReviewsData }) {
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="inline-flex items-center gap-3 font-sans-tight text-xs uppercase tracking-[0.22em] text-foreground/45">
+      <div className="inline-flex items-center gap-3 font-sans-tight text-xs uppercase tracking-[0.22em] text-foreground/70">
         <GoogleMark className="h-4 w-4" />
         Google reviews
       </div>
       <h2 className="mt-6 font-display text-[clamp(2.75rem,6vw,5rem)] leading-[1.02] tracking-tight">
         Trusted by patients
         <br />
-        <span className="italic text-foreground/50">who chose quieter care.</span>
+        <span className="italic text-foreground/70">who chose quieter care.</span>
       </h2>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-foreground/70">
         <Stars rating={Math.round(data.rating)} />
@@ -159,7 +159,7 @@ function ReviewsHeader({ data }: { data: GoogleReviewsData }) {
           {formatRating(data.rating)}
         </span>
         <span className="h-4 w-px bg-foreground/15" aria-hidden />
-        <span className="font-sans-tight text-[11px] uppercase tracking-[0.18em] text-foreground/45">
+        <span className="font-sans-tight text-[11px] uppercase tracking-[0.18em] text-foreground/70">
           {formatReviewCount(data.totalReviews)} on Google
         </span>
       </div>
@@ -183,7 +183,7 @@ function ReviewCard({
           <ReviewAvatar review={review} className="h-12 w-12" active textClassName="text-lg" />
           <div>
             <div className="font-display text-xl leading-tight">{review.author}</div>
-            <div className="mt-0.5 font-sans-tight text-[10px] uppercase tracking-[0.16em] text-foreground/45">
+            <div className="mt-0.5 font-sans-tight text-[10px] uppercase tracking-[0.16em] text-foreground/65">
               {review.publishedAt}
             </div>
           </div>
@@ -193,7 +193,7 @@ function ReviewCard({
             type="button"
             aria-label="Close review"
             onClick={onClose}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border text-foreground/50"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground/70"
           >
             <X className="h-4 w-4" />
           </button>
@@ -233,7 +233,7 @@ function MobileReviews({ reviews }: { reviews: GoogleReview[] }) {
         >
           <ArrowLeft className="h-4 w-4" />
         </button>
-        <span className="font-sans-tight text-[11px] tracking-[0.2em] text-foreground/45">
+        <span className="font-sans-tight text-[11px] tracking-[0.2em] text-foreground/70">
           {String(index + 1).padStart(2, "0")} / {String(reviews.length).padStart(2, "0")}
         </span>
         <button
@@ -515,7 +515,7 @@ export function GoogleReviews({ data }: GoogleReviewsProps) {
           href={data.mapsUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/45 transition-colors hover:text-foreground"
+          className="inline-flex min-h-11 items-center gap-2 py-2 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/70 transition-colors hover:text-foreground"
         >
           All reviews on Google <ArrowRight className="h-3.5 w-3.5" />
         </a>
@@ -531,7 +531,7 @@ export function GoogleReviews({ data }: GoogleReviewsProps) {
               </div>
               <h3 className="mt-4 font-display text-3xl leading-tight md:text-5xl">
                 Experienced ORA?
-                <span className="italic text-foreground/55"> Leave a review.</span>
+                <span className="italic text-foreground/70"> Leave a review.</span>
               </h3>
             </div>
             <div className="lg:col-span-4 lg:flex lg:justify-end">

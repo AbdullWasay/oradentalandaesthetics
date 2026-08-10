@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Facebook, Instagram, Phone, X } from "lucide-react";
-import popupDesktop from "@/assets/her-section-bg.webp";
-import popupMobile from "@/assets/about-us.webp";
+import popupImage from "@/assets/about-us.webp";
 import {
   ORA_PHONE_DISPLAY,
   ORA_PHONE_PRIMARY,
@@ -116,61 +115,46 @@ export function ContactLeadPopup() {
       />
 
       <div
-        className={`relative z-10 flex max-h-[min(88dvh,640px)] w-full max-w-[min(420px,100%)] flex-col overflow-hidden rounded-[1.25rem] bg-[#f5f1eb] opacity-0 shadow-[0_40px_100px_-40px_rgba(26,28,24,0.55)] will-change-transform sm:max-w-[880px] sm:flex-row ${panelClass}`}
+        className={`relative z-10 flex max-h-[min(88dvh,640px)] w-full max-w-[min(420px,100%)] flex-col overflow-hidden rounded-[1.25rem] bg-[#f5f1eb] opacity-0 shadow-[0_40px_100px_-40px_rgba(26,28,24,0.55)] will-change-transform sm:max-w-[860px] sm:flex-row ${panelClass}`}
       >
         <button
           type="button"
           onClick={close}
           aria-label="Close"
-          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f1eb]/95 text-[#4d5645] shadow-sm transition-colors hover:bg-[#f5f1eb] sm:right-4 sm:top-4"
+          className="absolute right-3 top-3 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-[#f5f1eb]/95 text-[#4d5645] shadow-sm transition-colors hover:bg-[#f5f1eb] sm:right-4 sm:top-4"
         >
           <X className="h-4 w-4" />
         </button>
 
-        {/* Mobile image — atelier (full-bleed portrait crop) */}
-        <div className="relative h-[42vw] min-h-[160px] max-h-[200px] w-full shrink-0 overflow-hidden sm:hidden">
+        {/* Atelier image — cream fade into content */}
+        <div className="relative h-[42vw] min-h-[160px] max-h-[220px] w-full shrink-0 overflow-hidden sm:h-auto sm:max-h-none sm:min-h-[420px] sm:w-[44%]">
           <img
-            src={popupMobile}
+            src={popupImage}
             alt="ORA Dental Wellness atelier in Bahria Town Phase 4"
             className="absolute inset-0 h-full w-full object-cover object-center"
-            width={800}
-            height={1000}
+            width={420}
+            height={560}
             decoding="async"
           />
+          {/* Mobile: fade up into cream · Desktop: fade right into cream */}
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-[#f5f1eb] via-[#f5f1eb]/20 to-transparent"
+            className="absolute inset-0 bg-gradient-to-t from-[#f5f1eb] via-[#f5f1eb]/55 to-[#f5f1eb]/10 sm:bg-gradient-to-r sm:from-transparent sm:via-[#f5f1eb]/25 sm:to-[#f5f1eb]"
           />
         </div>
 
-        {/* Desktop image — reception, right crop */}
-        <div className="relative hidden w-[46%] shrink-0 overflow-hidden sm:block sm:min-h-[420px]">
-          <img
-            src={popupDesktop}
-            alt="ORA Dental Wellness reception in Bahria Town Phase 4"
-            className="absolute inset-0 h-full w-full object-cover object-right"
-            width={1750}
-            height={899}
-            decoding="async"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-gradient-to-r from-transparent to-[#4d5645]/15"
-          />
-        </div>
-
-        <div className="relative z-10 flex flex-1 flex-col justify-center overflow-y-auto bg-[#f5f1eb] px-5 pb-6 pt-4 sm:px-10 sm:py-12">
-          <p className="font-sans-tight text-[10px] uppercase tracking-[0.28em] text-[#666d57]/80">
+        <div className="relative z-10 flex flex-1 flex-col justify-center overflow-y-auto bg-[#f5f1eb] px-5 pb-6 pt-1 sm:px-10 sm:py-12">
+          <p className="font-sans-tight text-[10px] uppercase tracking-[0.28em] text-[#4d5645]">
             Prefer to talk?
           </p>
           <h2
             id="ora-lead-title"
-            className="mt-2.5 font-display text-[clamp(1.55rem,5vw,2.35rem)] font-light leading-[1.08] tracking-tight text-[#4d5645] sm:mt-3"
+            className="mt-2.5 font-display text-[clamp(1.55rem,5vw,2.25rem)] font-light leading-[1.08] tracking-tight text-[#4d5645] sm:mt-3"
           >
             Skip the form.
             <span className="mt-1 block italic text-[#666d57]">Call or WhatsApp us.</span>
           </h2>
-          <p className="mt-3 max-w-sm text-[0.92rem] font-light leading-relaxed text-[#70796b] sm:mt-4 sm:text-[0.95rem]">
+          <p className="mt-3 max-w-sm text-[0.92rem] font-light leading-relaxed text-[#5a6358] sm:mt-4 sm:text-[0.95rem]">
             Most patients prefer a quick message. We’ll confirm your visit within minutes.
           </p>
 
@@ -207,7 +191,7 @@ export function ContactLeadPopup() {
               target="_blank"
               rel="noreferrer"
               aria-label="ORA Dental Wellness on Instagram"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#4d5645]/25 text-[#4d5645] transition-colors hover:border-[#666d57] hover:bg-[#666d57]/10"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#4d5645]/25 text-[#4d5645] transition-colors hover:border-[#666d57] hover:bg-[#666d57]/10"
             >
               <Instagram className="h-4 w-4" />
             </a>
@@ -216,11 +200,11 @@ export function ContactLeadPopup() {
               target="_blank"
               rel="noreferrer"
               aria-label="ORA Dental Wellness on Facebook"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#4d5645]/25 text-[#4d5645] transition-colors hover:border-[#666d57] hover:bg-[#666d57]/10"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#4d5645]/25 text-[#4d5645] transition-colors hover:border-[#666d57] hover:bg-[#666d57]/10"
             >
               <Facebook className="h-4 w-4" />
             </a>
-            <p className="font-sans-tight text-[10px] tracking-[0.12em] text-[#70796b]/70">
+            <p className="font-sans-tight text-[10px] tracking-[0.12em] text-[#5a6358]">
               Mon – Sat · 12:00 – 9:00 PM
             </p>
           </div>

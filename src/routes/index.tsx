@@ -60,7 +60,7 @@ const marqueeItems = [
 function HomePage() {
   const googleReviews = Route.useLoaderData();
   const submit = useServerFn(submitForm);
-  const [heroReady, setHeroReady] = useState(false);
+  const [heroReady, setHeroReady] = useState(true);
 
   const stats = [
     { icon: Smile, k: "500+", v: "Smiles transformed", short: "Smiles" },
@@ -186,8 +186,8 @@ function HomePage() {
                 className="h-full w-full object-cover object-center"
                 loading="lazy"
                 decoding="async"
-                width={700}
-                height={934}
+                width={420}
+                height={560}
                 sizes="(min-width: 1024px) 40vw, 100vw"
               />
             </div>
@@ -553,72 +553,84 @@ function HomePage() {
 
                   <div className="mt-5 grid gap-4 md:mt-10 md:grid-cols-2 md:gap-6">
                     <div className="md:col-span-2">
-                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Full name</label>
+                      <label htmlFor="booking-name" className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/70 md:text-xs">Full name</label>
                       <div className="relative mt-1.5 md:mt-2">
-                        <UserIcon className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/40 md:h-4 md:w-4" />
+                        <UserIcon className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/50 md:h-4 md:w-4" aria-hidden />
                         <Input
+                          id="booking-name"
                           required
                           name="name"
                           disabled={bookingSubmitting}
                           placeholder="Your name"
-                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 md:h-12 md:pl-7"
+                          autoComplete="name"
+                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/45 shadow-none focus-visible:border-accent focus-visible:ring-0 md:h-12 md:pl-7"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Email</label>
+                      <label htmlFor="booking-email" className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/70 md:text-xs">Email</label>
                       <div className="relative mt-1.5 md:mt-2">
-                        <Mail className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/40 md:h-4 md:w-4" />
+                        <Mail className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/50 md:h-4 md:w-4" aria-hidden />
                         <Input
+                          id="booking-email"
                           required
                           name="email"
                           disabled={bookingSubmitting}
                           type="email"
                           placeholder="you@email.com"
-                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 md:h-12 md:pl-7"
+                          autoComplete="email"
+                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/45 shadow-none focus-visible:border-accent focus-visible:ring-0 md:h-12 md:pl-7"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Phone</label>
+                      <label htmlFor="booking-phone" className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/70 md:text-xs">Phone</label>
                       <div className="relative mt-1.5 md:mt-2">
-                        <Phone className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/40 md:h-4 md:w-4" />
+                        <Phone className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/50 md:h-4 md:w-4" aria-hidden />
                         <Input
+                          id="booking-phone"
                           required
                           name="phone"
                           disabled={bookingSubmitting}
                           type="tel"
                           placeholder="0339 8891919"
-                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 md:h-12 md:pl-7"
+                          autoComplete="tel"
+                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/45 shadow-none focus-visible:border-accent focus-visible:ring-0 md:h-12 md:pl-7"
                         />
                       </div>
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Preferred date</label>
+                      <label htmlFor="booking-preferred-date" className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/70 md:text-xs">Preferred date</label>
                       <div className="relative mt-1.5 md:mt-2">
-                        <CalendarDays className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/40 md:h-4 md:w-4" />
+                        <CalendarDays className="pointer-events-none absolute left-0 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-background/50 md:h-4 md:w-4" aria-hidden />
                         <Input
+                          id="booking-preferred-date"
                           required
                           name="preferredDate"
                           disabled={bookingSubmitting}
                           type="date"
-                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/30 shadow-none focus-visible:border-accent focus-visible:ring-0 [color-scheme:dark] md:h-12 md:pl-7"
+                          className="h-10 rounded-none border-0 border-b border-background/20 bg-transparent pl-6 text-background placeholder:text-background/45 shadow-none focus-visible:border-accent focus-visible:ring-0 [color-scheme:dark] md:h-12 md:pl-7"
                         />
                       </div>
                     </div>
 
                     <div className="md:col-span-2">
-                      <label className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/50 md:text-xs">Service</label>
+                      <label id="booking-service-label" htmlFor="booking-service" className="font-sans-tight text-[10px] uppercase tracking-[0.2em] text-background/70 md:text-xs">Service</label>
                       <Select
                         required
                         disabled={bookingSubmitting}
                         value={bookingService}
                         onValueChange={setBookingService}
                       >
-                        <SelectTrigger className="mt-1.5 h-10 rounded-none border-0 border-b border-background/20 bg-transparent px-0 text-background shadow-none focus:ring-0 [&>span]:text-background/80 data-[placeholder]:[&>span]:text-background/30 md:mt-2 md:h-12">
+                        <SelectTrigger
+                          id="booking-service"
+                          aria-labelledby="booking-service-label"
+                          aria-label="Choose a treatment"
+                          className="mt-1.5 h-11 min-h-11 rounded-none border-0 border-b border-background/20 bg-transparent px-0 text-background shadow-none focus:ring-0 [&>span]:text-background/90 data-[placeholder]:[&>span]:text-background/55 md:mt-2 md:h-12"
+                        >
                           <SelectValue placeholder="Choose a treatment" />
                         </SelectTrigger>
                         <SelectContent>
@@ -665,7 +677,7 @@ function HomePage() {
               href={ORA_MAPS_SHARE_URL}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/50 transition-colors hover:text-foreground"
+              className="inline-flex min-h-11 items-center gap-2 py-2 font-sans-tight text-xs uppercase tracking-[0.18em] text-foreground/70 transition-colors hover:text-foreground"
             >
               Open in Google Maps <ArrowRight className="h-3.5 w-3.5" />
             </a>
@@ -703,7 +715,7 @@ function HomePage() {
               <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#666d57]" strokeWidth={1.5} />
               <div className="text-sm text-foreground/80">
                 <p>Mon – Sat · 12:00 – 9:00 PM</p>
-                <p className="text-foreground/45">Sunday · By appointment</p>
+                <p className="text-foreground/70">Sunday · By appointment</p>
               </div>
             </li>
           </ul>
@@ -712,7 +724,7 @@ function HomePage() {
           <div className="mt-14 hidden gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid lg:grid-cols-4">
             <div className="bg-background p-8">
               <MapPin className="h-4 w-4 text-foreground/35" strokeWidth={1.5} />
-              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/65">
                 Location
               </p>
               <a
@@ -731,7 +743,7 @@ function HomePage() {
 
             <div className="bg-background p-8">
               <Phone className="h-4 w-4 text-foreground/35" strokeWidth={1.5} />
-              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/65">
                 Phone
               </p>
               <ul className="mt-4 space-y-3">
@@ -758,7 +770,7 @@ function HomePage() {
 
             <div className="bg-background p-8">
               <Mail className="h-4 w-4 text-foreground/35" strokeWidth={1.5} />
-              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/65">
                 Email
               </p>
               <EmailLink className="mt-3 block text-sm text-foreground/80 transition-colors hover:text-foreground" />
@@ -766,12 +778,12 @@ function HomePage() {
 
             <div className="bg-background p-8">
               <Clock className="h-4 w-4 text-foreground/35" strokeWidth={1.5} />
-              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/40">
+              <p className="mt-5 font-sans-tight text-[10px] uppercase tracking-[0.2em] text-foreground/65">
                 Hours
               </p>
               <div className="mt-3 space-y-1 text-sm text-foreground/80">
                 <p>Mon – Sat · 12:00 – 9:00 PM</p>
-                <p className="text-foreground/45">Sunday · By appointment</p>
+                <p className="text-foreground/70">Sunday · By appointment</p>
               </div>
             </div>
           </div>

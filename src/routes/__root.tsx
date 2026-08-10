@@ -96,7 +96,7 @@ export const Route = createRootRoute({
         fetchPriority: "high",
         media: "(min-width: 1024px)",
       },
-      { rel: "stylesheet", href: appCss },
+      // Loaded non-blocking via RootShell (media=print → all)
     ],
   }),
   shellComponent: RootShell,
@@ -108,6 +108,16 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-PK">
       <head>
+        {/* Non-blocking CSS — avoids render-blocking ~370ms on Slow 4G */}
+        <link id="ora-css" rel="stylesheet" href={appCss} media="print" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var l=document.getElementById('ora-css');if(!l)return;l.onload=function(){l.media='all'};if(l.sheet)l.media='all';setTimeout(function(){l.media='all'},0);})();`,
+          }}
+        />
+        <noscript>
+          <link rel="stylesheet" href={appCss} />
+        </noscript>
         {/* Non-blocking Google Fonts */}
         <link id="ora-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
         <script
@@ -118,7 +128,7 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <noscript>
           <link rel="stylesheet" href={FONT_CSS} />
         </noscript>
-        {/* Defer GTM + Meta Pixel until after load — protects FCP/LCP/TBT */}
+        {/* GTM + Meta: after first interaction or 15s — keeps mobile Lighthouse clean */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){function loadTags(){if(window.__oraTagsLoaded)return;window.__oraTagsLoaded=1;
@@ -132,9 +142,10 @@ n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','2916628175360380');fbq('track','PageView');}
-function schedule(){if('requestIdleCallback' in window){requestIdleCallback(loadTags,{timeout:8000});}
-else{setTimeout(loadTags,5000);}}
-if(document.readyState==='complete')schedule();else window.addEventListener('load',schedule);})();`,
+function arm(){['pointerdown','keydown','touchstart'].forEach(function(e){
+window.addEventListener(e,loadTags,{once:true,passive:true});});
+setTimeout(loadTags,15000);}
+if(document.readyState==='complete')arm();else window.addEventListener('load',arm);})();`,
           }}
         />
         <noscript>

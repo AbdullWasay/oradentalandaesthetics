@@ -18,7 +18,7 @@ export type GoogleReviewsData = {
 };
 
 /** Shrink Google profile photos for avatar display (saves bandwidth on mobile). */
-export function compactGooglePhotoUrl(url: string | null | undefined, size = 96): string | null {
+export function compactGooglePhotoUrl(url: string | null | undefined, size = 48): string | null {
   if (!url) return null;
   // Only rewrite the size token — keep the rest of Google's flags intact
   if (/=s\d+/i.test(url)) {

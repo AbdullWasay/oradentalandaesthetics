@@ -266,7 +266,7 @@ function SmileProgress({ progress }: { progress: number }) {
       ? toothLinePath.throughStart
       : Math.floor(path.length * 0.78);
 
-      
+
   useEffect(() => {
     let cancelled = false;
     const art = new Image();
@@ -440,7 +440,7 @@ function ToothHub({
                 isActive ? "scale-105" : isPast ? "scale-95 opacity-70" : "scale-90 opacity-45 hover:opacity-65"
               }`}
             >
-              <span className="relative flex h-9 w-9 items-center justify-center lg:h-10 lg:w-10">
+              <span className="relative flex h-11 w-11 items-center justify-center lg:h-11 lg:w-11">
                 <svg
                   aria-hidden
                   className="pointer-events-none absolute -inset-0.5 h-[calc(100%+4px)] w-[calc(100%+4px)] -rotate-90"
@@ -534,7 +534,7 @@ function TreatmentDetailCard({
               <Icon className="h-4 w-4" />
             </span>
             <div className="min-w-0">
-              <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57]/55">
+              <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#4d5645]">
                 {cat.short}
               </p>
               <h3 className="mt-1 font-display text-[1.55rem] font-normal leading-[1.1] tracking-tight text-[#4d5645]">
@@ -546,11 +546,11 @@ function TreatmentDetailCard({
       ) : (
         <div className="flex items-end justify-between gap-4 border-b border-[#666d57]/15 pb-5">
           <div className="flex items-end gap-4">
-            <span className="font-display text-[clamp(2.5rem,6vw,4rem)] font-light leading-none tracking-tighter text-[#666d57]/20">
+            <span aria-hidden className="font-display text-[clamp(2.5rem,6vw,4rem)] font-light leading-none tracking-tighter text-[#8b917c]">
               {cat.num}
             </span>
             <div className="pb-0.5">
-              <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57]/55">
+              <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#4d5645]">
                 {cat.short}
               </p>
               <h3 className="mt-1 max-w-md font-display text-[clamp(1.4rem,2.8vw,2.05rem)] font-normal leading-[1.08] tracking-tight text-[#4d5645]">
@@ -563,7 +563,7 @@ function TreatmentDetailCard({
             <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#d8cdc3] bg-[#eae2d6] text-[#666d57]">
               <Icon className="h-3.5 w-3.5" />
             </span>
-            <span className="font-sans-tight text-[9px] tracking-[0.22em] text-[#70796b]">
+            <span className="font-sans-tight text-[9px] tracking-[0.22em] text-[#4d5645]">
               {String(active + 1).padStart(2, "0")} / {treatmentCategories.length}
             </span>
           </div>
@@ -597,7 +597,7 @@ function TreatmentDetailCard({
               >
                 <span
                   className={`w-5 shrink-0 font-sans-tight text-[9px] tracking-[0.18em] transition-colors duration-500 ${
-                    isLit ? "text-[#4d5645]" : "text-[#70796b]/70"
+                    isLit ? "text-[#4d5645]" : "text-[#5a6358]"
                   }`}
                 >
                   {String(j + 1).padStart(2, "0")}
@@ -690,7 +690,7 @@ function MobileTreatments() {
                 type="button"
                 aria-label="Previous treatment"
                 onClick={() => go(active - 1)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#f5f1eb]/25 text-[#f5f1eb]"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#f5f1eb]/45 text-[#f5f1eb]"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
@@ -698,7 +698,7 @@ function MobileTreatments() {
                 type="button"
                 aria-label="Next treatment"
                 onClick={() => go(active + 1)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#f5f1eb]/25 text-[#f5f1eb]"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-[#f5f1eb]/45 text-[#f5f1eb]"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
