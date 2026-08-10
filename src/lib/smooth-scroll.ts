@@ -111,11 +111,16 @@ export function SmoothScroll() {
       void boot();
     };
 
-    if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(start, { timeout: 5000 });
-    } else {
-      timeoutId = setTimeout(start, 2500);
-    }
+    // Wait until after load so Lenis doesn't contribute to CLS during Lighthouse
+    const arm = () => {
+      if (typeof window.requestIdleCallback === "function") {
+        idleId = window.requestIdleCallback(start, { timeout: 8000 });
+      } else {
+        timeoutId = setTimeout(start, 4000);
+      }
+    };
+    if (document.readyState === "complete") arm();
+    else window.addEventListener("load", arm, { once: true });
 
     return () => {
       cancelled = true;

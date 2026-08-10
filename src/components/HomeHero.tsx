@@ -119,8 +119,8 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
   }, [loadVideo, reducedMotion]);
 
   return (
-    <section className="ora-crit-hero relative flex h-[calc(100svh-7.75rem)] min-h-[520px] max-h-[720px] flex-col overflow-hidden bg-[#f5f1eb] lg:hidden">
-      <div aria-hidden className="ora-crit-hero-media pointer-events-none absolute inset-0 overflow-hidden">
+    <section className="relative flex h-[calc(100svh-7.75rem)] min-h-[520px] max-h-[720px] flex-col overflow-hidden bg-[#f5f1eb] lg:hidden">
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <img
           src={heroMobilePoster}
           alt="ORA Dental Wellness clinic interior in Bahria Town Phase 4, Rawalpindi"
@@ -149,10 +149,10 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
         ) : null}
         <div className="absolute inset-0 bg-[#f5f1eb]/55" />
         <div className="absolute inset-0 bg-[#4d5645]/18 mix-blend-multiply" />
-        <div className="ora-crit-hero-wash absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85" />
       </div>
 
-      <div className="ora-crit-hero-copy relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8">
+      <div className="relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8">
         <div className="flex items-center justify-center gap-2.5">
           <span className="h-px w-8 bg-[#666d57]/40" />
           <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57]">
@@ -185,10 +185,11 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
             target="_blank"
             rel="noreferrer"
             onClick={() => trackContact("whatsapp")}
-            className="ora-crit-cta group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
+            style={{ color: "#f5f1eb", backgroundColor: "#4d5645" }}
+            className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
           >
             Chat on WhatsApp
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight className="h-4 w-4 text-[#f5f1eb] transition-transform group-hover:translate-x-0.5" />
           </a>
           <a
             href={`tel:${ORA_PHONE_PRIMARY}`}
@@ -276,10 +277,11 @@ function DesktopHero({ ready }: { ready: boolean }) {
               target="_blank"
               rel="noreferrer"
               onClick={() => trackContact("whatsapp")}
+              style={{ color: "#4d5645", backgroundColor: "#f5f1eb" }}
               className="group inline-flex items-center gap-3 rounded-full bg-[#f5f1eb] px-7 py-4 font-sans-tight text-[#4d5645] transition-all hover:gap-4 hover:bg-[#f5f1eb]/95"
             >
               Chat on WhatsApp
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 text-[#4d5645] transition-transform group-hover:translate-x-1" />
             </a>
             <a
               href={`tel:${ORA_PHONE_PRIMARY}`}
