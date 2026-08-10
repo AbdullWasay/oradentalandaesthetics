@@ -60,8 +60,8 @@ export function SiteHeader() {
             src={logoWhite}
             alt="ORA Dental Wellness logo"
             className="h-8 w-auto"
-            width={106}
-            height={32}
+            width={212}
+            height={64}
           />
           <span className="hidden h-7 w-px bg-foreground/30 sm:block" />
           <span className="hidden font-sans-tight text-[0.72rem] uppercase tracking-[0.18em] text-foreground/70 sm:inline">

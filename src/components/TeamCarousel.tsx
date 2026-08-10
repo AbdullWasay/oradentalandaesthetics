@@ -213,16 +213,22 @@ export function TeamCarousel() {
         <ChevronRight className="h-5 w-5 text-[#666d57]" />
       </button>
 
-      <div className="relative z-10 mt-6 flex items-center justify-center gap-2">
+      <div className="relative z-10 mt-6 flex items-center justify-center gap-0.5">
         {team.map((m, i) => (
           <button
             key={m.name}
+            type="button"
             onClick={() => setActive(i)}
             aria-label={`Go to ${m.name}`}
-            className={`h-1.5 rounded-full transition-all duration-500 ${
-              i === active ? "w-10 bg-[#666d57]" : "w-1.5 bg-[#666d57]/25 hover:bg-[#666d57]/45"
-            }`}
-          />
+            aria-current={i === active ? "true" : undefined}
+            className="flex h-11 min-w-11 items-center justify-center px-1"
+          >
+            <span
+              className={`block h-1.5 rounded-full transition-all duration-500 ${
+                i === active ? "w-10 bg-[#666d57]" : "w-1.5 bg-[#666d57]/35 hover:bg-[#666d57]/55"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </div>

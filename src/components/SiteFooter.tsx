@@ -32,8 +32,8 @@ export function SiteFooter() {
             src={logoWhite}
             alt="ORA Dental Wellness logo"
             className="h-6 w-auto"
-            width={100}
-            height={28}
+            width={212}
+            height={64}
             loading="lazy"
           />
           <div className="flex gap-2">
@@ -130,8 +130,8 @@ export function SiteFooter() {
                 src={logoWhite}
                 alt="ORA Dental Wellness logo"
                 className="h-8 w-auto"
-                width={120}
-                height={32}
+                width={212}
+                height={64}
                 loading="lazy"
               />
               <span className="h-7 w-px bg-foreground/30" />
