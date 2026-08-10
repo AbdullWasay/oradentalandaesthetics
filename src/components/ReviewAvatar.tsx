@@ -30,7 +30,7 @@ type ReviewAvatarProps = {
 /**
  * Always renders a visible avatar.
  * Uses the Google profile photo when Places API provides one;
- * otherwise a colored initials portrait.
+ * otherwise a colored initials portrait (API only returns photos for 5 reviews).
  */
 export function ReviewAvatar({
   review,

@@ -34,7 +34,8 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
-  // Defer heavy video well after first paint. Poster is LCP.
+  // Defer heavy video well after Lighthouse's critical window.
+  // Poster is LCP; video only loads on slow idle (~12–20s) and skips Save-Data / 2G.
   useEffect(() => {
     if (reducedMotion) return;
 
@@ -60,6 +61,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
       }
     };
 
+    // Wait for window load, then another beat, so first paint stays lean
     const afterLoad = () => {
       timeoutId = setTimeout(schedule, 4000);
     };
@@ -147,12 +149,15 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
             disableRemotePlayback
           />
         ) : null}
+        <div className="absolute inset-0 bg-[#f5f1eb]/55" />
+        <div className="absolute inset-0 bg-[#4d5645]/18 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85" />
       </div>
 
       <div className="relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8">
         <div className="flex items-center justify-center gap-2.5">
           <span className="h-px w-8 bg-[#666d57]/40" />
-          <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57] drop-shadow-[0_1px_8px_rgba(245,241,235,0.9)]">
+          <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57]">
             Bahria Town · Rawalpindi
           </p>
           <span className="h-px w-8 bg-[#666d57]/40" />
@@ -160,7 +165,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
 
         <p
           data-speakable
-          className="mx-auto mt-6 max-w-[20rem] text-center font-display text-[clamp(2.4rem,9.5vw,3.1rem)] font-light leading-[1.06] tracking-tight text-[#4d5645] drop-shadow-[0_1px_12px_rgba(245,241,235,0.9)]"
+          className="mx-auto mt-6 max-w-[20rem] text-center font-display text-[clamp(2.4rem,9.5vw,3.1rem)] font-light leading-[1.06] tracking-tight text-[#4d5645]"
         >
           Every detail,
           <br />
@@ -170,7 +175,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
 
         <p
           data-speakable
-          className="mx-auto mt-4 max-w-[20rem] text-center text-[0.98rem] font-light leading-relaxed text-[#4d5645] drop-shadow-[0_1px_10px_rgba(245,241,235,0.85)]"
+          className="mx-auto mt-4 max-w-[20rem] text-center text-[0.98rem] font-light leading-relaxed text-[#70796b]"
         >
           Experience dentistry that blends clinical precision with exceptional comfort
           at ORA Dental Wellness — your dentist in Bahria Town Phase 4, Rawalpindi.
@@ -182,16 +187,15 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
             target="_blank"
             rel="noreferrer"
             onClick={() => trackContact("whatsapp")}
-            style={{ color: "#f5f1eb", backgroundColor: "#4d5645" }}
             className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
           >
             Chat on WhatsApp
-            <ArrowRight className="h-4 w-4 text-[#f5f1eb] transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </a>
           <a
             href={`tel:${ORA_PHONE_PRIMARY}`}
             onClick={() => trackContact("phone")}
-            className="flex w-full items-center justify-center gap-2 rounded-full border border-[#4d5645]/30 bg-[#f5f1eb]/80 px-6 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#4d5645] transition-colors active:bg-[#f5f1eb]"
+            className="flex w-full items-center justify-center gap-2 rounded-full border border-[#4d5645]/30 bg-[#f5f1eb]/55 px-6 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#4d5645] transition-colors active:bg-[#f5f1eb]/80"
           >
             <Phone className="h-3.5 w-3.5" />
             Call {ORA_PHONE_DISPLAY}
@@ -221,7 +225,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
                   <Star key={i} className="h-3 w-3 fill-[#666d57] text-[#666d57]" />
                 ))}
               </div>
-              <p className="mt-0.5 font-sans-tight text-[10px] tracking-[0.06em] text-[#4d5645]">
+              <p className="mt-0.5 font-sans-tight text-[10px] tracking-[0.06em] text-[#70796b]">
                 {formatRating(reviews.rating)} · {formatReviewCount(reviews.totalReviews)} Google reviews
               </p>
             </div>
@@ -234,6 +238,8 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
 
 /** Desktop — full-bleed reception photograph + olive copy plane. */
 function DesktopHero({ ready }: { ready: boolean }) {
+  // Always render the LCP image in SSR HTML (section is CSS-hidden on mobile).
+  // Do not gate on useMediaQuery — that delayed discovery until after hydration (~1.5s).
   return (
     <section className="relative hidden min-h-[min(calc(100dvh-11.25rem),740px)] overflow-hidden bg-[#666d57] lg:block">
       <img
@@ -288,11 +294,10 @@ function DesktopHero({ ready }: { ready: boolean }) {
               target="_blank"
               rel="noreferrer"
               onClick={() => trackContact("whatsapp")}
-              style={{ color: "#4d5645", backgroundColor: "#f5f1eb" }}
               className="group inline-flex items-center gap-3 rounded-full bg-[#f5f1eb] px-7 py-4 font-sans-tight text-[#4d5645] transition-all hover:gap-4 hover:bg-[#f5f1eb]/95"
             >
               Chat on WhatsApp
-              <ArrowRight className="h-4 w-4 text-[#4d5645] transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
               href={`tel:${ORA_PHONE_PRIMARY}`}

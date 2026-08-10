@@ -40,6 +40,3 @@ User-agent: CCBot
 Allow: /
 
 Sitemap: https://www.oradentalwellness.com/sitemap.xml
-
-# AI agents — curated site summary
-# https://www.oradentalwellness.com/llms.txt

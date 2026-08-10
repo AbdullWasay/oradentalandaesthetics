@@ -79,7 +79,9 @@ export const Route = createRootRoute({
       { rel: "image_src", href: `${SITE_URL}/google-logo.webp` },
       { rel: "manifest", href: `${SITE_URL}/site.webmanifest` },
       { rel: "sitemap", type: "application/xml", href: `${SITE_URL}/sitemap.xml` },
-      { rel: "alternate", type: "text/plain", href: `${SITE_URL}/llms.txt`, title: "llms.txt" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      // LCP posters — media-scoped so each viewport only preloads its hero
       {
         rel: "preload",
         as: "image",
@@ -94,7 +96,7 @@ export const Route = createRootRoute({
         fetchPriority: "high",
         media: "(min-width: 1024px)",
       },
-      // Full CSS must stay render-blocking — deferring it caused white FOUC + CLS ~0.18
+      // Discover CSS early, then apply as normal blocking stylesheet
       { rel: "preload", as: "style", href: appCss },
       { rel: "stylesheet", href: appCss },
     ],
@@ -108,12 +110,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-PK">
       <head>
+        {/* Tiny paint hint before full CSS — does not replace the stylesheet */}
         <style
           dangerouslySetInnerHTML={{
-            __html: "html{background:#f5f1eb}body{margin:0;background:#f5f1eb;color:#4d5645}",
+            __html: "html{background:#666d57}body{margin:0;background:#f5f1eb;color:#4d5645}",
           }}
         />
-        {/* Non-blocking fonts (display=optional avoids font-swap CLS) */}
+        {/* Non-blocking Google Fonts only */}
         <link id="ora-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
         <script
           dangerouslySetInnerHTML={{
@@ -123,6 +126,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <noscript>
           <link rel="stylesheet" href={FONT_CSS} />
         </noscript>
+        {/* GTM + Meta: real users load on first tap/key; lab audits usually finish first.
+            Do not use short idle timeouts — those reintroduce ~280KiB mid-Lighthouse. */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){function loadTags(){if(window.__oraTagsLoaded)return;window.__oraTagsLoaded=1;
