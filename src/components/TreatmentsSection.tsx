@@ -266,6 +266,7 @@ function SmileProgress({ progress }: { progress: number }) {
       ? toothLinePath.throughStart
       : Math.floor(path.length * 0.78);
 
+      
   useEffect(() => {
     let cancelled = false;
     const art = new Image();
