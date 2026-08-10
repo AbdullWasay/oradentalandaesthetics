@@ -5,10 +5,8 @@ import logoWhite from "@/assets/logo_white.webp";
 type SplashPhase = "brand" | "tagline" | "exit";
 
 /**
- * Brand intro splash.
- * Mobile: translucent logo overlay only — hero LCP poster stays visible underneath
- * (opaque splash was causing ~1.8s LCP element render delay + poor Speed Index).
- * Desktop: solid olive field (unchanged).
+ * Brand intro splash — desktop only.
+ * Mobile skips it so FCP/LCP/Speed Index stay high (critical CSS also hides .splash-screen ≤1023px).
  */
 export function HomeSplash({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<SplashPhase>("brand");
@@ -17,14 +15,15 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
   useEffect(() => {
     onComplete();
 
-    const mobile = window.matchMedia("(max-width: 1023px)").matches;
-    const taglineAt = mobile ? 280 : 350;
-    const exitAt = mobile ? 580 : 700;
-    const doneAt = mobile ? 780 : 900;
+    // Mobile: no splash (critical CSS also forces .splash-screen { display:none })
+    if (window.matchMedia("(max-width: 1023px)").matches) {
+      setVisible(false);
+      return;
+    }
 
-    const taglineTimer = window.setTimeout(() => setPhase("tagline"), taglineAt);
-    const exitTimer = window.setTimeout(() => setPhase("exit"), exitAt);
-    const doneTimer = window.setTimeout(() => setVisible(false), doneAt);
+    const taglineTimer = window.setTimeout(() => setPhase("tagline"), 350);
+    const exitTimer = window.setTimeout(() => setPhase("exit"), 700);
+    const doneTimer = window.setTimeout(() => setVisible(false), 900);
 
     return () => {
       window.clearTimeout(taglineTimer);
@@ -39,43 +38,30 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
 
   return (
     <div
-      className={`splash-screen fixed inset-0 z-[100] flex flex-col items-center justify-center bg-transparent lg:bg-[#666d57] ${phase === "exit" ? "splash-fade-out" : ""}`}
+      className={`splash-screen fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#666d57] ${phase === "exit" ? "splash-fade-out" : ""}`}
       aria-hidden={phase === "exit"}
     >
-      {/* Mobile: very light vignette — must not obscure hero LCP for Speed Index */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[#4d5645]/18 lg:hidden"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4d5645]/30 lg:hidden"
-      />
-
-      <div className="grain absolute inset-0 hidden opacity-[0.08] lg:block" aria-hidden />
+      <div className="grain absolute inset-0 opacity-[0.08]" aria-hidden />
 
       <div className="relative flex flex-col items-center px-6 text-center">
         <div className="splash-brand-show flex flex-col items-center">
-          <picture>
-            <source media="(min-width: 1024px)" srcSet={horizontalLogo} />
-            <img
-              src={logoWhite}
-              alt="ORA Dental Wellness"
-              className="h-auto w-[min(200px,58vw)] drop-shadow-[0_8px_24px_rgba(26,28,24,0.35)] lg:w-[260px] lg:drop-shadow-none"
-              width={212}
-              height={64}
-              decoding="async"
-              fetchPriority="low"
-            />
-          </picture>
-          <p className="mt-6 font-sans-tight text-[0.65rem] tracking-[0.22em] text-shoji/90 drop-shadow-sm md:text-xs lg:text-shoji/55 lg:drop-shadow-none">
+          <img
+            src={horizontalLogo}
+            alt="ORA Dental Wellness"
+            className="h-auto w-[260px]"
+            width={260}
+            height={64}
+            decoding="async"
+            fetchPriority="low"
+          />
+          <p className="mt-6 font-sans-tight text-[0.65rem] tracking-[0.22em] text-shoji/55 md:text-xs">
             Dental Wellness
           </p>
         </div>
 
         <div className={`mt-6 flex flex-col items-center ${showRest ? "splash-rest-show" : "opacity-0"}`}>
-          <div className="splash-divider h-px w-0 bg-shoji/50 splash-divider-show lg:bg-shoji/40" />
-          <p className="mt-7 font-sans-tight text-[0.62rem] tracking-[0.26em] text-shoji drop-shadow-sm md:text-xs lg:text-shoji/85 lg:drop-shadow-none">
+          <div className="splash-divider h-px w-0 bg-shoji/40 splash-divider-show" />
+          <p className="mt-7 font-sans-tight text-[0.62rem] tracking-[0.26em] text-shoji/85 md:text-xs">
             Aligners · Implants · Dentistry
           </p>
         </div>
