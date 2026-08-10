@@ -42,14 +42,14 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
       className={`splash-screen fixed inset-0 z-[100] flex flex-col items-center justify-center bg-transparent lg:bg-[#666d57] ${phase === "exit" ? "splash-fade-out" : ""}`}
       aria-hidden={phase === "exit"}
     >
-      {/* Mobile: soft vignette only — must not fully obscure hero LCP */}
+      {/* Mobile: very light vignette — must not obscure hero LCP for Speed Index */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-[#4d5645]/40 lg:hidden"
+        className="absolute inset-0 bg-[#4d5645]/18 lg:hidden"
       />
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-b from-[#4d5645]/25 via-transparent to-[#4d5645]/55 lg:hidden"
+        className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#4d5645]/30 lg:hidden"
       />
 
       <div className="grain absolute inset-0 hidden opacity-[0.08] lg:block" aria-hidden />

@@ -1,10 +1,10 @@
-/** Booking form service options (kept separate so treatments UI can be code-split). */
+/** Booking form service options (kept separate so Treatments UI can be code-split). */
 export const bookingServices = [
   { title: "Dental Check-up & Consultation" },
   { title: "Teeth Cleaning (Scaling & Polishing)" },
   { title: "Tooth-Colored Fillings" },
   { title: "Root Canal Treatment" },
-  { title: "Tooth Extractions" },
+  { title: "Tooth Extraction" },
   { title: "Crowns & Bridges" },
   { title: "Dentures" },
   { title: "Gum Disease Treatment" },

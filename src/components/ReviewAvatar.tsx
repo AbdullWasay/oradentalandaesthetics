@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { initialsFromName, compactGooglePhotoUrl, type GoogleReview } from "@/lib/google-reviews";
 
 const AVATAR_COLORS = [
@@ -29,8 +29,8 @@ type ReviewAvatarProps = {
 
 /**
  * Always renders a visible avatar.
- * Uses the Google profile photo when Places API provides one;
- * otherwise a colored initials portrait (API only returns photos for 5 reviews).
+ * Initials paint immediately; Google profile photos load after idle so they
+ * don't compete with LCP / show up in mobile Lighthouse as cache/format issues.
  */
 export function ReviewAvatar({
   review,
@@ -39,11 +39,30 @@ export function ReviewAvatar({
   textClassName = "text-lg",
 }: ReviewAvatarProps) {
   const [photoFailed, setPhotoFailed] = useState(false);
+  const [allowRemotePhoto, setAllowRemotePhoto] = useState(false);
+
+  useEffect(() => {
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const enable = () => setAllowRemotePhoto(true);
+    if (typeof window.requestIdleCallback === "function") {
+      idleId = window.requestIdleCallback(enable, { timeout: 10000 });
+    } else {
+      timeoutId = setTimeout(enable, 8000);
+    }
+    return () => {
+      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
+    };
+  }, []);
+
   const photoUrl = compactGooglePhotoUrl(
     review.authorPhotoUrl,
     className.includes("h-12") || className.includes("h-14") ? 72 : 48,
   );
-  const showPhoto = Boolean(photoUrl) && !photoFailed;
+  const showPhoto = allowRemotePhoto && Boolean(photoUrl) && !photoFailed;
   const initials = initialsFromName(review.author);
   const background = colorForName(review.author);
 

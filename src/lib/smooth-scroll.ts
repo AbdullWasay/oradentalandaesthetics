@@ -78,11 +78,14 @@ export function startSmoothScroll() {
   lenis?.start();
 }
 
-/** Site-wide Lenis — deferred until idle so it doesn't block TBT/FCP. */
+/** Site-wide Lenis — desktop only; skipped on mobile to avoid forced reflow / extra JS. */
 export function SmoothScroll() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Touch / narrow viewports: native scroll is fine and avoids Lenis layout thrash
+    if (window.matchMedia("(max-width: 1023px)").matches) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
     let cancelled = false;
     let idleId: number | undefined;

@@ -9,7 +9,6 @@ import {
   ORA_WHATSAPP_URL,
 } from "@/lib/seo";
 import { trackContact } from "@/lib/meta-pixel";
-import { ReviewAvatar } from "@/components/ReviewAvatar";
 
 type HomeHeroProps = {
   ready: boolean;
@@ -24,8 +23,6 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [loadVideo, setLoadVideo] = useState(false);
-  const avatars = reviews?.reviews.filter((r) => r.authorPhotoUrl).slice(0, 4) ?? [];
-  const [showProof, setShowProof] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -33,24 +30,6 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
     const onChange = () => setReducedMotion(mq.matches);
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
-  }, []);
-
-  // Defer Google avatar network until after LCP window
-  useEffect(() => {
-    let idleId: number | undefined;
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
-    const show = () => setShowProof(true);
-    if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(show, { timeout: 4000 });
-    } else {
-      timeoutId = setTimeout(show, 2500);
-    }
-    return () => {
-      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") {
-        window.cancelIdleCallback(idleId);
-      }
-      if (timeoutId !== undefined) clearTimeout(timeoutId);
-    };
   }, []);
 
   // Defer heavy video well after Lighthouse's critical window.
@@ -140,8 +119,8 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
   }, [loadVideo, reducedMotion]);
 
   return (
-    <section className="relative flex h-[calc(100svh-7.75rem)] min-h-[520px] max-h-[720px] flex-col overflow-hidden bg-[#f5f1eb] lg:hidden">
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+    <section className="ora-crit-hero relative flex h-[calc(100svh-7.75rem)] min-h-[520px] max-h-[720px] flex-col overflow-hidden bg-[#f5f1eb] lg:hidden">
+      <div aria-hidden className="ora-crit-hero-media pointer-events-none absolute inset-0 overflow-hidden">
         <img
           src={heroMobilePoster}
           alt="ORA Dental Wellness clinic interior in Bahria Town Phase 4, Rawalpindi"
@@ -170,10 +149,10 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
         ) : null}
         <div className="absolute inset-0 bg-[#f5f1eb]/55" />
         <div className="absolute inset-0 bg-[#4d5645]/18 mix-blend-multiply" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85" />
+        <div className="ora-crit-hero-wash absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8">
+      <div className="ora-crit-hero-copy relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8">
         <div className="flex items-center justify-center gap-2.5">
           <span className="h-px w-8 bg-[#666d57]/40" />
           <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57]">
@@ -206,7 +185,7 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
             target="_blank"
             rel="noreferrer"
             onClick={() => trackContact("whatsapp")}
-            className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
+            className="ora-crit-cta group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
           >
             Chat on WhatsApp
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -221,33 +200,17 @@ function MobileHero({ reviews }: { reviews?: GoogleReviewsData }) {
           </a>
         </div>
 
-        {reviews && showProof && (
-          <div className="mx-auto mt-8 flex items-center justify-center gap-3">
-            <div className="flex -space-x-2">
-              {avatars.map((r) => (
-                <ReviewAvatar
-                  key={r.id}
-                  review={r}
-                  className="h-9 w-9 border-2 border-[#f5f1eb] shadow-sm ring-0"
-                  textClassName="text-[0.7rem]"
-                />
+        {/* Text + stars only — no Google CDN photos competing with LCP on mobile */}
+        {reviews && (
+          <div className="mx-auto mt-8 flex items-center justify-center gap-2">
+            <div className="flex items-center gap-1" aria-hidden>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} className="h-3.5 w-3.5 fill-[#666d57] text-[#666d57]" />
               ))}
-              {avatars.length < 4 && (
-                <span className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#f5f1eb] bg-[#666d57]/15">
-                  <Star className="h-3.5 w-3.5 fill-[#666d57] text-[#666d57]" />
-                </span>
-              )}
             </div>
-            <div className="text-left">
-              <div className="flex items-center gap-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-3 w-3 fill-[#666d57] text-[#666d57]" />
-                ))}
-              </div>
-              <p className="mt-0.5 font-sans-tight text-[10px] tracking-[0.06em] text-[#70796b]">
-                {formatRating(reviews.rating)} · {formatReviewCount(reviews.totalReviews)} Google reviews
-              </p>
-            </div>
+            <p className="font-sans-tight text-[10px] tracking-[0.06em] text-[#70796b]">
+              {formatRating(reviews.rating)} · {formatReviewCount(reviews.totalReviews)} Google reviews
+            </p>
           </div>
         )}
       </div>

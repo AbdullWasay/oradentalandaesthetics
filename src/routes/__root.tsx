@@ -9,6 +9,28 @@ import appCss from "../styles.css?url";
 const FONT_CSS =
   "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@400;500&display=optional";
 
+/** Above-the-fold paint without waiting on the full Tailwind bundle (esp. Slow 4G mobile). */
+const CRITICAL_CSS = `
+html{background:#f5f1eb}
+body{margin:0;background:#f5f1eb;color:#4d5645;font-family:Georgia,"Times New Roman",serif}
+img{max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+.ora-crit-header{position:sticky;top:0;z-index:40;padding:0;background:rgba(245,241,235,.92);border-bottom:1px solid rgba(77,86,69,.12)}
+.ora-crit-header>div{display:flex;width:100%;max-width:80rem;margin:0 auto;align-items:center;justify-content:space-between;padding:1rem 1.5rem;box-sizing:border-box}
+.ora-crit-header img{height:2rem;width:auto}
+.ora-crit-hero{position:relative;display:flex;flex-direction:column;min-height:520px;max-height:720px;height:calc(100svh - 7.75rem);overflow:hidden;background:#f5f1eb}
+.ora-crit-hero-media{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.ora-crit-hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 28%}
+.ora-crit-hero-wash{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(245,241,235,.7),rgba(245,241,235,.45),rgba(245,241,235,.85))}
+.ora-crit-hero-copy{position:relative;z-index:10;margin-top:auto;padding:2rem 1.25rem 2.5rem;text-align:center;color:#4d5645}
+.ora-crit-cta{display:flex;align-items:center;justify-content:center;gap:.6rem;width:100%;max-width:24rem;margin:.75rem auto 0;padding:1rem 1.5rem;border-radius:999px;background:#4d5645;color:#f5f1eb;font-family:system-ui,sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;box-sizing:border-box}
+.splash-screen{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:transparent;pointer-events:none}
+@media (min-width:1024px){
+.ora-crit-hero{display:none}
+.splash-screen{background:#666d57;pointer-events:auto}
+}
+`.replace(/\n/g, "");
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -79,9 +101,7 @@ export const Route = createRootRoute({
       { rel: "image_src", href: `${SITE_URL}/google-logo.webp` },
       { rel: "manifest", href: `${SITE_URL}/site.webmanifest` },
       { rel: "sitemap", type: "application/xml", href: `${SITE_URL}/sitemap.xml` },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      // LCP posters — media-scoped so each viewport only preloads its hero
+      // No font preconnect — on Slow 4G it steals the connection from CSS + LCP image
       {
         rel: "preload",
         as: "image",
@@ -96,9 +116,8 @@ export const Route = createRootRoute({
         fetchPriority: "high",
         media: "(min-width: 1024px)",
       },
-      // Discover CSS early, then apply as normal blocking stylesheet
       { rel: "preload", as: "style", href: appCss },
-      { rel: "stylesheet", href: appCss },
+      // Full CSS applied non-blocking in RootShell (critical CSS covers first paint)
     ],
   }),
   shellComponent: RootShell,
@@ -110,24 +129,32 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-PK">
       <head>
-        {/* Tiny paint hint before full CSS — does not replace the stylesheet */}
-        <style
+        <style dangerouslySetInnerHTML={{ __html: CRITICAL_CSS }} />
+        {/*
+          Mobile: start as print (non-blocking) so critical CSS paints FCP/LCP immediately.
+          Desktop: flip to all immediately so Tailwind stays render-blocking (defer crashed ~95→57).
+        */}
+        <link id="ora-css" rel="stylesheet" href={appCss} media="print" />
+        <script
           dangerouslySetInnerHTML={{
-            __html: "html{background:#666d57}body{margin:0;background:#f5f1eb;color:#4d5645}",
+            __html: `(function(){var l=document.getElementById('ora-css');if(!l)return;var desktop=window.matchMedia('(min-width:1024px)').matches;if(desktop){l.media='all';return;}var go=function(){l.media='all'};l.onload=go;if(l.sheet)go();setTimeout(go,0);})();`,
           }}
         />
-        {/* Non-blocking Google Fonts only */}
+        <noscript>
+          <link rel="stylesheet" href={appCss} />
+        </noscript>
+        {/* Fonts after first paint */}
         <link id="ora-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var l=document.getElementById('ora-fonts');if(!l)return;l.onload=function(){l.media='all'};if(l.sheet)l.media='all';})();`,
+            __html: `(function(){function loadFonts(){var l=document.getElementById('ora-fonts');if(!l)return;l.media='all'};
+if('requestIdleCallback' in window){requestIdleCallback(loadFonts,{timeout:3000});}
+else{setTimeout(loadFonts,1200);}})();`,
           }}
         />
         <noscript>
           <link rel="stylesheet" href={FONT_CSS} />
         </noscript>
-        {/* GTM + Meta: real users load on first tap/key; lab audits usually finish first.
-            Do not use short idle timeouts — those reintroduce ~280KiB mid-Lighthouse. */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){function loadTags(){if(window.__oraTagsLoaded)return;window.__oraTagsLoaded=1;
