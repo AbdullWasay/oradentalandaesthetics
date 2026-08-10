@@ -1,8 +1,13 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { PAGE_SEO, SITE_URL, buildPageLinks, buildPageMeta } from "@/lib/seo";
 import { SmoothScroll } from "@/lib/smooth-scroll";
+import homePosterMobile from "@/assets/home-poster-mobile.webp";
+import heroDesktop from "@/assets/her-section-bg.webp";
 
 import appCss from "../styles.css?url";
+
+const FONT_CSS =
+  "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@400;500&display=swap";
 
 function NotFoundComponent() {
   return (
@@ -37,8 +42,6 @@ export const Route = createRootRoute({
     ],
     links: [
       ...buildPageLinks(rootPage),
-      // Google Search favicon — stable URLs (no cache-bust query). Must be ≥48×48 square PNG.
-      // Small sizes use ORA-only crop (clearer in SERP); google-logo.png stays full brand for schema.
       {
         rel: "icon",
         href: `${SITE_URL}/favicon-48x48.png`,
@@ -73,14 +76,25 @@ export const Route = createRootRoute({
         href: `${SITE_URL}/apple-touch-icon.png`,
         sizes: "180x180",
       },
-      { rel: "image_src", href: `${SITE_URL}/google-logo.png` },
+      { rel: "image_src", href: `${SITE_URL}/google-logo.webp` },
       { rel: "manifest", href: `${SITE_URL}/site.webmanifest` },
       { rel: "sitemap", type: "application/xml", href: `${SITE_URL}/sitemap.xml` },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      // LCP posters — media-scoped so mobile/desktop only fetch what they need
       {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap",
+        rel: "preload",
+        as: "image",
+        href: homePosterMobile,
+        fetchPriority: "high",
+        media: "(max-width: 1023px)",
+      },
+      {
+        rel: "preload",
+        as: "image",
+        href: heroDesktop,
+        fetchPriority: "high",
+        media: "(min-width: 1024px)",
       },
       { rel: "stylesheet", href: appCss },
     ],
@@ -94,26 +108,33 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-PK">
       <head>
-        {/* Google Tag Manager — keep as high in <head> as possible */}
+        {/* Non-blocking Google Fonts */}
+        <link id="ora-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NVCC7DPD');`,
+            __html: `(function(){var l=document.getElementById('ora-fonts');if(!l)return;l.onload=function(){l.media='all'};if(l.sheet)l.media='all';})();`,
           }}
         />
-        {/* Meta (Facebook) Pixel base code — every page */}
+        <noscript>
+          <link rel="stylesheet" href={FONT_CSS} />
+        </noscript>
+        {/* Defer GTM + Meta Pixel until after load — protects FCP/LCP/TBT */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            __html: `(function(){function loadTags(){if(window.__oraTagsLoaded)return;window.__oraTagsLoaded=1;
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NVCC7DPD');
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init','2916628175360380');
-fbq('track','PageView');`,
+fbq('init','2916628175360380');fbq('track','PageView');}
+function schedule(){if('requestIdleCallback' in window){requestIdleCallback(loadTags,{timeout:8000});}
+else{setTimeout(loadTags,5000);}}
+if(document.readyState==='complete')schedule();else window.addEventListener('load',schedule);})();`,
           }}
         />
         <noscript>
@@ -128,7 +149,6 @@ fbq('track','PageView');`,
         <HeadContent />
       </head>
       <body>
-        {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NVCC7DPD"

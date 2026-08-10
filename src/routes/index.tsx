@@ -186,8 +186,8 @@ function HomePage() {
                 className="h-full w-full object-cover object-center"
                 loading="lazy"
                 decoding="async"
-                width={800}
-                height={1000}
+                width={700}
+                height={934}
                 sizes="(min-width: 1024px) 40vw, 100vw"
               />
             </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
-import logoWhite from "@/assets/logo_white.png";
+import logoWhite from "@/assets/logo_white.webp";
 import { ORA_WHATSAPP_URL } from "@/lib/seo";
 import { trackContact } from "@/lib/meta-pixel";
 import { smoothScrollTo } from "@/lib/smooth-scroll";
@@ -60,7 +60,7 @@ export function SiteHeader() {
             src={logoWhite}
             alt="ORA Dental Wellness logo"
             className="h-8 w-auto"
-            width={120}
+            width={106}
             height={32}
           />
           <span className="hidden h-7 w-px bg-foreground/30 sm:block" />

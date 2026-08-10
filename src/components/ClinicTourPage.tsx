@@ -12,7 +12,7 @@ import {
 import { trackContact } from "@/lib/meta-pixel";
 
 const VIDEO_SRC = "/clinic_video_mobile.mp4";
-const VIDEO_POSTER = "/clinic-video-poster.jpg";
+const VIDEO_POSTER = "/clinic-video-poster.webp";
 
 export function ClinicTourPage() {
   return (

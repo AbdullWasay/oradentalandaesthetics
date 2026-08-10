@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Phone, Star } from "lucide-react";
 import heroDesktop from "@/assets/her-section-bg.webp";
-import heroMobilePoster from "@/assets/home-poster.webp";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import heroMobilePoster from "@/assets/home-poster-mobile.webp";
 import { formatRating, formatReviewCount, type GoogleReviewsData } from "@/lib/google-reviews";
 import {
   ORA_PHONE_DISPLAY,
@@ -10,6 +9,7 @@ import {
   ORA_WHATSAPP_URL,
 } from "@/lib/seo";
 import { trackContact } from "@/lib/meta-pixel";
+import { ReviewAvatar } from "@/components/ReviewAvatar";
 
 type HomeHeroProps = {
   ready: boolean;
@@ -17,15 +17,14 @@ type HomeHeroProps = {
 };
 
 /**
- * Mobile — clinic video atmosphere behind centered copy + social proof.
- * iOS Low Power Mode blocks autoplay; we fall back to a still (never show the native ▶).
+ * Mobile — clinic still is LCP (always painted). Video loads after idle.
  */
 function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReviewsData }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const avatars =
-    reviews?.reviews.filter((r) => r.authorPhotoUrl).slice(0, 4) ?? [];
+  const [loadVideo, setLoadVideo] = useState(false);
+  const avatars = reviews?.reviews.filter((r) => r.authorPhotoUrl).slice(0, 4) ?? [];
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -35,9 +34,28 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
+  // Defer video until after first paint / idle — LCP is the poster
+  useEffect(() => {
+    if (reducedMotion) return;
+    const start = () => setLoadVideo(true);
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    if (typeof window.requestIdleCallback === "function") {
+      idleId = window.requestIdleCallback(start, { timeout: 3500 });
+    } else {
+      timeoutId = setTimeout(start, 2800);
+    }
+    return () => {
+      if (idleId !== undefined && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
+    };
+  }, [reducedMotion]);
+
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || reducedMotion) return;
+    if (!video || !loadVideo || reducedMotion) return;
 
     video.defaultMuted = true;
     video.muted = true;
@@ -64,7 +82,6 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
     video.addEventListener("loadeddata", tryPlay);
     video.addEventListener("canplay", tryPlay);
 
-    // First user gesture unlocks playback even under Low Power Mode on some iOS versions
     const unlock = () => tryPlay();
     document.addEventListener("touchstart", unlock, { once: true, passive: true });
     document.addEventListener("click", unlock, { once: true });
@@ -77,26 +94,21 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
       document.removeEventListener("touchstart", unlock);
       document.removeEventListener("click", unlock);
     };
-  }, [reducedMotion]);
+  }, [loadVideo, reducedMotion]);
 
   return (
-    <section
-      className={`relative flex h-[calc(100svh-7.75rem)] min-h-[520px] max-h-[720px] flex-col overflow-hidden bg-[#f5f1eb] lg:hidden ${
-        ready ? "opacity-100" : "opacity-0"
-      }`}
-    >
+    <section className="relative flex h-[calc(100svh-7.75rem)] min-h-[520px] max-h-[720px] flex-col overflow-hidden bg-[#f5f1eb] lg:hidden">
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        {/* Still always under the video — visible when iOS blocks autoplay */}
         <img
           src={heroMobilePoster}
           alt="ORA Dental Wellness clinic interior in Bahria Town Phase 4, Rawalpindi"
           className="absolute inset-0 h-full w-full object-cover object-[center_28%]"
-          width={1080}
-          height={1440}
+          width={720}
+          height={960}
           fetchPriority="high"
           decoding="async"
         />
-        {!reducedMotion ? (
+        {loadVideo && !reducedMotion ? (
           <video
             ref={videoRef}
             className={`hero-mobile-video absolute inset-0 h-full w-full scale-105 object-cover transition-opacity duration-500 ${
@@ -107,7 +119,7 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
             autoPlay
             loop
             playsInline
-            preload="auto"
+            preload="metadata"
             controls={false}
             disablePictureInPicture
             disableRemotePlayback
@@ -118,7 +130,11 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
         <div className="absolute inset-0 bg-gradient-to-b from-[#f5f1eb]/70 via-[#f5f1eb]/45 to-[#f5f1eb]/85" />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8">
+      <div
+        className={`relative z-10 flex flex-1 flex-col justify-end px-5 pb-10 pt-8 transition-opacity duration-500 ${
+          ready ? "opacity-100" : "opacity-0"
+        }`}
+      >
         <div className="flex items-center justify-center gap-2.5">
           <span className="h-px w-8 bg-[#666d57]/40" />
           <p className="font-sans-tight text-[9px] uppercase tracking-[0.3em] text-[#666d57]">
@@ -127,7 +143,6 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
           <span className="h-px w-8 bg-[#666d57]/40" />
         </div>
 
-        {/* Document H1 lives in DesktopHero; mobile uses visual headline only */}
         <p
           data-speakable
           className="mx-auto mt-6 max-w-[20rem] text-center font-display text-[clamp(2.4rem,9.5vw,3.1rem)] font-light leading-[1.06] tracking-tight text-[#4d5645]"
@@ -146,40 +161,36 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
           at ORA Dental Wellness — your dentist in Bahria Town Phase 4, Rawalpindi.
         </p>
 
-            <div className="mx-auto mt-7 flex w-full max-w-sm flex-col gap-2.5">
-              <a
-                href={ORA_WHATSAPP_URL}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => trackContact("whatsapp")}
-                className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
-              >
-                Chat on WhatsApp
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
-              <a
-                href={`tel:${ORA_PHONE_PRIMARY}`}
-                onClick={() => trackContact("phone")}
-                className="flex w-full items-center justify-center gap-2 rounded-full border border-[#4d5645]/30 bg-[#f5f1eb]/55 px-6 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#4d5645] transition-colors active:bg-[#f5f1eb]/80"
-              >
-                <Phone className="h-3.5 w-3.5" />
-                Call {ORA_PHONE_DISPLAY}
-              </a>
-            </div>
+        <div className="mx-auto mt-7 flex w-full max-w-sm flex-col gap-2.5">
+          <a
+            href={ORA_WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            onClick={() => trackContact("whatsapp")}
+            className="group flex w-full items-center justify-center gap-2.5 rounded-full bg-[#4d5645] px-6 py-4 font-sans-tight text-[11px] tracking-[0.16em] text-[#f5f1eb] shadow-[0_18px_48px_-16px_rgba(77,86,69,0.55)] transition-all active:scale-[0.98] active:bg-[#666d57]"
+          >
+            Chat on WhatsApp
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
+          <a
+            href={`tel:${ORA_PHONE_PRIMARY}`}
+            onClick={() => trackContact("phone")}
+            className="flex w-full items-center justify-center gap-2 rounded-full border border-[#4d5645]/30 bg-[#f5f1eb]/55 px-6 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#4d5645] transition-colors active:bg-[#f5f1eb]/80"
+          >
+            <Phone className="h-3.5 w-3.5" />
+            Call {ORA_PHONE_DISPLAY}
+          </a>
+        </div>
 
         {reviews && (
           <div className="mx-auto mt-8 flex items-center justify-center gap-3">
             <div className="flex -space-x-2">
               {avatars.map((r) => (
-                <img
-                  key={r.author}
-                  src={r.authorPhotoUrl!}
-                  alt={`${r.author}, Google review for ORA Dental Wellness`}
-                  className="h-9 w-9 rounded-full border-2 border-[#f5f1eb] object-cover shadow-sm"
-                  width={36}
-                  height={36}
-                  loading="lazy"
-                  decoding="async"
+                <ReviewAvatar
+                  key={r.id}
+                  review={r}
+                  className="h-9 w-9 border-2 border-[#f5f1eb] shadow-sm ring-0"
+                  textClassName="text-[0.7rem]"
                 />
               ))}
               {avatars.length < 4 && (
@@ -207,24 +218,20 @@ function MobileHero({ ready, reviews }: { ready: boolean; reviews?: GoogleReview
 
 /** Desktop — full-bleed reception photograph + olive copy plane. */
 function DesktopHero({ ready }: { ready: boolean }) {
-  const loadDesktopMedia = useMediaQuery("(min-width: 1024px)");
-
+  // Always render the LCP image in SSR HTML (section is CSS-hidden on mobile).
+  // Do not gate on useMediaQuery — that delayed discovery until after hydration (~1.5s).
   return (
     <section className="relative hidden min-h-[min(calc(100dvh-11.25rem),740px)] overflow-hidden bg-[#666d57] lg:block">
-      {loadDesktopMedia ? (
-        <img
-          src={heroDesktop}
-          alt="ORA Dental Wellness reception desk and waiting area in Bahria Town Phase 4, Rawalpindi"
-          className={`pointer-events-none absolute inset-0 h-full w-full object-cover object-center ${
-            ready ? "opacity-100" : "opacity-0"
-          }`}
-          width={1750}
-          height={899}
-          fetchPriority="high"
-          decoding="async"
-          sizes="100vw"
-        />
-      ) : null}
+      <img
+        src={heroDesktop}
+        alt="ORA Dental Wellness reception desk and waiting area in Bahria Town Phase 4, Rawalpindi"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+        width={1440}
+        height={740}
+        fetchPriority="high"
+        decoding="async"
+        sizes="100vw"
+      />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#4d5645]/25 via-transparent to-transparent"
@@ -232,9 +239,11 @@ function DesktopHero({ ready }: { ready: boolean }) {
 
       <div className="relative z-10 mx-auto grid max-w-7xl px-10 pt-11 pb-[5.5rem] lg:pt-[3.25rem] lg:pb-[6.5rem]">
         <div
-          className={`max-w-2xl text-[#f5f1eb] ${ready ? "opacity-100" : "opacity-0"}`}
+          className={`max-w-2xl text-[#f5f1eb] transition-opacity duration-500 ${
+            ready ? "opacity-100" : "opacity-0"
+          }`}
         >
-            <div className="flex items-center gap-3 font-sans-tight text-[#f5f1eb]/80">
+          <div className="flex items-center gap-3 font-sans-tight text-[#f5f1eb]/80">
             <span className="h-px w-8 bg-[#f5f1eb]/70" />
             Dentist in Rawalpindi · Bahria Town
           </div>

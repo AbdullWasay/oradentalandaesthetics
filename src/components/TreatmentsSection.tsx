@@ -14,7 +14,7 @@ import {
 } from "@/components/DentalIcons";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import toothLineImg from "@/assets/tooth-line.png";
+import toothLineImg from "@/assets/tooth-line.webp";
 import toothLinePath from "@/assets/tooth-line-path.json";
 import { smoothScrollTo } from "@/lib/smooth-scroll";
 

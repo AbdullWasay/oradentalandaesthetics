@@ -1,6 +1,7 @@
 import {
   FALLBACK_GOOGLE_REVIEWS,
   GOOGLE_WRITE_REVIEW_URL,
+  compactGooglePhotoUrl,
   formatPublishDate,
   mergeGoogleReviews,
   type GoogleReview,
@@ -8,7 +9,7 @@ import {
 } from "@/lib/google-reviews";
 
 const CACHE_TTL_MS = 1000 * 60 * 60 * 6; // refresh every 6 hours
-const CACHE_VERSION = 6;
+const CACHE_VERSION = 7;
 
 type CacheEntry = {
   version: number;
@@ -58,7 +59,7 @@ function mapReview(review: PlacesReview, index: number): GoogleReview | null {
   return {
     id: review.name ?? `google-review-${index}`,
     author,
-    authorPhotoUrl: review.authorAttribution?.photoUri ?? null,
+    authorPhotoUrl: compactGooglePhotoUrl(review.authorAttribution?.photoUri),
     rating: Math.min(5, Math.max(1, Math.round(review.rating ?? 5))),
     text,
     publishedAt: publishedAt || "Google review",

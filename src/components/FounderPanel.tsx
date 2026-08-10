@@ -60,8 +60,8 @@ export function FounderPanel({ img, name, role, bio, position, align, pad }: Fou
         className={`absolute inset-0 h-full w-full scale-105 object-cover transition-transform duration-[1.6s] ease-out group-hover:scale-110 ${position}`}
         loading="lazy"
         decoding="async"
-        width={680}
-        height={1020}
+        width={720}
+        height={1082}
         sizes="(min-width: 768px) 50vw, 100vw"
       />
       <div className="absolute inset-0 bg-[#000000]/25 transition-colors duration-700 group-hover:bg-[#000000]/15" />

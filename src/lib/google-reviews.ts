@@ -17,6 +17,19 @@ export type GoogleReviewsData = {
   source: "google" | "fallback";
 };
 
+/** Shrink Google profile photos for avatar display (saves bandwidth on mobile). */
+export function compactGooglePhotoUrl(url: string | null | undefined, size = 96): string | null {
+  if (!url) return null;
+  // Only rewrite the size token — keep the rest of Google's flags intact
+  if (/=s\d+/i.test(url)) {
+    return url.replace(/=s\d+/i, `=s${size}`);
+  }
+  if (/=w\d+-h\d+/i.test(url)) {
+    return url.replace(/=w\d+-h\d+/i, `=w${size}-h${size}`);
+  }
+  return url;
+}
+
 /** Opens Google's "Write a review" flow for ORA Dental Wellness. */
 export const GOOGLE_WRITE_REVIEW_URL =
   "https://www.google.com/search?sca_esv=537f0f8c76537249&rlz=1C5CHFA_enPK1186PK1186&sxsrf=APpeQnt7FxLoCQs876NY2tK8-kQc4rcz-g:1783151475420&si=APenkKm7iecQ4G6P-TsbSMFKIQtv3EFIqRAFw-i8uEbk55Z-_1KxKv6c1uV3rcxYuzCBc2NMBYXP1uUp321oG-l7k-WyHijhm81BkMxUJd8Nw9mK0EPybxKNT3B-gVxI6e8wppa3ph0Pl-0LUqjHk_-7MHDodO0t6w%3D%3D&q=ORA+Dental+Wellness+Reviews&sa=X&ved=2ahUKEwiknpfyxLiVAxWqdaQEHY_gJd0Q0bkNegQIORAH&biw=1440&bih=812&dpr=2#lrd=0x38dfed8e72778f4b:0xdec0f601e0a8ed50,3,,,,";
@@ -26,7 +39,7 @@ export const CURATED_GOOGLE_REVIEWS: GoogleReview[] = [
   {
     id: "curated-asma-sajid",
     author: "Asma Sajid",
-    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjWJukKKTBKh8z460NjQrHI7VXz0N-Wm2RPQxtibtlleNxxUjEtVwQ=w144-h144-p-rp-mo-br100",
+    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjWJukKKTBKh8z460NjQrHI7VXz0N-Wm2RPQxtibtlleNxxUjEtVwQ=s128-c0x00000000-cc-rp-mo",
     rating: 5,
     text: "I have been taking aligners treatment from Dr. Ahmed and Dr. Roha. Also got deep scaling done from Dr. Roha. Both are very cooperative and nice. Highly recommended for any dental procedure.",
     publishedAt: "2 July 2026",
@@ -44,7 +57,7 @@ export const CURATED_GOOGLE_REVIEWS: GoogleReview[] = [
   {
     id: "curated-abdul-basit",
     author: "Abdul Basit",
-    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjUYP3bCaz9B8Io_5ivZxLCRw6kW1KnVslwdzTzKqqglRlsoyWdo=w144-h144-p-rp-mo-br100",
+    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjUYP3bCaz9B8Io_5ivZxLCRw6kW1KnVslwdzTzKqqglRlsoyWdo=s128-c0x00000000-cc-rp-mo",
     rating: 5,
     text: "I had a great experience at this dental clinic. The staff was welcoming, professional, and made me feel comfortable throughout the visit. The dentist explained everything clearly and took the time to answer my questions. The clinic was clean, well organized, and the treatment was handled with care. I really appreciated the attention to detail and overall patient experience. Highly recommended for anyone looking for quality dental care.",
     publishedAt: "2 July 2026",
@@ -53,7 +66,7 @@ export const CURATED_GOOGLE_REVIEWS: GoogleReview[] = [
   {
     id: "curated-maham-munir",
     author: "Maham Munir",
-    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjU8L0jjfFrbICl0os4jzP4Q52OqNbGD_EsFemkZ_-RuRmLNCZA=w144-h144-p-rp-mo-br100",
+    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjU8L0jjfFrbICl0os4jzP4Q52OqNbGD_EsFemkZ_-RuRmLNCZA=s128-c0x00000000-cc-rp-mo",
     rating: 5,
     text: "I had an excellent experience at ORA Dental Wellness. I've visited the clinic 3–4 times for teeth scaling, a root canal treatment, and a dental crown, and every visit has been outstanding. Dr. Ahmad and Dr. Roha did an amazing job. They were extremely professional, gentle, and made me feel comfortable throughout every procedure. This has honestly been one of the best experiences I've ever had with a dentist. The staff is humble and welcoming, and the clinic is clean, comfortable, and well-maintained. Highly recommended for anyone looking for quality dental care.",
     publishedAt: "30 June 2026",
@@ -89,7 +102,7 @@ export const CURATED_GOOGLE_REVIEWS: GoogleReview[] = [
   {
     id: "curated-suleman-khan",
     author: "Suleman Khan",
-    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjWGvRORAGUCp-el99zmfZhlQLxt9Xusho-MObVvQCYrE8m7dj3w=w144-h144-p-rp-mo-br100",
+    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjWGvRORAGUCp-el99zmfZhlQLxt9Xusho-MObVvQCYrE8m7dj3w=s128-c0x00000000-cc-rp-mo",
     rating: 5,
     text: "Best dental clinic in the twin cities. Highly recommended.",
     publishedAt: "29 June 2026",
@@ -125,7 +138,7 @@ export const CURATED_GOOGLE_REVIEWS: GoogleReview[] = [
   {
     id: "curated-mohid-saleem",
     author: "Mohid Saleem",
-    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjUwvouxVDQtyrNCC1TYT7yyhbw2_ZQLqf_WckDhWPGOkN3tww17=w144-h144-p-rp-mo-br100",
+    authorPhotoUrl: "https://lh3.googleusercontent.com/a-/ALV-UjUwvouxVDQtyrNCC1TYT7yyhbw2_ZQLqf_WckDhWPGOkN3tww17=s128-c0x00000000-cc-rp-mo",
     rating: 5,
     text: "The doctors are highly professional, and I am extremely satisfied with the treatment I received. Their expertise, care, and attention to detail were outstanding. I would highly recommend this clinic to anyone experiencing dental issues.",
     publishedAt: "27 June 2026",

@@ -39,9 +39,9 @@
       "purpose": "any"
     },
     {
-      "src": "/google-logo.png",
+      "src": "/google-logo.webp",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/webp",
       "purpose": "any"
     }
   ]

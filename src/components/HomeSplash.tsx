@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import horizontalLogo from "@/assets/horizontal-logo-dark.png";
+import horizontalLogo from "@/assets/horizontal-logo-dark.webp";
 
 type SplashPhase = "brand" | "tagline" | "exit";
 
@@ -8,13 +8,12 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const taglineTimer = window.setTimeout(() => setPhase("tagline"), 1050);
-    const exitTimer = window.setTimeout(() => {
-      setPhase("exit");
-      // Reveal hero under the fading splash so image + copy appear together
-      onComplete();
-    }, 1850);
-    const doneTimer = window.setTimeout(() => setVisible(false), 2400);
+    // Reveal hero immediately under splash so LCP can paint without waiting
+    onComplete();
+
+    const taglineTimer = window.setTimeout(() => setPhase("tagline"), 700);
+    const exitTimer = window.setTimeout(() => setPhase("exit"), 1250);
+    const doneTimer = window.setTimeout(() => setVisible(false), 1650);
 
     return () => {
       window.clearTimeout(taglineTimer);
@@ -41,8 +40,9 @@ export function HomeSplash({ onComplete }: { onComplete: () => void }) {
             src={horizontalLogo}
             alt="ORA Dental Wellness"
             className="h-auto w-[min(220px,60vw)] md:w-[260px]"
-            width={260}
-            height={80}
+            width={440}
+            height={134}
+            decoding="async"
           />
           <p className="mt-6 font-sans-tight text-[0.65rem] tracking-[0.22em] text-shoji/55 md:text-xs">
             Dental Wellness

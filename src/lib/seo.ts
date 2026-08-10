@@ -40,7 +40,7 @@ export const ORA_HOURS = {
   display: "Mon – Sat · 12:00 PM – 9:00 PM",
 } as const;
 
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.webp`;
 export const DEFAULT_OG_IMAGE_ALT =
   "ORA Dental Wellness reception in Bahria Town Phase 4, Rawalpindi — calm clinical atelier with soft lighting";
 
@@ -106,7 +106,7 @@ export const PAGE_SEO = {
       "Watch a short clinic tour of ORA Dental Wellness in Bahria Town Phase 4, Rawalpindi. See the atelier, then book a visit.",
     keywords:
       "ORA Dental clinic tour, dental clinic Rawalpindi video, Bahria Town dentist tour, ORA Dental Wellness walkthrough",
-    ogImage: `${SITE_URL}/clinic-video-poster.jpg`,
+    ogImage: `${SITE_URL}/clinic-video-poster.webp`,
     ogImageAlt:
       "Still from the ORA Dental Wellness clinic tour video — Bahria Town Phase 4, Rawalpindi",
   },
@@ -269,8 +269,8 @@ function logoImage() {
   return {
     "@type": "ImageObject",
     "@id": `${SITE_URL}/#logo`,
-    url: `${SITE_URL}/google-logo.png`,
-    contentUrl: `${SITE_URL}/google-logo.png`,
+    url: `${SITE_URL}/google-logo.webp`,
+    contentUrl: `${SITE_URL}/google-logo.webp`,
     width: 512,
     height: 512,
     caption: SITE_NAME,
@@ -649,7 +649,7 @@ export function buildClinicTourVideoJsonLd() {
   const page = PAGE_SEO.clinicTour;
   const pageUrl = absoluteUrl(page.path);
   const contentUrl = absoluteUrl("/clinic_video_mobile.mp4");
-  const thumbnailUrl = absoluteUrl("/clinic-video-poster.jpg");
+  const thumbnailUrl = absoluteUrl("/clinic-video-poster.webp");
 
   return {
     "@context": "https://schema.org",
@@ -669,7 +669,7 @@ export function buildClinicTourVideoJsonLd() {
       name: SITE_NAME,
       logo: {
         "@type": "ImageObject",
-        url: absoluteUrl("/google-logo.png"),
+        url: absoluteUrl("/google-logo.webp"),
       },
     },
     mainEntityOfPage: {
@@ -710,7 +710,7 @@ export function clinicTourJsonLdScripts() {
       about: { "@id": `${SITE_URL}/#dentist` },
       primaryImageOfPage: {
         "@type": "ImageObject",
-        url: absoluteUrl("/clinic-video-poster.jpg"),
+        url: absoluteUrl("/clinic-video-poster.webp"),
       },
       video: { "@id": `${absoluteUrl(page.path)}#video` },
       speakable: {

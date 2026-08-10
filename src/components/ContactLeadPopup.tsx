@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { Phone, X } from "lucide-react";
-import popupImage from "@/assets/her-section-bg.webp";
+import { Facebook, Instagram, Phone, X } from "lucide-react";
+import popupDesktop from "@/assets/her-section-bg.webp";
+import popupMobile from "@/assets/about-us.webp";
 import {
   ORA_PHONE_DISPLAY,
   ORA_PHONE_PRIMARY,
@@ -11,6 +12,8 @@ import { startSmoothScroll, stopSmoothScroll } from "@/lib/smooth-scroll";
 
 const STORAGE_KEY = "ora-contact-popup-seen";
 const EXIT_MS = 420;
+const IG_URL = "https://www.instagram.com/oradentalwellness/?hl=en";
+const FB_URL = "https://www.facebook.com/profile.php?id=61590825338018";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -46,7 +49,6 @@ export function ContactLeadPopup() {
       }
     };
 
-    // After Atelier, as Founders (#doctors) approaches mid-viewport
     const doctors = document.getElementById("doctors");
     if (!doctors) return;
 
@@ -101,7 +103,7 @@ export function ContactLeadPopup() {
 
   return (
     <div
-      className="fixed inset-0 z-[60] flex items-end justify-center p-0 sm:items-center sm:p-6"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="ora-lead-title"
@@ -114,20 +116,37 @@ export function ContactLeadPopup() {
       />
 
       <div
-        className={`relative z-10 flex max-h-[min(92dvh,640px)] w-full max-w-[880px] flex-col overflow-hidden bg-[#f5f1eb] opacity-0 shadow-[0_40px_100px_-40px_rgba(26,28,24,0.55)] will-change-transform sm:flex-row sm:rounded-[1.25rem] ${panelClass}`}
+        className={`relative z-10 flex max-h-[min(88dvh,640px)] w-full max-w-[min(420px,100%)] flex-col overflow-hidden rounded-[1.25rem] bg-[#f5f1eb] opacity-0 shadow-[0_40px_100px_-40px_rgba(26,28,24,0.55)] will-change-transform sm:max-w-[880px] sm:flex-row ${panelClass}`}
       >
         <button
           type="button"
           onClick={close}
           aria-label="Close"
-          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f1eb]/90 text-[#4d5645] shadow-sm transition-colors hover:bg-[#f5f1eb] sm:right-4 sm:top-4"
+          className="absolute right-3 top-3 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-[#f5f1eb]/95 text-[#4d5645] shadow-sm transition-colors hover:bg-[#f5f1eb] sm:right-4 sm:top-4"
         >
           <X className="h-4 w-4" />
         </button>
 
-        <div className="relative h-[38vw] min-h-[140px] max-h-[220px] w-full shrink-0 overflow-hidden sm:h-auto sm:max-h-none sm:min-h-[420px] sm:w-[46%]">
+        {/* Mobile image — atelier (full-bleed portrait crop) */}
+        <div className="relative h-[42vw] min-h-[160px] max-h-[200px] w-full shrink-0 overflow-hidden sm:hidden">
           <img
-            src={popupImage}
+            src={popupMobile}
+            alt="ORA Dental Wellness atelier in Bahria Town Phase 4"
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            width={800}
+            height={1000}
+            decoding="async"
+          />
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-gradient-to-t from-[#f5f1eb] via-[#f5f1eb]/20 to-transparent"
+          />
+        </div>
+
+        {/* Desktop image — reception, right crop */}
+        <div className="relative hidden w-[46%] shrink-0 overflow-hidden sm:block sm:min-h-[420px]">
+          <img
+            src={popupDesktop}
             alt="ORA Dental Wellness reception in Bahria Town Phase 4"
             className="absolute inset-0 h-full w-full object-cover object-right"
             width={1750}
@@ -136,26 +155,26 @@ export function ContactLeadPopup() {
           />
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-[#4d5645]/40 via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-[#4d5645]/15"
+            className="absolute inset-0 bg-gradient-to-r from-transparent to-[#4d5645]/15"
           />
         </div>
 
-        <div className="relative z-10 flex flex-1 flex-col justify-center bg-[#f5f1eb] px-6 py-7 sm:px-10 sm:py-12">
+        <div className="relative z-10 flex flex-1 flex-col justify-center overflow-y-auto bg-[#f5f1eb] px-5 pb-6 pt-4 sm:px-10 sm:py-12">
           <p className="font-sans-tight text-[10px] uppercase tracking-[0.28em] text-[#666d57]/80">
             Prefer to talk?
           </p>
           <h2
             id="ora-lead-title"
-            className="mt-3 font-display text-[clamp(1.65rem,4vw,2.35rem)] font-light leading-[1.08] tracking-tight text-[#4d5645]"
+            className="mt-2.5 font-display text-[clamp(1.55rem,5vw,2.35rem)] font-light leading-[1.08] tracking-tight text-[#4d5645] sm:mt-3"
           >
             Skip the form.
             <span className="mt-1 block italic text-[#666d57]">Call or WhatsApp us.</span>
           </h2>
-          <p className="mt-4 max-w-sm text-[0.95rem] font-light leading-relaxed text-[#70796b]">
+          <p className="mt-3 max-w-sm text-[0.92rem] font-light leading-relaxed text-[#70796b] sm:mt-4 sm:text-[0.95rem]">
             Most patients prefer a quick message. We’ll confirm your visit within minutes.
           </p>
 
-          <div className="mt-7 flex flex-col gap-3">
+          <div className="mt-5 flex flex-col gap-2.5 sm:mt-7 sm:gap-3">
             <a
               href={ORA_WHATSAPP_URL}
               target="_blank"
@@ -182,9 +201,29 @@ export function ContactLeadPopup() {
             </a>
           </div>
 
-          <p className="mt-5 font-sans-tight text-[10px] tracking-[0.12em] text-[#70796b]/70">
-            Mon – Sat · 12:00 PM – 9:00 PM
-          </p>
+          <div className="mt-5 flex items-center gap-3 sm:mt-6">
+            <a
+              href={IG_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="ORA Dental Wellness on Instagram"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#4d5645]/25 text-[#4d5645] transition-colors hover:border-[#666d57] hover:bg-[#666d57]/10"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
+            <a
+              href={FB_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="ORA Dental Wellness on Facebook"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#4d5645]/25 text-[#4d5645] transition-colors hover:border-[#666d57] hover:bg-[#666d57]/10"
+            >
+              <Facebook className="h-4 w-4" />
+            </a>
+            <p className="font-sans-tight text-[10px] tracking-[0.12em] text-[#70796b]/70">
+              Mon – Sat · 12:00 – 9:00 PM
+            </p>
+          </div>
         </div>
       </div>
     </div>

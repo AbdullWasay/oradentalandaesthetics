@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { initialsFromName, type GoogleReview } from "@/lib/google-reviews";
+import { initialsFromName, compactGooglePhotoUrl, type GoogleReview } from "@/lib/google-reviews";
 
 const AVATAR_COLORS = [
   "#666d57",
@@ -39,14 +39,16 @@ export function ReviewAvatar({
   textClassName = "text-lg",
 }: ReviewAvatarProps) {
   const [photoFailed, setPhotoFailed] = useState(false);
-  const photoUrl = review.authorPhotoUrl;
+  const photoUrl = compactGooglePhotoUrl(review.authorPhotoUrl);
   const showPhoto = Boolean(photoUrl) && !photoFailed;
   const initials = initialsFromName(review.author);
   const background = colorForName(review.author);
 
   const ring = active
     ? "ring-[3px] ring-[#666d57] ring-offset-2 ring-offset-background"
-    : "ring-1 ring-white/80";
+    : className.includes("ring-0")
+      ? ""
+      : "ring-1 ring-white/80";
 
   return (
     <div

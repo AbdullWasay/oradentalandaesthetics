@@ -1,5 +1,5 @@
 import { Instagram, Facebook, Mail, Phone, MapPin } from "lucide-react";
-import logoWhite from "@/assets/logo_white.png";
+import logoWhite from "@/assets/logo_white.webp";
 import { ORA_ADDRESS_LINES, ORA_MAPS_SHARE_URL } from "@/lib/location";
 import { EmailLink } from "@/components/EmailLink";
 import { smoothScrollTo } from "@/lib/smooth-scroll";
@@ -42,18 +42,18 @@ export function SiteFooter() {
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
-              className="rounded-full border border-foreground/20 p-2 text-foreground/70"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#666d57]/35 text-[#4d5645] transition-colors hover:border-[#666d57] hover:bg-[#666d57]/10"
             >
-              <Instagram className="h-3.5 w-3.5" />
+              <Instagram className="h-4 w-4" />
             </a>
             <a
               href="https://www.facebook.com/profile.php?id=61590825338018"
               target="_blank"
               rel="noreferrer"
               aria-label="Facebook"
-              className="rounded-full border border-foreground/20 p-2 text-foreground/70"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#666d57]/35 text-[#4d5645] transition-colors hover:border-[#666d57] hover:bg-[#666d57]/10"
             >
-              <Facebook className="h-3.5 w-3.5" />
+              <Facebook className="h-4 w-4" />
             </a>
           </div>
         </div>
