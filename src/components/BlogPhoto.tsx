@@ -15,6 +15,8 @@ type BlogPhotoProps = {
   className?: string;
 };
 
+
+
 /** Full image, native ratio — scaled to fit, never cropped. */
 export function BlogPhoto({
   media,
