@@ -16,7 +16,7 @@
       <image:caption>Quiet-luxury dental clinic in Bahria Paradise Commercial, Rawalpindi</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://www.oradentalwellness.com/google-logo.webp</image:loc>
+      <image:loc>https://www.oradentalwellness.com/google-logo.png</image:loc>
       <image:title>ORA Dental Wellness logo</image:title>
       <image:caption>Official logo of ORA Dental Wellness, Rawalpindi</image:caption>
     </image:image>
@@ -39,4 +39,58 @@
       <video:live>no</video:live>
     </video:video>
   </url>
+  <url>
+    <loc>https://www.oradentalwellness.com/blog</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-PK" href="https://www.oradentalwellness.com/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.oradentalwellness.com/blog" />
+    <image:image>
+      <image:loc>https://www.oradentalwellness.com/og-image.webp</image:loc>
+      <image:title>Best dental clinic near me in Rawalpindi — ORA Dental Wellness</image:title>
+      <image:caption>ORA Dental Wellness journal — nearest dental clinic in Bahria Town Phase 4</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.oradentalwellness.com/blog/teeth-whitening-in-bahria-town-rawalpindi</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-PK" href="https://www.oradentalwellness.com/blog/teeth-whitening-in-bahria-town-rawalpindi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.oradentalwellness.com/blog/teeth-whitening-in-bahria-town-rawalpindi" />
+    <image:image>
+      <image:loc>https://www.oradentalwellness.com/teeth-whiteing.jpg</image:loc>
+      <image:title>Why teeth whitening matters — ORA Dental Wellness, Bahria Town</image:title>
+      <image:caption>Professional teeth whitening at ORA Dental Wellness, Bahria Town Phase 4, Rawalpindi</image:caption>
+    </image:image>
+  </url>
+  <!--
+  <url>
+    <loc>https://www.oradentalwellness.com/blog/best-dental-clinic-in-rawalpindi</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en-PK" href="https://www.oradentalwellness.com/blog/best-dental-clinic-in-rawalpindi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.oradentalwellness.com/blog/best-dental-clinic-in-rawalpindi" />
+    <image:image>
+      <image:loc>https://www.oradentalwellness.com/og-image.webp</image:loc>
+      <image:title>How ORA Dental Wellness is the best dental clinic in Rawalpindi</image:title>
+      <image:caption>ORA Dental Wellness — Bahria Town Phase 4, Rawalpindi</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.oradentalwellness.com/blog/clear-aligners-in-bahria-town-rawalpindi</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en-PK" href="https://www.oradentalwellness.com/blog/clear-aligners-in-bahria-town-rawalpindi" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.oradentalwellness.com/blog/clear-aligners-in-bahria-town-rawalpindi" />
+    <image:image>
+      <image:loc>https://www.oradentalwellness.com/aligners.webp</image:loc>
+      <image:title>Clear aligners in Bahria Town — official Aligno partner</image:title>
+      <image:caption>Aligno clear aligners at ORA Dental Wellness, Bahria Town Phase 4</image:caption>
+    </image:image>
+  </url>
+  -->
 </urlset>

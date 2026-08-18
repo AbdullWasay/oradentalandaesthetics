@@ -51,6 +51,7 @@ export type PageSeo = {
   keywords?: string;
   ogImage?: string;
   ogImageAlt?: string;
+  ogType?: "website" | "article";
   noIndex?: boolean;
 };
 
@@ -98,6 +99,14 @@ export const PAGE_SEO = {
     description:
       "Read Google patient reviews for ORA Dental Wellness in Bahria Town Phase 4, Rawalpindi.",
     keywords: "ORA Dental reviews Rawalpindi, dentist reviews Bahria Town",
+  },
+  blog: {
+    path: "/blog",
+    title: "Journal | ORA Dental Wellness — Rawalpindi",
+    description:
+      "Notes from ORA Dental Wellness in Bahria Town Phase 4 — the clinic, clear aligners as an official Aligno partner, and professional teeth whitening.",
+    keywords:
+      "ORA Dental Wellness, best dental clinic in Rawalpindi, dentist Bahria Town, clear aligners Rawalpindi, Aligno partner, teeth whitening Bahria Town, ORA Dental Wellness journal",
   },
   clinicTour: {
     path: "/clinic-tour",
@@ -200,7 +209,7 @@ export function buildPageMeta(page: PageSeo): MetaTag[] {
       content: "Bahria Town Phase 4, Rawalpindi, Punjab, Pakistan",
     },
     { property: "og:locale", content: "en_PK" },
-    { property: "og:type", content: "website" },
+    { property: "og:type", content: page.ogType ?? "website" },
     { property: "og:site_name", content: SITE_NAME },
     { property: "og:title", content: page.title },
     { property: "og:description", content: page.description },
@@ -265,12 +274,12 @@ function openingHoursSpecification() {
 }
 
 function logoImage() {
-  // Solid 512×512 square (no transparency) — required for Google Search / Knowledge Graph logo.
+  // Solid 512×512 PNG (no transparency) — Google Search / Knowledge Graph logo.
   return {
     "@type": "ImageObject",
     "@id": `${SITE_URL}/#logo`,
-    url: `${SITE_URL}/google-logo.webp`,
-    contentUrl: `${SITE_URL}/google-logo.webp`,
+    url: `${SITE_URL}/google-logo.png`,
+    contentUrl: `${SITE_URL}/google-logo.png`,
     width: 512,
     height: 512,
     caption: SITE_NAME,
@@ -645,6 +654,98 @@ export function pageJsonLdScripts(page: PageSeo, crumbName: string) {
   ];
 }
 
+export function blogIndexJsonLdScripts(
+  posts: { slug: string; title: string }[],
+) {
+  const url = absoluteUrl(PAGE_SEO.blog.path);
+  return [
+    ...pageJsonLdScripts(PAGE_SEO.blog, "Journal"),
+    jsonLdScript({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "@id": `${url}#collection`,
+      name: PAGE_SEO.blog.title,
+      description: PAGE_SEO.blog.description,
+      url,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      mainEntity: {
+        "@type": "ItemList",
+        numberOfItems: posts.length,
+        itemListElement: posts.map((post, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          url: absoluteUrl(`/blog/${post.slug}`),
+          name: post.title,
+        })),
+      },
+    }),
+  ];
+}
+
+export function blogPostJsonLdScripts(post: {
+  slug: string;
+  title: string;
+  description: string;
+  publishedAt: string;
+  modifiedAt?: string;
+  ogImage?: string;
+  faqs?: { question: string; answer: string }[];
+}) {
+  const path = `/blog/${post.slug}`;
+  const url = absoluteUrl(path);
+  const image = post.ogImage ?? DEFAULT_OG_IMAGE;
+  const scripts = [
+    jsonLdScript(buildOrganizationJsonLd()),
+    jsonLdScript(buildDentistJsonLd()),
+    jsonLdScript(
+      buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Journal", path: "/blog" },
+        { name: post.title, path },
+      ]),
+    ),
+    jsonLdScript({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "@id": `${url}#article`,
+      headline: post.title,
+      description: post.description,
+      datePublished: post.publishedAt,
+      dateModified: post.modifiedAt ?? post.publishedAt,
+      inLanguage: "en-PK",
+      mainEntityOfPage: { "@type": "WebPage", "@id": url },
+      image: [image],
+      author: { "@id": `${SITE_URL}/#dentist` },
+      publisher: { "@id": `${SITE_URL}/#organization` },
+      about: { "@id": `${SITE_URL}/#dentist` },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", "h2"],
+      },
+    }),
+  ];
+
+  if (post.faqs?.length) {
+    scripts.push(
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        mainEntity: post.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      }),
+    );
+  }
+
+  return scripts;
+}
+
 export function buildClinicTourVideoJsonLd() {
   const page = PAGE_SEO.clinicTour;
   const pageUrl = absoluteUrl(page.path);
@@ -669,7 +770,7 @@ export function buildClinicTourVideoJsonLd() {
       name: SITE_NAME,
       logo: {
         "@type": "ImageObject",
-        url: absoluteUrl("/google-logo.webp"),
+        url: absoluteUrl("/google-logo.png"),
       },
     },
     mainEntityOfPage: {

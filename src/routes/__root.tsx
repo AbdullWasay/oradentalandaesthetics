@@ -7,7 +7,7 @@ import heroDesktop from "@/assets/her-section-bg.webp";
 import appCss from "../styles.css?url";
 
 const FONT_CSS =
-  "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@400;500&display=optional";
+  "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500&display=block";
 
 function NotFoundComponent() {
   return (
@@ -42,45 +42,12 @@ export const Route = createRootRoute({
     ],
     links: [
       ...buildPageLinks(rootPage),
-      {
-        rel: "icon",
-        href: `${SITE_URL}/favicon-48x48.png`,
-        type: "image/png",
-        sizes: "48x48",
-      },
-      {
-        rel: "icon",
-        href: `${SITE_URL}/favicon-96x96.png`,
-        type: "image/png",
-        sizes: "96x96",
-      },
-      {
-        rel: "icon",
-        href: `${SITE_URL}/favicon-192x192.png`,
-        type: "image/png",
-        sizes: "192x192",
-      },
-      {
-        rel: "icon",
-        href: `${SITE_URL}/favicon.png`,
-        type: "image/png",
-        sizes: "512x512",
-      },
-      {
-        rel: "shortcut icon",
-        href: `${SITE_URL}/favicon.ico`,
-        type: "image/x-icon",
-      },
-      {
-        rel: "apple-touch-icon",
-        href: `${SITE_URL}/apple-touch-icon.png`,
-        sizes: "180x180",
-      },
-      { rel: "image_src", href: `${SITE_URL}/google-logo.webp` },
-      { rel: "manifest", href: `${SITE_URL}/site.webmanifest` },
+      { rel: "manifest", href: "/site.webmanifest" },
       { rel: "sitemap", type: "application/xml", href: `${SITE_URL}/sitemap.xml` },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "preload", as: "style", href: FONT_CSS },
+      { rel: "stylesheet", href: FONT_CSS },
       // LCP posters — media-scoped so each viewport only preloads its hero
       {
         rel: "preload",
@@ -110,22 +77,16 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-PK">
       <head>
-        {/* Tiny paint hint before full CSS — does not replace the stylesheet */}
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <style
           dangerouslySetInnerHTML={{
-            __html: "html{background:#666d57}body{margin:0;background:#f5f1eb;color:#4d5645}",
+            __html: "html{background:#f5f1eb}body{margin:0;background:#f5f1eb;color:#2c3228;font-family:Inter,Helvetica Neue,system-ui,sans-serif;font-weight:300}",
           }}
         />
-        {/* Non-blocking Google Fonts only */}
-        <link id="ora-fonts" rel="stylesheet" href={FONT_CSS} media="print" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var l=document.getElementById('ora-fonts');if(!l)return;l.onload=function(){l.media='all'};if(l.sheet)l.media='all';})();`,
-          }}
-        />
-        <noscript>
-          <link rel="stylesheet" href={FONT_CSS} />
-        </noscript>
+        <HeadContent />
         {/* GTM + Meta: real users load on first tap/key; lab audits usually finish first.
             Do not use short idle timeouts — those reintroduce ~280KiB mid-Lighthouse. */}
         <script
@@ -157,7 +118,6 @@ if(document.readyState==='complete')arm();else window.addEventListener('load',ar
             alt=""
           />
         </noscript>
-        <HeadContent />
       </head>
       <body>
         <noscript>

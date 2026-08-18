@@ -8,6 +8,8 @@ ORA Dental Wellness is a calm, atelier-style practice focused on precise dentist
 
 - [Home](https://www.oradentalwellness.com/): Main landing page for ORA Dental Wellness
 - [Clinic tour](https://www.oradentalwellness.com/clinic-tour): Short video walkthrough of the clinic
+- [Journal](https://www.oradentalwellness.com/blog): Guides for the clinic, teeth whitening, and clear aligners in Rawalpindi
+- [Why teeth whitening matters](https://www.oradentalwellness.com/blog/teeth-whitening-in-bahria-town-rawalpindi): Professional teeth whitening at ORA in Bahria Town Phase 4
 - [Atelier](https://www.oradentalwellness.com/#atelier): Interior and clinic atmosphere
 - [Founders](https://www.oradentalwellness.com/#doctors): Dr. Ahmed Sultan and Dr. Roha Ejaz
 - [Treatments](https://www.oradentalwellness.com/#treatments): Preventive, restorative, cosmetic, and specialty care
@@ -34,10 +36,10 @@ ORA Dental Wellness is a calm, atelier-style practice focused on precise dentist
 
 - [Sitemap](https://www.oradentalwellness.com/sitemap.xml): XML sitemap of public URLs
 - [Robots](https://www.oradentalwellness.com/robots.txt): Crawler rules
-- [Brand logo](https://www.oradentalwellness.com/google-logo.webp): Square brand mark for citations
+- [Brand logo](https://www.oradentalwellness.com/google-logo.png): Square brand mark for citations
+- [Favicon](https://www.oradentalwellness.com/favicon.ico): Site icon for Google Search and browsers
 - [Open Graph image](https://www.oradentalwellness.com/og-image.webp): Social preview image
 
 ## Optional
 
 - [Clinic tour video file](https://www.oradentalwellness.com/clinic_video_mobile.mp4): MP4 used on the clinic tour page
-- [Favicon](https://www.oradentalwellness.com/favicon-48x48.png): Site icon

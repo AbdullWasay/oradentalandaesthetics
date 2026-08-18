@@ -9,11 +9,16 @@ const nav = [
   { href: "/#doctors", label: "Founders" },
   { href: "/#treatments", label: "Treatments" },
   { href: "/#team", label: "Our Team" },
+  { href: "/blog", label: "Journal" },
   { href: "/#contact", label: "Contact" },
   { href: "/#reviews", label: "Reviews" },
 ] as const;
 
 function go(href: string) {
+  if (!href.includes("#")) {
+    window.location.assign(href);
+    return;
+  }
   const hash = href.replace(/^\/?#/, "");
   if (window.location.pathname !== "/") {
     window.location.assign(`/#${hash}`);
