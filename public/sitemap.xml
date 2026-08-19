@@ -22,24 +22,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.oradentalwellness.com/clinic-tour</loc>
-    <lastmod>2026-08-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en-PK" href="https://www.oradentalwellness.com/clinic-tour" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.oradentalwellness.com/clinic-tour" />
-    <video:video>
-      <video:thumbnail_loc>https://www.oradentalwellness.com/clinic-video-poster.webp</video:thumbnail_loc>
-      <video:title>ORA Dental Wellness clinic tour — Bahria Town Phase 4, Rawalpindi</video:title>
-      <video:description>A short walkthrough of ORA Dental Wellness, a quiet-luxury dental clinic in Bahria Paradise Commercial, Bahria Town Phase 4, Rawalpindi.</video:description>
-      <video:content_loc>https://www.oradentalwellness.com/clinic_video_mobile.mp4</video:content_loc>
-      <video:duration>17</video:duration>
-      <video:publication_date>2026-07-20T00:00:00+05:00</video:publication_date>
-      <video:family_friendly>yes</video:family_friendly>
-      <video:live>no</video:live>
-    </video:video>
-  </url>
-  <url>
     <loc>https://www.oradentalwellness.com/blog</loc>
     <lastmod>2026-08-17</lastmod>
     <changefreq>weekly</changefreq>

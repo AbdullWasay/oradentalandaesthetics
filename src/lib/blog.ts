@@ -171,7 +171,7 @@ export const BLOG_POSTS: BlogPost[] = [
         type: "cta",
         kicker: "Book a whitening consult",
         title: "Start with a look at the teeth, not a kit.",
-        text: "WhatsApp us and we will find a time that suits. Dr. Roha will check the enamel first, then talk through whether whitening is right.",
+        text: "Book your appointment for teeth whitening right away.",
         address:
           "ORA Dental Wellness — Plot 35, Street 8, Bahria Paradise Commercial, Bahria Town Phase 4.",
       },

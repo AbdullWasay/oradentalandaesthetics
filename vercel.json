@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/clinic-tour", "destination": "/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/favicon.ico",

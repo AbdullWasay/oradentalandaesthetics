@@ -73,33 +73,33 @@ function BlogSplit({
   text: string;
 }) {
   return (
-    <div className="blog-rise grid items-center gap-5 rounded-2xl bg-[#f5f1eb] p-3 md:grid-cols-2 md:gap-8 md:p-4">
-      <figure className="relative m-0 overflow-hidden rounded-2xl bg-[#ebe4d8]">
+    <div className="blog-rise md:grid md:grid-cols-2 md:items-center md:gap-8">
+      <figure className="relative m-0 overflow-hidden rounded-2xl">
         <img
           src={src}
           alt={alt}
           width={width}
           height={height}
-          className="block h-auto w-full rounded-2xl"
+          className="mx-auto block h-auto max-h-[17rem] w-auto max-w-full"
           loading="lazy"
         />
-        <span className="pointer-events-none absolute left-4 top-4 rounded-full bg-[#1f241c]/55 px-3 py-1 font-sans-tight text-[9px] tracking-[0.18em] text-[#f5f1eb]">
+        <span className="pointer-events-none absolute left-3 top-3 rounded-full bg-[#1f241c]/50 px-3 py-1 font-sans-tight text-[9px] tracking-[0.18em] text-[#f5f1eb]">
           Before
         </span>
-        <span className="pointer-events-none absolute bottom-4 left-4 rounded-full bg-[#1f241c]/55 px-3 py-1 font-sans-tight text-[9px] tracking-[0.18em] text-[#f5f1eb]">
+        <span className="pointer-events-none absolute bottom-3 left-3 rounded-full bg-[#1f241c]/50 px-3 py-1 font-sans-tight text-[9px] tracking-[0.18em] text-[#f5f1eb]">
           After
         </span>
       </figure>
-      <div className="flex flex-col justify-center px-4 py-5 sm:px-8 sm:py-8 md:px-10">
+      <div className="mt-6 md:mt-0">
         {kicker ? (
           <p className="font-sans-tight text-[10px] tracking-[0.2em] text-[#8a6d2f]">
             {kicker}
           </p>
         ) : null}
-        <h2 className="mt-2 font-display text-[1.7rem] font-bold leading-snug tracking-tight text-[#4d5645] sm:text-[2rem]">
+        <h2 className="mt-2 font-display text-[1.55rem] font-bold leading-snug tracking-tight text-[#4d5645] sm:text-[1.75rem]">
           {title}
         </h2>
-        <p className="mt-4 max-w-md text-[1.05rem] font-light leading-relaxed text-[#3d4438]">
+        <p className="mt-3 text-[1.02rem] font-light leading-relaxed text-[#3d4438]">
           {text}
         </p>
       </div>
@@ -181,7 +181,7 @@ function BlogClinicCta({
           <p className="font-sans-tight text-[10px] tracking-[0.22em] text-[#d8cdc3]">
             {kicker}
           </p>
-          <p className="mt-3 max-w-xl font-display text-[clamp(1.75rem,3.8vw,2.7rem)] font-bold leading-[1.08] text-[#f5f1eb]">
+          <p className="mt-3 max-w-xl font-display text-[clamp(1.75rem,3.8vw,2.7rem)] font-light leading-[1.08] text-[#f5f1eb]">
             {title}
           </p>
           {text ? (
@@ -406,32 +406,49 @@ export function BlogPostPage({ post }: { post: BlogPost }) {
       <SiteHeader />
 
       <main id="main" ref={articleRef}>
-        <article className="border-b border-[#4d5645]/10">
-          <header className="bg-[#4d5645]">
-            <div className="blog-rise mx-auto grid max-w-7xl items-center gap-8 px-6 py-10 lg:grid-cols-2 lg:gap-12 lg:px-10 lg:py-14">
-              <div className={PLAIN_PHOTOS.has(post.hero.src) ? "lg:order-2" : undefined}>
-                <Link
-                  to="/blog"
-                  className="inline-flex items-center gap-2 font-sans-tight text-[10px] tracking-[0.18em] text-[#f5f1eb]/70 transition-colors hover:text-[#f5f1eb]"
-                >
-                  <ArrowLeft className="h-3.5 w-3.5" />
-                  Journal
-                </Link>
-                <p className="mt-8 font-sans-tight text-[10px] tracking-[0.2em] text-[#c4a35a]">
-                  {post.category} · {formatBlogDate(post.publishedAt)} ·{" "}
-                  {post.readingMinutes} min
-                </p>
-                <h1 className="mt-3 max-w-3xl font-display text-[clamp(2.1rem,4.8vw,3.35rem)] font-bold leading-[1.08] tracking-tight text-[#f5f1eb]">
+        <article>
+          <header className="relative overflow-hidden bg-[#f7f3ec] pt-10 lg:pt-14">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#666d57] via-[#666d57] via-[42%] to-[#f7f3ec]"
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-4 top-6 select-none font-display text-[clamp(5rem,14vw,10rem)] font-light leading-none tracking-[-0.05em] text-[#f5f1eb]/15 sm:right-8 lg:right-12"
+            >
+              ORA
+            </div>
+            <div className="relative mx-auto max-w-7xl px-6 lg:px-10">
+              <Link
+                to="/blog"
+                className="blog-rise inline-flex items-center gap-2 font-sans-tight text-[10px] tracking-[0.18em] text-[#f5f1eb]/80 transition-colors hover:text-[#f5f1eb]"
+              >
+                <ArrowLeft className="h-3.5 w-3.5" />
+                Journal
+              </Link>
+
+              <div className="blog-rise mx-auto mt-10 max-w-3xl text-center">
+                <div className="flex items-center justify-center gap-4">
+                  <span className="h-px w-10 bg-[#f5f1eb]/55" />
+                  <p className="font-sans-tight text-[10px] tracking-[0.32em] text-[#f5f1eb]/80">
+                    {post.category}
+                  </p>
+                  <span className="h-px w-10 bg-[#f5f1eb]/55" />
+                </div>
+                <h1 className="mt-5 font-display text-[clamp(2.15rem,4.4vw,3.35rem)] font-bold leading-[1.08] tracking-tight text-[#f5f1eb]">
                   {post.title}
                 </h1>
-                <p className="mt-5 max-w-xl text-[1.05rem] font-light leading-relaxed text-[#f5f1eb]/80">
+                <p className="mx-auto mt-5 max-w-xl text-[1.08rem] font-light leading-relaxed text-[#f5f1eb]/85">
                   {post.excerpt}
                 </p>
-                <div className="mt-7">
-                  <BlogShareBar post={post} onSage />
-                </div>
+                <p className="mt-5 font-sans-tight text-[10px] tracking-[0.18em] text-[#f5f1eb]/70">
+                  {formatBlogDate(post.publishedAt)}
+                  <span className="mx-2 text-[#c4a35a]">·</span>
+                  {post.readingMinutes} min read
+                </p>
               </div>
-              <figure className={PLAIN_PHOTOS.has(post.hero.src) ? "lg:order-1" : undefined}>
+
+              <figure className="blog-rise mx-auto mt-10 max-w-lg">
                 {PLAIN_PHOTOS.has(post.hero.src) ? (
                   <div className="overflow-hidden rounded-2xl">
                     <BlogPhoto
@@ -451,7 +468,7 @@ export function BlogPostPage({ post }: { post: BlogPost }) {
                     />
                   </SageFrame>
                 )}
-                <figcaption className="mt-2.5 text-[0.82rem] font-light text-[#f5f1eb]">
+                <figcaption className="mt-3 text-[0.82rem] font-light text-[#6a7364]">
                   {post.hero.caption}
                 </figcaption>
               </figure>
@@ -459,61 +476,102 @@ export function BlogPostPage({ post }: { post: BlogPost }) {
           </header>
 
           <div className="mx-auto max-w-7xl px-6 py-12 lg:px-10 lg:py-16">
-            <BlogBody post={post} />
+            <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+              <aside className="hidden lg:col-span-2 lg:block">
+                <div className="sticky top-28">
+                  <p className="font-sans-tight text-[10px] tracking-[0.22em] text-[#6a7364]">
+                    Share
+                  </p>
+                  <div className="mt-4">
+                    <BlogShareBar post={post} compact stack />
+                  </div>
+                </div>
+              </aside>
 
-            <section
-              id="faq"
-              className="blog-rise mt-14 scroll-mt-24"
-              aria-labelledby="blog-faq-heading"
-            >
-              <p className="font-sans-tight text-[10px] tracking-[0.22em] text-[#666d57]">
-                Questions
-              </p>
-              <h2
-                id="blog-faq-heading"
-                className="mt-2 font-display text-[1.55rem] font-bold leading-tight tracking-tight text-[#4d5645]"
-              >
-                {post.faqTitle}
-              </h2>
-              <p className="mt-2 text-[0.95rem] font-light leading-relaxed text-[#4a5246]">
-                {post.faqIntro}
-              </p>
+              <div className="min-w-0 lg:col-span-7">
+                <BlogBody post={post} />
 
-              <div className="mt-6 overflow-hidden rounded-2xl bg-white/80">
-                <Accordion type="single" collapsible className="w-full">
-                  {post.faqs.map((item, i) => (
-                    <AccordionItem
-                      key={item.question}
-                      value={`faq-${i}`}
-                      className="border-0 border-b border-[#4d5645]/10 px-4 last:border-b-0"
-                    >
-                      <AccordionTrigger className="group gap-3 py-4 hover:no-underline [&>svg]:hidden">
-                        <span className="flex min-w-0 flex-1 items-start gap-3 text-left">
-                          <span className="mt-0.5 font-sans-tight text-[9px] tracking-[0.16em] text-[#8a6d2f]">
-                            {String(i + 1).padStart(2, "0")}
-                          </span>
-                          <span className="font-display text-[1.02rem] font-bold leading-snug text-[#4d5645]">
-                            {item.question}
-                          </span>
-                        </span>
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f3eee4] text-[#4d5645] transition-colors group-data-[state=open]:bg-[#666d57] group-data-[state=open]:text-[#f5f1eb]">
-                          <ChevronDown className="h-3.5 w-3.5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
-                        </span>
-                      </AccordionTrigger>
-                      <AccordionContent className="pb-4 pl-9 pr-10 text-[0.95rem] font-light leading-relaxed text-[#4a5246]">
-                        {item.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
+                <section
+                  id="faq"
+                  className="blog-rise mt-16 scroll-mt-24"
+                  aria-labelledby="blog-faq-heading"
+                >
+                  <p className="font-sans-tight text-[10px] tracking-[0.22em] text-[#666d57]">
+                    Questions
+                  </p>
+                  <h2
+                    id="blog-faq-heading"
+                    className="mt-2 font-display text-[1.55rem] font-bold leading-tight tracking-tight text-[#4d5645]"
+                  >
+                    {post.faqTitle}
+                  </h2>
+                  <p className="mt-2 text-[0.95rem] font-light leading-relaxed text-[#4a5246]">
+                    {post.faqIntro}
+                  </p>
+
+                  <div className="mt-6 overflow-hidden rounded-2xl bg-white/80">
+                    <Accordion type="single" collapsible className="w-full">
+                      {post.faqs.map((item, i) => (
+                        <AccordionItem
+                          key={item.question}
+                          value={`faq-${i}`}
+                          className="border-0 border-b border-[#4d5645]/10 px-4 last:border-b-0"
+                        >
+                          <AccordionTrigger className="group gap-3 py-4 hover:no-underline [&>svg]:hidden">
+                            <span className="flex min-w-0 flex-1 items-start gap-3 text-left">
+                              <span className="mt-0.5 font-sans-tight text-[9px] tracking-[0.16em] text-[#8a6d2f]">
+                                {String(i + 1).padStart(2, "0")}
+                              </span>
+                              <span className="font-display text-[1.02rem] font-normal leading-snug text-[#4d5645]">
+                                {item.question}
+                              </span>
+                            </span>
+                            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f3eee4] text-[#4d5645] transition-colors group-data-[state=open]:bg-[#666d57] group-data-[state=open]:text-[#f5f1eb]">
+                              <ChevronDown className="h-3.5 w-3.5 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                            </span>
+                          </AccordionTrigger>
+                          <AccordionContent className="pb-4 pl-9 pr-10 text-[0.95rem] font-light leading-relaxed text-[#4a5246]">
+                            {item.answer}
+                          </AccordionContent>
+                        </AccordionItem>
+                      ))}
+                    </Accordion>
+                  </div>
+                </section>
+
+                <div className="blog-rise mt-12 flex flex-col gap-4 border-t border-[#4d5645]/10 pt-7 sm:flex-row sm:items-center sm:justify-between lg:hidden">
+                  <p className="font-sans-tight text-[10px] tracking-[0.18em] text-[#6a7364]">
+                    Pass this guide on
+                  </p>
+                  <BlogShareBar post={post} compact />
+                </div>
               </div>
-            </section>
 
-            <div className="blog-rise mt-10 flex flex-col gap-4 border-t border-[#4d5645]/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
-              <p className="font-sans-tight text-[10px] tracking-[0.18em] text-[#6a7364]">
-                Pass this guide on
-              </p>
-              <BlogShareBar post={post} compact />
+              <aside className="lg:col-span-3">
+                <div className="blog-rise sticky top-28 rounded-2xl bg-[#666d57] px-5 py-6">
+                  <p className="font-sans-tight text-[10px] tracking-[0.2em] text-[#d8cdc3]">
+                    {cta?.kicker ?? "Bahria Town Phase 4"}
+                  </p>
+                  <p className="mt-3 font-display text-[1.45rem] font-bold leading-snug text-[#f5f1eb]">
+                    {cta?.title ?? "Book a visit this week."}
+                  </p>
+                  {cta?.text ? (
+                    <p className="mt-3 text-[0.92rem] font-light leading-relaxed text-[#f5f1eb]/85">
+                      {cta.text}
+                    </p>
+                  ) : null}
+                  <a
+                    href={ORA_WHATSAPP_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => trackContact("whatsapp")}
+                    className="mt-6 inline-flex w-full items-center justify-center gap-2 bg-[#f5f1eb] px-5 py-3.5 font-sans-tight text-[11px] tracking-[0.14em] text-[#4d5645] transition-colors hover:bg-white"
+                  >
+                    WhatsApp
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              </aside>
             </div>
           </div>
 

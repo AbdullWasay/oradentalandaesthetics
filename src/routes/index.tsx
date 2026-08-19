@@ -39,6 +39,9 @@ const TreatmentsSection = lazy(() =>
 const TeamCarousel = lazy(() =>
   import("@/components/TeamCarousel").then((m) => ({ default: m.TeamCarousel })),
 );
+const BlogNewsCarousel = lazy(() =>
+  import("@/components/BlogNewsCarousel").then((m) => ({ default: m.BlogNewsCarousel })),
+);
 const GoogleReviews = lazy(() =>
   import("@/components/GoogleReviews").then((m) => ({ default: m.GoogleReviews })),
 );
@@ -382,6 +385,10 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      <Suspense fallback={null}>
+        <BlogNewsCarousel />
+      </Suspense>
 
       <section
         id="locations"

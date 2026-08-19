@@ -108,17 +108,6 @@ export const PAGE_SEO = {
     keywords:
       "ORA Dental Wellness, best dental clinic in Rawalpindi, dentist Bahria Town, clear aligners Rawalpindi, Aligno partner, teeth whitening Bahria Town, ORA Dental Wellness journal",
   },
-  clinicTour: {
-    path: "/clinic-tour",
-    title: "Clinic Tour | ORA Dental Wellness Rawalpindi",
-    description:
-      "Watch a short clinic tour of ORA Dental Wellness in Bahria Town Phase 4, Rawalpindi. See the atelier, then book a visit.",
-    keywords:
-      "ORA Dental clinic tour, dental clinic Rawalpindi video, Bahria Town dentist tour, ORA Dental Wellness walkthrough",
-    ogImage: `${SITE_URL}/clinic-video-poster.webp`,
-    ogImageAlt:
-      "Still from the ORA Dental Wellness clinic tour video — Bahria Town Phase 4, Rawalpindi",
-  },
 } as const satisfies Record<string, PageSeo>;
 
 export const FAQ_ITEMS = [
@@ -744,82 +733,6 @@ export function blogPostJsonLdScripts(post: {
   }
 
   return scripts;
-}
-
-export function buildClinicTourVideoJsonLd() {
-  const page = PAGE_SEO.clinicTour;
-  const pageUrl = absoluteUrl(page.path);
-  const contentUrl = absoluteUrl("/clinic_video_mobile.mp4");
-  const thumbnailUrl = absoluteUrl("/clinic-video-poster.webp");
-
-  return {
-    "@context": "https://schema.org",
-    "@type": "VideoObject",
-    "@id": `${pageUrl}#video`,
-    name: "ORA Dental Wellness clinic tour — Bahria Town Phase 4, Rawalpindi",
-    description: page.description,
-    thumbnailUrl: [thumbnailUrl],
-    contentUrl,
-    embedUrl: pageUrl,
-    uploadDate: "2026-07-20",
-    duration: "PT17S",
-    inLanguage: "en",
-    isFamilyFriendly: true,
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      logo: {
-        "@type": "ImageObject",
-        url: absoluteUrl("/google-logo.png"),
-      },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": pageUrl,
-      name: page.title,
-      url: pageUrl,
-      description: page.description,
-      isPartOf: { "@id": `${SITE_URL}/#website` },
-    },
-    about: { "@id": `${SITE_URL}/#dentist` },
-    contentLocation: {
-      "@type": "Place",
-      name: SITE_NAME,
-      address: postalAddress(),
-      geo: {
-        "@type": "GeoCoordinates",
-        latitude: ORA_GEO.latitude,
-        longitude: ORA_GEO.longitude,
-      },
-    },
-  };
-}
-
-export function clinicTourJsonLdScripts() {
-  const page = PAGE_SEO.clinicTour;
-  return [
-    ...pageJsonLdScripts(page, "Clinic tour"),
-    jsonLdScript(buildClinicTourVideoJsonLd()),
-    jsonLdScript({
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": absoluteUrl(page.path),
-      url: absoluteUrl(page.path),
-      name: page.title,
-      description: page.description,
-      isPartOf: { "@id": `${SITE_URL}/#website` },
-      about: { "@id": `${SITE_URL}/#dentist` },
-      primaryImageOfPage: {
-        "@type": "ImageObject",
-        url: absoluteUrl("/clinic-video-poster.webp"),
-      },
-      video: { "@id": `${absoluteUrl(page.path)}#video` },
-      speakable: {
-        "@type": "SpeakableSpecification",
-        cssSelector: ["h1", "main p"],
-      },
-    }),
-  ];
 }
 
 export { ORA_ADDRESS_FULL, ORA_ADDRESS_LINES, ORA_MAPS_SHARE_URL };

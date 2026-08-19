@@ -20,14 +20,20 @@ export function BlogShareBar({
   post,
   compact = false,
   onSage = false,
+  stack = false,
 }: {
   post: BlogPost;
   compact?: boolean;
   onSage?: boolean;
+  stack?: boolean;
 }) {
   const [copied, setCopied] = useState(false);
   const [canNativeShare, setCanNativeShare] = useState(false);
-  const buttonClass = onSage ? btnClassOnSage : btnClass;
+  const buttonClass = onSage
+    ? btnClassOnSage
+    : stack
+      ? "inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#4d5645]/20 text-[#4d5645] transition-colors hover:border-[#4d5645] hover:bg-[#4d5645] hover:text-[#f5f1eb]"
+      : btnClass;
   const url = blogPostUrl(post.slug);
   const shareText = `${post.title} — ${url}`;
   const encodedUrl = encodeURIComponent(url);
@@ -57,8 +63,16 @@ export function BlogShareBar({
   };
 
   return (
-    <div className={compact ? "flex items-center gap-2" : "flex flex-wrap items-center gap-2"}>
-      {!compact ? (
+    <div
+      className={
+        stack
+          ? "flex flex-col items-start gap-2.5"
+          : compact
+            ? "flex items-center gap-2"
+            : "flex flex-wrap items-center gap-2"
+      }
+    >
+      {!compact && !stack ? (
         <p
           className={`mr-2 font-sans-tight text-[10px] tracking-[0.18em] ${onSage ? "text-[#f5f1eb]/55" : "text-foreground/40"}`}
         >
