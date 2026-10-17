@@ -9,6 +9,9 @@ ORA Dental Wellness is a calm, atelier-style practice focused on precise dentist
 - [Home](https://www.oradentalwellness.com/): Main landing page for ORA Dental Wellness
 - [Journal](https://www.oradentalwellness.com/blog): Guides for the clinic, teeth whitening, and clear aligners in Rawalpindi
 - [Why teeth whitening matters](https://www.oradentalwellness.com/blog/teeth-whitening-in-bahria-town-rawalpindi): Professional teeth whitening at ORA in Bahria Town Phase 4
+- [Clear aligners](https://www.oradentalwellness.com/treatments/clear-aligners): Aligno clear aligners with Dr. Ahmed Sultan in Bahria Town Phase 4
+- [Dental implants](https://www.oradentalwellness.com/treatments/dental-implants): Implant planning and restoration at ORA Dental Wellness
+- [General dentistry](https://www.oradentalwellness.com/treatments/general-dentistry): Check-ups, cleaning, fillings, and family care
 - [Atelier](https://www.oradentalwellness.com/#atelier): Interior and clinic atmosphere
 - [Founders](https://www.oradentalwellness.com/#doctors): Dr. Ahmed Sultan and Dr. Roha Ejaz
 - [Treatments](https://www.oradentalwellness.com/#treatments): Preventive, restorative, cosmetic, and specialty care

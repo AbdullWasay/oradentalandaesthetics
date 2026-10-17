@@ -36,6 +36,9 @@ import drRoha from "@/assets/doctors/dr-roha-ejaz.webp";
 const TreatmentsSection = lazy(() =>
   import("@/components/TreatmentsSection").then((m) => ({ default: m.TreatmentsSection })),
 );
+const FeaturedTreatments = lazy(() =>
+  import("@/components/FeaturedTreatments").then((m) => ({ default: m.FeaturedTreatments })),
+);
 const TeamCarousel = lazy(() =>
   import("@/components/TeamCarousel").then((m) => ({ default: m.TeamCarousel })),
 );
@@ -355,6 +358,10 @@ function HomePage() {
 
       <Suspense fallback={null}>
         <TreatmentsSection />
+      </Suspense>
+
+      <Suspense fallback={null}>
+        <FeaturedTreatments />
       </Suspense>
 
       {/* MEET OUR TEAM — animated carousel */}
