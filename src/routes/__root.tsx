@@ -3,6 +3,7 @@ import { PAGE_SEO, SITE_URL, buildPageLinks, buildPageMeta } from "@/lib/seo";
 import { SmoothScroll } from "@/lib/smooth-scroll";
 import homePosterMobile from "@/assets/home-poster-mobile.webp";
 import heroDesktop from "@/assets/her-section-bg.webp";
+import { Analytics } from "@vercel/analytics/react";
 
 import appCss from "../styles.css?url";
 
@@ -131,6 +132,7 @@ if(document.readyState==='complete')arm();else window.addEventListener('load',ar
         </noscript>
         {children}
         <Scripts />
+        <Analytics />
       </body>
     </html>
   );
