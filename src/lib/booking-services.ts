@@ -1,6 +1,8 @@
 /** Booking form service options (kept separate so treatments UI can be code-split). */
 export const bookingServices = [
   { title: "Dental Check-up & Consultation" },
+  { title: "Clear Aligners" },
+  { title: "Dental Implants" },
   { title: "Teeth Cleaning (Scaling & Polishing)" },
   { title: "Tooth-Colored Fillings" },
   { title: "Root Canal Treatment" },

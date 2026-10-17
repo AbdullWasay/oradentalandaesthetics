@@ -108,6 +108,33 @@ export const PAGE_SEO = {
     keywords:
       "ORA Dental Wellness, best dental clinic in Rawalpindi, dentist Bahria Town, clear aligners Rawalpindi, Aligno partner, teeth whitening Bahria Town, ORA Dental Wellness journal",
   },
+  clearAligners: {
+    path: "/treatments/clear-aligners",
+    title: "Clear Aligners in Bahria Town, Rawalpindi | ORA Dental Wellness",
+    description:
+      "Clear aligners in Bahria Town Phase 4 at ORA Dental Wellness — official Aligno partner. Digital planning with Dr. Ahmed Sultan for discreet teeth straightening in Rawalpindi.",
+    keywords:
+      "clear aligners Rawalpindi, clear aligners Bahria Town, Aligno partner, invisible braces Rawalpindi, teeth straightening Bahria Town Phase 4",
+    ogImage: `${SITE_URL}/aligners.webp`,
+    ogImageAlt:
+      "Clear aligners at ORA Dental Wellness, Bahria Town Phase 4, Rawalpindi",
+  },
+  dentalImplants: {
+    path: "/treatments/dental-implants",
+    title: "Dental Implants in Bahria Town, Rawalpindi | ORA Dental Wellness",
+    description:
+      "Dental implants in Bahria Town Phase 4 at ORA Dental Wellness. Specialist-supported implant planning for missing teeth in Rawalpindi.",
+    keywords:
+      "dental implants Rawalpindi, dental implants Bahria Town, tooth implant Bahria Town Phase 4, implant dentist Rawalpindi",
+  },
+  generalDentistry: {
+    path: "/treatments/general-dentistry",
+    title: "General Dentistry in Bahria Town, Rawalpindi | ORA Dental Wellness",
+    description:
+      "General dentistry in Bahria Town Phase 4 — check-ups, cleaning, fillings, root canals, and family care at ORA Dental Wellness, Rawalpindi.",
+    keywords:
+      "general dentistry Rawalpindi, family dentist Bahria Town, dental check-up Bahria Town Phase 4, teeth cleaning Rawalpindi",
+  },
 } as const satisfies Record<string, PageSeo>;
 
 export const FAQ_ITEMS = [
@@ -721,6 +748,72 @@ export function blogPostJsonLdScripts(post: {
         "@type": "FAQPage",
         "@id": `${url}#faq`,
         mainEntity: post.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.answer,
+          },
+        })),
+      }),
+    );
+  }
+
+  return scripts;
+}
+
+export function treatmentJsonLdScripts(page: {
+  slug: string;
+  title: string;
+  headline: string;
+  description: string;
+  faqs?: { question: string; answer: string }[];
+}) {
+  const path = `/treatments/${page.slug}`;
+  const url = absoluteUrl(path);
+  const scripts = [
+    jsonLdScript(buildOrganizationJsonLd()),
+    jsonLdScript(buildDentistJsonLd()),
+    jsonLdScript(
+      buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Treatments", path: "/#treatments" },
+        { name: page.title, path },
+      ]),
+    ),
+    jsonLdScript({
+      "@context": "https://schema.org",
+      "@type": "MedicalWebPage",
+      "@id": `${url}#webpage`,
+      name: page.title,
+      headline: page.headline,
+      description: page.description,
+      url,
+      inLanguage: "en-PK",
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: {
+        "@type": "MedicalProcedure",
+        name: page.title,
+        description: page.description,
+      },
+      mainEntity: {
+        "@type": "MedicalBusiness",
+        "@id": `${SITE_URL}/#dentist`,
+      },
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", "h2"],
+      },
+    }),
+  ];
+
+  if (page.faqs?.length) {
+    scripts.push(
+      jsonLdScript({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        mainEntity: page.faqs.map((faq) => ({
           "@type": "Question",
           name: faq.question,
           acceptedAnswer: {
